@@ -11,5 +11,4 @@ public class Controller {
     public String index(){
         return "index";
     }
-    //TEST
 }

@@ -1,65 +1,64 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 public class Project {
-    private int projectId;
-    private String projectName;
-    private String projectDescription;
-    private LocalDateTime projectDeadline;
-    private LocalDateTime projectStartDate;
+    private int id;
+    private String name;
+    private String description;
+    private List<Task> tasks;
+    private List<Subproject> subprojects;
     private double totalHours;
 
-    public Project (int projectId, String projectName, String projectDescription, LocalDateTime projectDeadline,
-                    LocalDateTime projectStartDate, double totalHours){
-        this.projectId = projectId;
-        this.projectName = projectName;
-        this.projectDescription = projectDescription;
-        this.projectDeadline = projectDeadline;
-        this.projectStartDate = projectStartDate;
+    public Project() {} //til thymeleaf
+    public Project(int id, String name, String description, List<Task> tasks, List<Subproject> subprojects, double totalHours) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.tasks = tasks;
+        this.subprojects = subprojects;
         this.totalHours = totalHours;
     }
 
-    public int getProjectId() {
-        return projectId;
+    public int getId() {
+        return id;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getName() {
+        return name;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getProjectDescription() {
-        return projectDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setProjectDescription(String projectDescription) {
-        this.projectDescription = projectDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public LocalDateTime getProjectDeadline() {
-        return projectDeadline;
+    public List<Task> getTasks() {
+        return tasks;
     }
 
-    public void setProjectDeadline(LocalDateTime projectDeadline) {
-        this.projectDeadline = projectDeadline;
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
-    public LocalDateTime getProjectStartDate() {
-        return projectStartDate;
+    public List<Subproject> getSubprojects() {
+        return subprojects;
     }
 
-    public void setProjectStartDate(LocalDateTime projectStartDate) {
-        this.projectStartDate = projectStartDate;
+    public void setSubprojects(List<Subproject> subprojects) {
+        this.subprojects = subprojects;
     }
-
     public double getTotalHours() {
         return totalHours;
     }
@@ -67,4 +66,5 @@ public class Project {
     public void setTotalHours(double totalHours) {
         this.totalHours = totalHours;
     }
+
 }

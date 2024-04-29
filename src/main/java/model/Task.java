@@ -1,60 +1,54 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 public class Task {
-    private int taskId;
-    private String taskName;
-    private String taskDescription;
-    private LocalDateTime taskDeadline;
-    private LocalDateTime taskStartDate;
-    private double taskHours;
-
-    public int getTaskId() {
-        return taskId;
+    private int id;
+    private String title;
+    private String description;
+    private List<Subtask> subtasks;
+    private Date deadline;
+    private int hours;
+    public Task() {} //thymeleaf
+    public Task(int id, String title, String description, List<Subtask> subtasks, Date deadline, int hours) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.subtasks = subtasks;
+        this.deadline = deadline;
+        this.hours = hours;
     }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
+    public int getId() {
+        return id;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public String getTitle() {
+        return title;
     }
 
-    public String getTaskDescription() {
-        return taskDescription;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public LocalDateTime getTaskDeadline() {
-        return taskDeadline;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setTaskDeadline(LocalDateTime taskDeadline) {
-        this.taskDeadline = taskDeadline;
+    public List<Subtask> getSubtasks() {
+        return subtasks;
     }
 
-    public LocalDateTime getTaskStartDate() {
-        return taskStartDate;
-    }
-
-    public void setTaskStartDate(LocalDateTime taskStartDate) {
-        this.taskStartDate = taskStartDate;
-    }
-
-    public double getTaskHours() {
-        return taskHours;
-    }
-
-    public void setTaskHours(double taskHours) {
-        this.taskHours = taskHours;
+    public void setSubtasks(List<Subtask> subtasks) {
+        this.subtasks = subtasks;
     }
 }

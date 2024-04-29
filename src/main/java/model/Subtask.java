@@ -1,60 +1,60 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Subtask {
-    private int subtaskId;
-    private String subtaskName;
-    private String subtaskDescription;
-    private LocalDateTime subtaskDeadline;
-    private LocalDateTime subtaskStartDate;
-    private double subtaskHours;
+    private int id;
+    private String title;
+    private String description;
+    private Date deadline;
+    private int totalHours;
+    public Subtask() {} //thymeleaf
 
-    public int getSubtaskId() {
-        return subtaskId;
+    public Date getDeadline() {
+        return deadline;
     }
 
-    public void setSubtaskId(int subtaskId) {
-        this.subtaskId = subtaskId;
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 
-    public String getSubtaskName() {
-        return subtaskName;
+    public int getTotalHours() {
+        return totalHours;
     }
 
-    public void setSubtaskName(String subtaskName) {
-        this.subtaskName = subtaskName;
+    public void setTotalHours(int totalHours) {
+        this.totalHours = totalHours;
     }
 
-    public String getSubtaskDescription() {
-        return subtaskDescription;
+    public Subtask(int id, String title, String description, Date deadline, int totalHours) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.deadline = deadline;
+        this.totalHours = totalHours;
     }
 
-    public void setSubtaskDescription(String subtaskDescription) {
-        this.subtaskDescription = subtaskDescription;
+    public int getId() {
+        return id;
     }
 
-    public LocalDateTime getSubtaskDeadline() {
-        return subtaskDeadline;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setSubtaskDeadline(LocalDateTime subtaskDeadline) {
-        this.subtaskDeadline = subtaskDeadline;
+    public String getTitle() {
+        return title;
     }
 
-    public LocalDateTime getSubtaskStartDate() {
-        return subtaskStartDate;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setSubtaskStartDate(LocalDateTime subtaskStartDate) {
-        this.subtaskStartDate = subtaskStartDate;
+    public String getDescription() {
+        return description;
     }
 
-    public double getSubtaskHours() {
-        return subtaskHours;
-    }
-
-    public void setSubtaskHours(double subtaskHours) {
-        this.subtaskHours = subtaskHours;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

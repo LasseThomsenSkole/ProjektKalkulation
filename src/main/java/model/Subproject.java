@@ -1,60 +1,72 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Subproject {
-    private int subprojectId;
-    private String subprojectName;
-    private String subprojectDescription;
-    private LocalDateTime subprojectDeadline;
-    private LocalDateTime subprojectStartDate;
-    private double subprojectHours;
+    private int id;
+    private String name;
+    private String description;
+    private List<Task> tasks;
+    private Date deadline;
+    private int totalHours;
 
-    public int getSubprojectId() {
-        return subprojectId;
+    public Subproject(){} //thymeleaf
+
+    public Subproject(int id, String name, String description, List<Task> tasks, Date deadline, int totalHours) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.tasks = tasks;
+        this.deadline = deadline;
+        this.totalHours = totalHours;
     }
 
-    public void setSubprojectId(int subprojectId) {
-        this.subprojectId = subprojectId;
+    public int getId() {
+        return id;
     }
 
-    public String getSubprojectName() {
-        return subprojectName;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setSubprojectName(String subprojectName) {
-        this.subprojectName = subprojectName;
+    public String getName() {
+        return name;
     }
 
-    public String getSubprojectDescription() {
-        return subprojectDescription;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setSubprojectDescription(String subprojectDescription) {
-        this.subprojectDescription = subprojectDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public LocalDateTime getSubprojectDeadline() {
-        return subprojectDeadline;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setSubprojectDeadline(LocalDateTime subprojectDeadline) {
-        this.subprojectDeadline = subprojectDeadline;
+    public List<Task> getTasks() {
+        return tasks;
     }
 
-    public LocalDateTime getSubprojectStartDate() {
-        return subprojectStartDate;
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+    public Date getDeadline() {
+        return deadline;
     }
 
-    public void setSubprojectStartDate(LocalDateTime subprojectStartDate) {
-        this.subprojectStartDate = subprojectStartDate;
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 
-    public double getSubprojectHours() {
-        return subprojectHours;
+    public int getTotalHours() {
+        return totalHours;
     }
 
-    public void setSubprojectHours(double subprojectHours) {
-        this.subprojectHours = subprojectHours;
+    public void setTotalHours(int totalHours) {
+        this.totalHours = totalHours;
     }
 }
