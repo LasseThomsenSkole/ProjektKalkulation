@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Date;
 import java.util.List;
 
 public class Task {
@@ -7,12 +8,16 @@ public class Task {
     private String title;
     private String description;
     private List<Subtask> subtasks;
+    private Date deadline;
+    private int hours;
     public Task() {} //thymeleaf
-    public Task(int id, String title, String description, List<Subtask> subtasks) {
+    public Task(int id, String title, String description, List<Subtask> subtasks, Date deadline, int hours) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.subtasks = subtasks;
+        this.deadline = deadline;
+        this.hours = hours;
     }
 
     public int getId() {

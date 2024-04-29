@@ -1,15 +1,20 @@
 package model;
 
+import java.util.Date;
+
 public class Subtask {
     private int id;
     private String title;
     private String description;
-
+    private Date deadline;
+    private int totalHours;
     public Subtask() {} //thymeleaf
-    public Subtask(int id, String title, String description) {
+    public Subtask(int id, String title, String description, Date deadline, int totalHours) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.deadline = deadline;
+        this.totalHours = totalHours;
     }
 
     public int getId() {

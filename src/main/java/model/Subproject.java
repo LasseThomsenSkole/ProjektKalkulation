@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Subproject {
@@ -8,12 +9,17 @@ public class Subproject {
     private String name;
     private String description;
     private List<Task> tasks;
+    private Date deadline;
+    private int totalHours;
+
     public Subproject(){} //thymeleaf
-    public Subproject(int id, String name, String description, List<Task> tasks) {
+    public Subproject(int id, String name, String description, List<Task> tasks, Date deadline, int totalHours) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.tasks = tasks;
+        this.deadline = deadline;
+        this.totalHours = totalHours;
     }
 
     public int getId() {
