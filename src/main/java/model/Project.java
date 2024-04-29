@@ -8,14 +8,16 @@ public class Project {
     private String description;
     private List<Task> tasks;
     private List<Subproject> subprojects;
-    public Project() {} //til thymeleaf
+    private double totalHours;
 
-    public Project(int id, String name, String description, List<Task> tasks, List<Subproject> subprojects) {
+    public Project() {} //til thymeleaf
+    public Project(int id, String name, String description, List<Task> tasks, List<Subproject> subprojects, double totalHours) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.tasks = tasks;
         this.subprojects = subprojects;
+        this.totalHours = totalHours;
     }
 
     public int getId() {
@@ -57,4 +59,12 @@ public class Project {
     public void setSubprojects(List<Subproject> subprojects) {
         this.subprojects = subprojects;
     }
+    public double getTotalHours() {
+        return totalHours;
+    }
+
+    public void setTotalHours(double totalHours) {
+        this.totalHours = totalHours;
+    }
+
 }
