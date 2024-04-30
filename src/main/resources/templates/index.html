@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/main.css" type="text/css">
 </head>
 <body>
-<div th:insert="fragments/header :: header"></div>
+<div th:insert="~{fragments/header :: header}"></div>
 
 <section>
     <h1 th:text="'Velkommen ' + ${user} + '!'">Velkommen bruger</h1>
@@ -14,7 +14,7 @@
         Gennemse dine projekter, opdater opgavestatusser og hold øje med dine deadlines via kalenderen. Alt dette på et sted!</p>
 </section>
 
-<div th:insert="fragments/footer :: footer"></div>
+<div th:insert="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>
