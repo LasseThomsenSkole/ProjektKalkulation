@@ -80,20 +80,20 @@ nav ul {
 }
 
 nav ul li {
-    margin: 0 10px;
+    margin: 0 5px; /* Mindsker afstanden mellem knapperne */
 }
 
 .nav-button {
     background-color: transparent;
-    color: #007bff;
+    color: #0c0c0c; /* Pink farve for tekst */
     text-decoration: none;
-    padding: 10px 20px;
+    padding: 5px 15px; /* Reducerer padding for at gøre knapperne mindre */
     border-radius: 5px;
-    border: 2px solid #007bff;
+    border: 2px solid #c7156f; /* Pink farve for kant */
     transition: background-color 0.3s, color 0.3s;
 }
 
 .nav-button:hover {
-    background-color: #007bff;
-    color: white;
+    background-color: #d01275; /* Pink baggrund ved hover */
+    color: white; /* Hvid tekst ved hover */
 }
