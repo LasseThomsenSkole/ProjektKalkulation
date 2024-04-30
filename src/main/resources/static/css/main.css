@@ -1,34 +1,4 @@
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #ffffff;
-}
-
-.header-content {
-    display: flex;
-    align-items: center;
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.logo {
-    height: 40px;
-    margin-right: 10px; /* place between logo and logo text */
-}
-
-.logo-text {
-    font-size: 1.8em;
-    font-weight: bold;
-    color: #0c0c0c;
-}
-
-/* General body styling */
+/* General body and layout styling */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -39,14 +9,28 @@ body {
     justify-content: space-between;
 }
 
-/* Styling footer with box */
-footer {
-    padding: 10px 20px;
-    font-size: 0.9em; /
-    background-color: #ffffff;
+header, footer {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #ffffff;
+}
+
+.logo-container, .header-content {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 10px; /* Space between logo and logo text */
+}
+
+.logo-text {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #0c0c0c;
 }
 
 /* Navigation menu styling */
@@ -59,24 +43,25 @@ nav ul {
 }
 
 nav ul li {
-    margin: 0 5px; /* less distance between buttons */
+    margin: 0 5px; /* Less distance between buttons */
 }
 
 .nav-button {
     background-color: transparent;
     color: #0c0c0c;
     text-decoration: none;
-    padding: 5px 15px; /* size of buttons */
+    padding: 5px 15px; /* Reduced size of buttons */
     border-radius: 5px;
-    border: 2px solid #c7156f;
+    border: 2px solid #c7156f; /* Pink color for border */
     transition: background-color 0.3s, color 0.3s;
 }
 
 .nav-button:hover {
-    background-color: #d01275;
-    color: white; /* white text when hovering */
+    background-color: #d01275; /* Pink hover background */
+    color: white;
 }
 
+/* Section and text styling */
 section {
     background-color: #f4f4f4;
     padding: 40px;
@@ -95,4 +80,8 @@ p {
     color: #0c0c0c;
     font-size: 1.2em;
     line-height: 1.6;
+}
+
+footer {
+    font-size: 0.9em;
 }
