@@ -31,7 +31,7 @@ header {
 
 /* Generel body styling */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
@@ -96,4 +96,25 @@ nav ul li {
 .nav-button:hover {
     background-color: #d01275; /* Pink baggrund ved hover */
     color: white; /* Hvid tekst ved hover */
+}
+
+section {
+    background-color: #f4f4f4; /* Let grå baggrund for kontrast */
+    padding: 40px; /* Tilføjer padding for at skabe plads omkring indholdet */
+    margin: 20px auto; /* Centrerer sektionen og tilføjer margin */
+    max-width: 800px; /* Begrænser bredden for bedre læsbarhed */
+    border-radius: 8px; /* Tilføjer bløde kanter */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtil skygge for dybde */
+}
+
+h1 {
+    color: #333; /* Mørkegrå for at gøre teksten mindre hård */
+    font-size: 2.5em; /* Gør hovedoverskriften større og mere iøjnefaldende */
+    margin-bottom: 0.5em; /* Skaber afstand til paragrafen nedenunder */
+}
+
+p {
+    color: #666; /* Lysere grå for kroppens tekst */
+    font-size: 1.2em; /* Lidt større kropstekst for læsbarhed */
+    line-height: 1.6; /* Forbedrer læsbarheden med højere linjeafstand */
 }
