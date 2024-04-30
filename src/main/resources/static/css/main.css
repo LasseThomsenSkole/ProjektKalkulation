@@ -14,22 +14,22 @@ header {
 
 .logo-container {
     display: flex;
-    align-items: center; /* Dette sikrer, at logoet og teksten er centreret vertikalt */
-    justify-content: flex-start; /* Starter elementerne fra venstre side */
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .logo {
-    height: 40px; /* Fast højde for logoet */
-    margin-right: 10px; /* Tilføjer lidt plads mellem logoet og teksten */
+    height: 40px;
+    margin-right: 10px; /* place between logo and logo text */
 }
 
 .logo-text {
     font-size: 1.8em;
     font-weight: bold;
-    color: #333;
+    color: #0c0c0c;
 }
 
-/* Generel body styling */
+/* General body styling */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -54,23 +54,23 @@ section {
     border-radius: 10px;
 }
 
-/* Styling af footer med boks */
+/* Styling footer with box */
 footer {
-    background-color: #f0f0f0;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 0.9em; /
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* Justering og styling af header */
+/* styling header */
 header {
     background-color: #f0f0f0;
     padding: 10px 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Navigationsmenu styling */
+/* Navigation menu styling */
 nav ul {
     list-style: none;
     padding: 0;
@@ -80,41 +80,41 @@ nav ul {
 }
 
 nav ul li {
-    margin: 0 5px; /* Mindsker afstanden mellem knapperne */
+    margin: 0 5px; /* less distance between buttons */
 }
 
 .nav-button {
     background-color: transparent;
-    color: #0c0c0c; /* Pink farve for tekst */
+    color: #0c0c0c;
     text-decoration: none;
-    padding: 5px 15px; /* Reducerer padding for at gøre knapperne mindre */
+    padding: 5px 15px; /* size of buttons */
     border-radius: 5px;
-    border: 2px solid #c7156f; /* Pink farve for kant */
+    border: 2px solid #c7156f;
     transition: background-color 0.3s, color 0.3s;
 }
 
 .nav-button:hover {
-    background-color: #d01275; /* Pink baggrund ved hover */
-    color: white; /* Hvid tekst ved hover */
+    background-color: #d01275;
+    color: white; /* white text when hovering */
 }
 
 section {
-    background-color: #f4f4f4; /* Let grå baggrund for kontrast */
-    padding: 40px; /* Tilføjer padding for at skabe plads omkring indholdet */
-    margin: 20px auto; /* Centrerer sektionen og tilføjer margin */
-    max-width: 800px; /* Begrænser bredden for bedre læsbarhed */
-    border-radius: 8px; /* Tilføjer bløde kanter */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtil skygge for dybde */
+    background-color: #f4f4f4;
+    padding: 40px;
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    color: #333; /* Mørkegrå for at gøre teksten mindre hård */
-    font-size: 2.5em; /* Gør hovedoverskriften større og mere iøjnefaldende */
-    margin-bottom: 0.5em; /* Skaber afstand til paragrafen nedenunder */
+    color: #0c0c0c;
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
 }
 
 p {
-    color: #666; /* Lysere grå for kroppens tekst */
-    font-size: 1.2em; /* Lidt større kropstekst for læsbarhed */
-    line-height: 1.6; /* Forbedrer læsbarheden med højere linjeafstand */
+    color: #0c0c0c;
+    font-size: 1.2em;
+    line-height: 1.6;
 }
