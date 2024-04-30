@@ -24,7 +24,8 @@ public class Repository {
     }
 
 
-    //verdens længste metode :))))
+    /**HENT PROJECT**/
+    //verdens længste metode :)))) den skal måske deles op
     public Project getProject(int projectId) {
         Project project = null;
         List<Task> tasks = new ArrayList<>();
@@ -96,5 +97,34 @@ public class Repository {
 
 
 
+    /**OPRET PROJECT**/
+    public void createProject(String name, String description, double totalHours, Date deadline) {
+        try (Connection connection = DriverManager.getConnection(db_url, username, pwd)){
+            String SQL = "INSERT INTO projects (project_name, project_description, total_hours, deadline)" +
+                    "VALUES (?, ?, ?, ?);";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, description);
+            preparedStatement.setDouble(3, totalHours);
+            preparedStatement.setDate(4, deadline);
+            preparedStatement.executeQuery();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 
+
+
+    /**TOTALHOURS SUM TIL PROJECT**/
+    public double getTotalHours(int projectId){
+        double totalHours = 0;
+        try (Connection connection = DriverManager.getConnection(db_url, username, pwd)){
+
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return totalHours;
+    }
 }
