@@ -1,7 +1,7 @@
 package service;
 
 
-import Repository.Repository;
+import repository.Repository;
 
 @org.springframework.stereotype.Service
 public class Service {
