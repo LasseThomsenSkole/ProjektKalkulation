@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="header">
+    <div class="logo-container">
+        <img src="/img/logo_alpha.png" alt="Alpha Manager Logo" class="logo">
+        <span class="logo-text">Alpha Manager</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a th:href="@{/home}" class="nav-button">HJEM</a></li>
+            <li><a th:href="@{/mine-projekter}" class="nav-button">MINE PROJEKTER</a></li>
+            <li><a th:href="@{/teamprojekt}" class="nav-button">ALLE PROJEKTER</a></li>
+            <li><a th:href="@{/opgaveliste}" class="nav-button">MINE OPGAVER</a></li>
+            <li><a th:href="@{/kalender}" class="nav-button">KALENDER</a></li>
+        </ul>
+    </nav>
+</header>
+</body>
+</html>

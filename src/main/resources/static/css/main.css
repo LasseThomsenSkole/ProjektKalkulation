@@ -12,20 +12,26 @@ header {
     align-items: center;
 }
 
-.logo {
-    height: 70px;
+.logo-container {
+    display: flex;
+    align-items: center; /* Dette sikrer, at logoet og teksten er centreret vertikalt */
+    justify-content: flex-start; /* Starter elementerne fra venstre side */
 }
+
+.logo {
+    height: 40px; /* Fast højde for logoet */
+    margin-right: 10px; /* Tilføjer lidt plads mellem logoet og teksten */
+}
+
 .logo-text {
-    font-size: 2.5em;
+    font-size: 1.8em;
     font-weight: bold;
     color: #333;
-    margin-left: 0.0em;
-    height: 50px;
 }
 
 /* Generel body styling */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
@@ -74,20 +80,41 @@ nav ul {
 }
 
 nav ul li {
-    margin: 0 10px;
+    margin: 0 5px; /* Mindsker afstanden mellem knapperne */
 }
 
 .nav-button {
     background-color: transparent;
-    color: #007bff;
+    color: #0c0c0c; /* Pink farve for tekst */
     text-decoration: none;
-    padding: 10px 20px;
+    padding: 5px 15px; /* Reducerer padding for at gøre knapperne mindre */
     border-radius: 5px;
-    border: 2px solid #007bff;
+    border: 2px solid #c7156f; /* Pink farve for kant */
     transition: background-color 0.3s, color 0.3s;
 }
 
 .nav-button:hover {
-    background-color: #007bff;
-    color: white;
+    background-color: #d01275; /* Pink baggrund ved hover */
+    color: white; /* Hvid tekst ved hover */
+}
+
+section {
+    background-color: #f4f4f4; /* Let grå baggrund for kontrast */
+    padding: 40px; /* Tilføjer padding for at skabe plads omkring indholdet */
+    margin: 20px auto; /* Centrerer sektionen og tilføjer margin */
+    max-width: 800px; /* Begrænser bredden for bedre læsbarhed */
+    border-radius: 8px; /* Tilføjer bløde kanter */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtil skygge for dybde */
+}
+
+h1 {
+    color: #333; /* Mørkegrå for at gøre teksten mindre hård */
+    font-size: 2.5em; /* Gør hovedoverskriften større og mere iøjnefaldende */
+    margin-bottom: 0.5em; /* Skaber afstand til paragrafen nedenunder */
+}
+
+p {
+    color: #666; /* Lysere grå for kroppens tekst */
+    font-size: 1.2em; /* Lidt større kropstekst for læsbarhed */
+    line-height: 1.6; /* Forbedrer læsbarheden med højere linjeafstand */
 }
