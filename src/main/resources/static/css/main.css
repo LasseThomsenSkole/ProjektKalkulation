@@ -3,8 +3,7 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-    background-color: #f0f0f0;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
 }
 
 .header-content {
@@ -40,20 +39,6 @@ body {
     justify-content: space-between;
 }
 
-/* Centreret boks til velkomstsektion */
-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin: 20px auto;
-    padding: 20px;
-    max-width: 80%;
-    background-color: #ffffff; /* Hvid baggrund */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-}
-
 /* Styling footer with box */
 footer {
     padding: 10px 20px;
@@ -62,12 +47,6 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-/* styling header */
-header {
-    background-color: #f0f0f0;
-    padding: 10px 20px;
 }
 
 /* Navigation menu styling */
@@ -104,12 +83,11 @@ section {
     margin: 20px auto;
     max-width: 800px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     color: #0c0c0c;
-    font-size: 2.5em;
+    font-size: 2.0em;
     margin-bottom: 0.5em;
 }
 
