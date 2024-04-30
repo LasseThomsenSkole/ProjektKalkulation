@@ -27,7 +27,7 @@ Before you begin contributing, please ensure you have a clear understanding of t
 Respect confidentiality.
 Be respectful of your colleagues and other contributors.
 
-###### Community Guidelines
+##### Community Guidelines
 Encourage and support your fellow contributors.
 Provide constructive feedback in reviews.
 Be kind.
