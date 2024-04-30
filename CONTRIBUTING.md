@@ -17,17 +17,17 @@ Before you begin contributing, please ensure you have a clear understanding of t
 - Proficiency in the technologies we use (Java, Spring Boot).
 - An installed local development environment that mirrors our production environment.
 
-#### Setup Your Environment
+### Setup Your Environment
 
 1. Clone the repository to your local machine:
    ```bash
    git clone https://github.com/LasseThomsenSkole/ProjektKalkulation.git
 
-##### Code of Conduct
+### Code of Conduct
 Respect confidentiality.
 Be respectful of your colleagues and other contributors.
 
-##### Community Guidelines
+#### Community Guidelines
 Encourage and support your fellow contributors.
 Provide constructive feedback in reviews.
 Be kind.
