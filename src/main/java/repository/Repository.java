@@ -116,8 +116,9 @@ public class Repository {
 
 
 
-    /**TOTALHOURS SUM TIL PROJECT**/
-    public double getTotalHours(int projectId){
+
+    /**TOTALHOURS SUM TIL PROJECT**/ //så lige lasse har lavet det her i databasen hahaha
+    /*public double getTotalHours(int projectId){
         double totalHours = 0;
         try (Connection connection = DriverManager.getConnection(db_url, username, pwd)){
 
@@ -162,5 +163,5 @@ public class Repository {
             throw new RuntimeException(e);
         }
         return totalHours;
-    }
+    }*/
 }
