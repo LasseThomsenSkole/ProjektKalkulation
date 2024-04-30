@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class Subtask {
     private int id;
-    private String title;
+    private String name;
     private String description;
     private Date deadline;
-    private int totalHours;
+    private double hours;
     public Subtask() {} //thymeleaf
 
     public Date getDeadline() {
@@ -18,20 +18,20 @@ public class Subtask {
         this.deadline = deadline;
     }
 
-    public int getTotalHours() {
-        return totalHours;
+    public double getHours() {
+        return hours;
     }
 
-    public void setTotalHours(int totalHours) {
-        this.totalHours = totalHours;
+    public void setHours(double hours) {
+        this.hours = hours;
     }
 
-    public Subtask(int id, String title, String description, Date deadline, int totalHours) {
+    public Subtask(int id, String name, String description, Date deadline, double hours) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.description = description;
         this.deadline = deadline;
-        this.totalHours = totalHours;
+        this.hours = hours;
     }
 
     public int getId() {
@@ -42,12 +42,12 @@ public class Subtask {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

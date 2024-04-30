@@ -74,7 +74,7 @@ public class Repository {
                 String taskSQL = "SELECT task_id, task_name, task_description, task_hours, task_deadline " +
                         "FROM tasks " +
                         "INNER JOIN subprojects ON tasks.subproject_id = subprojects.subproject_id" +
-                        "WHERE subprojects.parent_project_id = ?;";
+                        "WHERE parent_project_id = ?;"; //gør det noget at where ikke er fed??
 
                 try (PreparedStatement taskStatement = con.prepareStatement(taskSQL)) {
                     taskStatement.setInt(1, projectId);
@@ -83,7 +83,7 @@ public class Repository {
                         int id = taskResult.getInt("task_id");
                         String name = taskResult.getString("task_name");
                         String description = taskResult.getString("task_description");
-                        int hours = taskResult.getInt("task_hours");
+                        double hours = taskResult.getDouble("task_hours");
                         Date deadline = taskResult.getDate("task_deadline");
                         tasks.add(new Task(id, name, description, deadline, hours));
                     }
@@ -121,6 +121,42 @@ public class Repository {
         double totalHours = 0;
         try (Connection connection = DriverManager.getConnection(db_url, username, pwd)){
 
+            //subprojects
+            String subprojectSQL = "SELECT SUM subprojects.subproject_hours AS total_subproject_hours" +
+                    "FROM subprojects" +
+                    "WHERE parent_project_id = ?";
+            try (PreparedStatement subprojectStatement = connection.prepareStatement(subprojectSQL)){
+                subprojectStatement.setDouble(1, projectId);
+                ResultSet subprojectResult = subprojectStatement.executeQuery();
+                if(subprojectResult.next()){
+                    totalHours += subprojectResult.getDouble("total_subproject_hours");
+                }
+            }
+
+            //TODO
+            //tasks
+            String taskSQL = "SELECT SUM tasks.task_hours AS total_task_hours" +
+                    "FROM tasks" +
+                    "JOIN ";
+            try (PreparedStatement taskStatement = connection.prepareStatement(taskSQL)){
+                taskStatement.setDouble(1, projectId);
+                ResultSet taskResult = taskStatement.executeQuery();
+                if(taskResult.next()){
+                    totalHours += taskResult.getDouble("total_task_hours");
+                }
+            }
+
+            //TODO
+            //subtasks
+            String subtaskSQL = "SELECT SUM subtasks-subtask_hours AS total_subtask_hours" +
+                    "FROM subtasks";
+            try (PreparedStatement subtaskStatement = connection.prepareStatement(subtaskSQL)){
+                subtaskStatement.setDouble(1, projectId);
+                ResultSet subtaskResult = subtaskStatement.executeQuery();
+                if(subtaskResult.next()){
+                    totalHours += subtaskResult.getDouble("total_subtask_hours");
+                }
+            }
         }
         catch (SQLException e){
             throw new RuntimeException(e);

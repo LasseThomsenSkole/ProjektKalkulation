@@ -9,11 +9,11 @@ public class Task {
     private String description;
     private List<Subtask> subtasks;
     private Date deadline;
-    private int hours;
+    private double hours;
 
     public Task() {} //thymeleaf
 
-    public Task(int id, String name, String description, List<Subtask> subtasks, Date deadline, int hours) {
+    public Task(int id, String name, String description, List<Subtask> subtasks, Date deadline, double hours) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -22,7 +22,7 @@ public class Task {
         this.hours = hours;
     }
 
-    public Task(int id, String name, String description, Date deadline, int hours) {
+    public Task(int id, String name, String description, Date deadline, double hours) {
         this.id = id;
         this.name = name;
         this.description = description;
