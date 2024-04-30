@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Project {
@@ -9,16 +11,28 @@ public class Project {
     private List<Task> tasks;
     private List<Subproject> subprojects;
     private double totalHours;
+    private Date deadline;
 
     public Project() {} //til thymeleaf
-    public Project(int id, String name, String description, List<Task> tasks, List<Subproject> subprojects, double totalHours) {
+
+    public Project(int id, String name, String description, List<Task> tasks, List<Subproject> subprojects,
+                   double totalHours, Date deadline) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.tasks = tasks;
         this.subprojects = subprojects;
         this.totalHours = totalHours;
+        this.deadline = deadline;
     }
+
+  /*  public Project(int id, String name, String description, double totalHours, Date deadline) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.totalHours = totalHours;
+        this.deadline = deadline;
+    }*/
 
     public int getId() {
         return id;

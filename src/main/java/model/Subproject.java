@@ -10,7 +10,7 @@ public class Subproject {
     private String description;
     private List<Task> tasks;
     private Date deadline;
-    private int totalHours;
+    private double hours;
 
     public Subproject(){} //thymeleaf
 
@@ -20,7 +20,15 @@ public class Subproject {
         this.description = description;
         this.tasks = tasks;
         this.deadline = deadline;
-        this.totalHours = totalHours;
+        this.hours = totalHours;
+    }
+
+    public Subproject(int id, String name, String description, double hours, Date deadline) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.deadline = deadline;
+        this.hours = hours;
     }
 
     public int getId() {
@@ -62,11 +70,11 @@ public class Subproject {
         this.deadline = deadline;
     }
 
-    public int getTotalHours() {
-        return totalHours;
+    public double getHours() {
+        return hours;
     }
 
-    public void setTotalHours(int totalHours) {
-        this.totalHours = totalHours;
+    public void setHours(double hours) {
+        this.hours = hours;
     }
 }
