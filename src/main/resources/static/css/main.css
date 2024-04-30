@@ -12,15 +12,21 @@ header {
     align-items: center;
 }
 
-.logo {
-    height: 70px;
+.logo-container {
+    display: flex;
+    align-items: center; /* Dette sikrer, at logoet og teksten er centreret vertikalt */
+    justify-content: flex-start; /* Starter elementerne fra venstre side */
 }
+
+.logo {
+    height: 40px; /* Fast højde for logoet */
+    margin-right: 10px; /* Tilføjer lidt plads mellem logoet og teksten */
+}
+
 .logo-text {
-    font-size: 2.5em;
+    font-size: 1.8em;
     font-weight: bold;
     color: #333;
-    margin-left: 0.0em;
-    height: 50px;
 }
 
 /* Generel body styling */
