@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS tasks(
     task_description varchar(500) not null,
     task_hours double not null default 0,
     task_deadline date,
-    project_id int not null
+    subproject_id int not null
 );
 CREATE TABLE IF NOT EXISTS subtasks(
     subtask_id int auto_increment primary key,
@@ -35,4 +35,9 @@ CREATE TABLE IF NOT EXISTS subtasks(
     subtask_hours double not null default 0,
     subtask_deadline date,
     parent_task_id int not null
-)
+);
+CREATE TABLE IF NOT EXISTS user_project_relation(
+    id int auto_increment primary key,
+    user_id int not null,
+    project_id int not null
+);
