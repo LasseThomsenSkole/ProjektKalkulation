@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Startside</title>
+    <title>Alpha Manager Dashboard</title>
+    <link rel="icon" href="/logo_alpha.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/main.css" type="text/css">
 </head>
 <body>
+<header>
+    <div>
+        <img src="/logo_alpha.png" alt="Alpha Manager Logo" class="logo">
+        <span class="logo-text">Alpha Manager</span>
+    </div>
+    <nav>
+        <!-- Navigation menu med knapper i vandret layout -->
+        <ul>
+            <li><a th:href="@{/home}" class="nav-button">HJEM</a></li>
+            <li><a th:href="@{/mine-projekter}" class="nav-button">MINE PROJEKTER</a></li>
+            <li><a th:href="@{/teamprojekt}" class="nav-button">ALLE PROJEKTER</a></li>
+            <li><a th:href="@{/opgaveliste}" class="nav-button">MINE OPGAVER</a></li>
+            <li><a th:href="@{/kalender}" class="nav-button">KALENDER</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section>
+    <h1 th:text="'Velkommen ' + ${user} + '!'">Velkommen bruger</h1>
+    <p>Velkommen til Alpha Manager Dashboard, hvor du kan administrere alle dine projekter og opgaver effektivt.
+        Gennemse dine projekter, opdater opgavestatusser og hold øje med dine deadlines via kalenderen. Alt dette på et sted!</p>
+</section>
+
+<footer>
+    <h2>Kontakt Os</h2>
+    <p>Har du spørgsmål eller brug for support? Tøv ikke med at kontakte os!</p>
+    <ul>
+        <li>Email: support@alphamanager.com</li>
+        <li>Telefon: +45 1234 5678</li>
+    </ul>
+    <p>Følg os også på vores sociale medier for de seneste opdateringer og nyheder!</p>
+</footer>
 
 </body>
 </html>

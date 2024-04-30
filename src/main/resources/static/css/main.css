@@ -1,0 +1,93 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 70px;
+}
+.logo-text {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #333;
+    margin-left: 0.0em;
+    height: 50px;
+}
+
+/* Generel body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: space-between;
+}
+
+/* Centreret boks til velkomstsektion */
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 80%;
+    background-color: #ffffff; /* Hvid baggrund */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+/* Styling af footer med boks */
+footer {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+/* Justering og styling af header */
+header {
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigationsmenu styling */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+.nav-button {
+    background-color: transparent;
+    color: #007bff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 2px solid #007bff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-button:hover {
+    background-color: #007bff;
+    color: white;
+}
