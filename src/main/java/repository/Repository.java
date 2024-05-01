@@ -180,7 +180,7 @@ public class Repository {
 
 
 
-    /**SLET PROJECT**/
+    /**SLET PROJECT**/ //todo gør så den sletter det som hører til også
     public void deleteProject(int projectId){
         try {
             String SQL = "DELETE FROM projects" +
@@ -192,7 +192,6 @@ public class Repository {
         catch (SQLException e){
             throw new RuntimeException(e);
         }
-
     }
 
 
@@ -214,7 +213,7 @@ public class Repository {
             throw new RuntimeException(e);
         }
     }
-
+//asohdbasghdvaSghdvabsdgh
 
 
     /**SLET SUBPROJECT**/
