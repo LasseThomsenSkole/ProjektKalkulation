@@ -170,6 +170,23 @@ public class Repository {
 
 
 
+    /**SLET SUBPROJECT**/
+    public void deleteSubproject(int subprojectId){
+        try {
+            String SQL = "DELETE FROM subprojects" +
+                    "WHERE subprojects_id = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, subprojectId);
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+
     /**OPRET TASK**/
     public void createTask(String name, String description, double hours, Date deadline, int subprojectId){
         try {
@@ -190,13 +207,13 @@ public class Repository {
 
 
 
-    /**SLET SUBPROJECT**/
-    public void deleteSubproject(int subprojectId){
+    /**SLET TASK**/
+    public void deleteTask(int taskId){
         try {
-            String SQL = "DELETE FROM subprojects" +
-                    "WHERE subprojects_id = ?;";
+            String SQL = "DELETE FROM tasks" +
+                    "WHERE task_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, subprojectId);
+            preparedStatement.setInt(1, taskId);
             preparedStatement.executeUpdate();
         }
         catch (SQLException e){
@@ -223,6 +240,22 @@ public class Repository {
         catch (SQLException e){
             throw new RuntimeException(e);
         }
+    }
+
+
+    /**SLET SUBTASK**/
+    public void deleteSubtask(int subtaskId){
+        try {
+            String SQL = "DELETE FROM subtasks" +
+                    "WHERE subtask_id = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, subtaskId);
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
     }
 
 
