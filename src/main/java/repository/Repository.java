@@ -1,11 +1,12 @@
 package repository;
 
+import manager.ConnectionManager;
 import model.Project;
 import model.Subproject;
 import model.Task;
 import org.springframework.beans.factory.annotation.Value;
 
-import javax.crypto.spec.PSource;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ public class Repository {
     @Value("${spring.datasource.password}")
     private String pwd;
 
+    Connection connection = ConnectionManager.getConnection(db_url, username, pwd);
+
     public void test(){
         System.out.println(username);
     }
@@ -31,14 +34,13 @@ public class Repository {
         List<Task> tasks = new ArrayList<>();
         List<Subproject> subprojects = new ArrayList<>();
 
-        try (Connection con = DriverManager.getConnection(db_url, username, pwd)) {
-
+        try {
             //Projects
             String projectSQL = "SELECT projects_id, project_name, project_description, total_hours, project_deadline " +
                     "FROM projects " +
                     "WHERE projects_id = ?;";
 
-            try (PreparedStatement projectStatement = con.prepareStatement(projectSQL)) {
+            try (PreparedStatement projectStatement = connection.prepareStatement(projectSQL)) {
                 projectStatement.setInt(1, projectId);
                 ResultSet projectResult = projectStatement.executeQuery();
                 if (projectResult.next()) {
@@ -56,7 +58,7 @@ public class Repository {
                     "FROM subprojects " +
                     "WHERE parent_project_id = ?;";
 
-            try (PreparedStatement subprojectStatement = con.prepareStatement(subprojectSQL)) {
+            try (PreparedStatement subprojectStatement = connection.prepareStatement(subprojectSQL)) {
                 subprojectStatement.setInt(1, projectId);
                 ResultSet subprojectResult = subprojectStatement.executeQuery();
                 while (subprojectResult.next()) {
@@ -76,7 +78,7 @@ public class Repository {
                         "INNER JOIN subprojects ON tasks.subproject_id = subprojects.subproject_id" +
                         "WHERE parent_project_id = ?;"; //gør det noget at where ikke er fed??
 
-                try (PreparedStatement taskStatement = con.prepareStatement(taskSQL)) {
+                try (PreparedStatement taskStatement = connection.prepareStatement(taskSQL)) {
                     taskStatement.setInt(1, projectId);
                     ResultSet taskResult = taskStatement.executeQuery();
                     while (taskResult.next()) {
@@ -98,15 +100,74 @@ public class Repository {
 
 
     /**OPRET PROJECT**/
-    public void createProject(String name, String description, double totalHours, Date deadline) {
-        try (Connection connection = DriverManager.getConnection(db_url, username, pwd)){
+    public void createProject(String name, String description, Date deadline) {
+        try {
             String SQL = "INSERT INTO projects (project_name, project_description, total_hours, deadline)" +
                     "VALUES (?, ?, ?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, description);
-            preparedStatement.setDouble(3, totalHours);
+            preparedStatement.setDate(3, deadline);
+            preparedStatement.executeQuery();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    /**OPRET SUBPROJECT**/
+    public void createSubproject(String name, String description, double hours, Date deadline, int parentProjectId){
+        try {
+            String SQL = "INSERT INTO subprojects (subproject_name, subproject_description, subproject_hours, subproject_deadline, parent_project_id)" +
+                    "VALUES (?, ?, ?, ?, ?);";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, description);
+            preparedStatement.setDouble(3, hours);
             preparedStatement.setDate(4, deadline);
+            preparedStatement.setInt(5, parentProjectId);
+            preparedStatement.executeQuery();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    /**OPRET TASK**/
+    public void createTask(String name, String description, double hours, Date deadline, int subprojectId){
+        try {
+            String SQL = "INSERT INTO tasks (task_name, task_description, task_hours, task_deadline, subproject_id)" +
+                    "VALUES (?, ?, ?, ?, ?);";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, description);
+            preparedStatement.setDouble(3, hours);
+            preparedStatement.setDate(4, deadline);
+            preparedStatement.setInt(5, subprojectId);
+            preparedStatement.executeQuery();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    /**OPRET SUBTASKS**/
+    public void createSubtask(String name, String description, double hours, Date deadline, int parentTaskId){
+        try {
+            String SQL = "INSERT INTO subtasks (subtask_name, subtask_description, subtask_hours, subtask_deadline, parent_task_id)" +
+                    "VALUES (?, ?, ?, ?, ?);";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, description);
+            preparedStatement.setDouble(3, hours);
+            preparedStatement.setDate(4, deadline);
+            preparedStatement.setInt(5, parentTaskId);
             preparedStatement.executeQuery();
         }
         catch (SQLException e){
@@ -117,51 +178,4 @@ public class Repository {
 
 
 
-    /**TOTALHOURS SUM TIL PROJECT**/ //så lige lasse har lavet det her i databasen hahaha
-    /*public double getTotalHours(int projectId){
-        double totalHours = 0;
-        try (Connection connection = DriverManager.getConnection(db_url, username, pwd)){
-
-            //subprojects
-            String subprojectSQL = "SELECT SUM subprojects.subproject_hours AS total_subproject_hours" +
-                    "FROM subprojects" +
-                    "WHERE parent_project_id = ?";
-            try (PreparedStatement subprojectStatement = connection.prepareStatement(subprojectSQL)){
-                subprojectStatement.setDouble(1, projectId);
-                ResultSet subprojectResult = subprojectStatement.executeQuery();
-                if(subprojectResult.next()){
-                    totalHours += subprojectResult.getDouble("total_subproject_hours");
-                }
-            }
-
-            //TODO
-            //tasks
-            String taskSQL = "SELECT SUM tasks.task_hours AS total_task_hours" +
-                    "FROM tasks" +
-                    "JOIN ";
-            try (PreparedStatement taskStatement = connection.prepareStatement(taskSQL)){
-                taskStatement.setDouble(1, projectId);
-                ResultSet taskResult = taskStatement.executeQuery();
-                if(taskResult.next()){
-                    totalHours += taskResult.getDouble("total_task_hours");
-                }
-            }
-
-            //TODO
-            //subtasks
-            String subtaskSQL = "SELECT SUM subtasks-subtask_hours AS total_subtask_hours" +
-                    "FROM subtasks";
-            try (PreparedStatement subtaskStatement = connection.prepareStatement(subtaskSQL)){
-                subtaskStatement.setDouble(1, projectId);
-                ResultSet subtaskResult = subtaskStatement.executeQuery();
-                if(subtaskResult.next()){
-                    totalHours += subtaskResult.getDouble("total_subtask_hours");
-                }
-            }
-        }
-        catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-        return totalHours;
-    }*/
 }

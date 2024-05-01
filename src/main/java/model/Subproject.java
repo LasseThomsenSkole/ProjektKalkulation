@@ -14,13 +14,13 @@ public class Subproject {
 
     public Subproject(){} //thymeleaf
 
-    public Subproject(int id, String name, String description, List<Task> tasks, Date deadline, int totalHours) {
+    public Subproject(int id, String name, String description, List<Task> tasks, Date deadline, int hours) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.tasks = tasks;
         this.deadline = deadline;
-        this.hours = totalHours;
+        this.hours = hours;
     }
 
     public Subproject(int id, String name, String description, double hours, Date deadline) {
