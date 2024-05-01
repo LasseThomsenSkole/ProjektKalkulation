@@ -3,6 +3,7 @@ package repository;
 import manager.ConnectionManager;
 import model.Project;
 import model.Subproject;
+import model.Subtask;
 import model.Task;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -26,21 +27,19 @@ public class Repository {
 
 
     /**HENT PROJECT**/
-    //verdens længste metode :)))) den skal måske deles op
     public Project getProject(int projectId) {
         Project project = null;
         List<Task> tasks = new ArrayList<>();
         List<Subproject> subprojects = new ArrayList<>();
 
         try {
-            //Projects
-            String projectSQL = "SELECT projects_id, project_name, project_description, total_hours, project_deadline " +
+            String SQL = "SELECT projects_id, project_name, project_description, total_hours, project_deadline " +
                     "FROM projects " +
                     "WHERE projects_id = ?;";
 
-            try (PreparedStatement projectStatement = connection.prepareStatement(projectSQL)) {
-                projectStatement.setInt(1, projectId);
-                ResultSet projectResult = projectStatement.executeQuery();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+                preparedStatement.setInt(1, projectId);
+                ResultSet projectResult = preparedStatement.executeQuery();
                 if (projectResult.next()) {
                     int id = projectResult.getInt("projects_id");
                     String name = projectResult.getString("project_name");
@@ -50,15 +49,24 @@ public class Repository {
                     project = new Project(id, name, description, tasks, subprojects, totalHours, deadline);
                 }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return project;
+    }
 
-            //Subprojects
-            String subprojectSQL = "SELECT subproject_id, subproject_name, subproject_description, subproject_hours, subproject_deadline " +
+
+
+    /**HENT SUBPROJECT**/
+    public List<Subproject> getSubprojects(int subprojectId){
+        List<Subproject> subprojects = new ArrayList<>();
+        try {
+            String SQL = "SELECT subproject_id, subproject_name, subproject_description, subproject_hours, subproject_deadline " +
                     "FROM subprojects " +
                     "WHERE parent_project_id = ?;";
-
-            try (PreparedStatement subprojectStatement = connection.prepareStatement(subprojectSQL)) {
-                subprojectStatement.setInt(1, projectId);
-                ResultSet subprojectResult = subprojectStatement.executeQuery();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+                preparedStatement.setInt(1, subprojectId);
+                ResultSet subprojectResult = preparedStatement.executeQuery();
                 while (subprojectResult.next()) {
                     int id = subprojectResult.getInt("subproject_id");
                     String name = subprojectResult.getString("subproject_name");
@@ -68,32 +76,71 @@ public class Repository {
                     subprojects.add(new Subproject(id, name, description, hours, deadline));
                 }
             }
-
-            //Tasks
-            if (project != null) {
-                String taskSQL = "SELECT task_id, task_name, task_description, task_hours, task_deadline " +
-                        "FROM tasks " +
-                        "INNER JOIN subprojects ON tasks.subproject_id = subprojects.subproject_id" +
-                        "WHERE parent_project_id = ?;"; //gør det noget at where ikke er fed??
-
-                try (PreparedStatement taskStatement = connection.prepareStatement(taskSQL)) {
-                    taskStatement.setInt(1, projectId);
-                    ResultSet taskResult = taskStatement.executeQuery();
-                    while (taskResult.next()) {
-                        int id = taskResult.getInt("task_id");
-                        String name = taskResult.getString("task_name");
-                        String description = taskResult.getString("task_description");
-                        double hours = taskResult.getDouble("task_hours");
-                        Date deadline = taskResult.getDate("task_deadline");
-                        tasks.add(new Task(id, name, description, deadline, hours));
-                    }
-                }
-            }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return project;
+        return subprojects;
     }
+
+
+
+    /**HENT TASK**/
+    public List<Task> getTasks(int taskId){
+        List<Task> tasks = new ArrayList<>();
+        try {
+            String taskSQL = "SELECT task_id, task_name, task_description, task_hours, task_deadline " +
+                    "FROM tasks " +
+                    "WHERE subproject_id = ?;";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(taskSQL)) {
+                preparedStatement.setInt(1, taskId);
+                ResultSet taskResult = preparedStatement.executeQuery();
+                while (taskResult.next()) {
+                    int id = taskResult.getInt("task_id");
+                    String name = taskResult.getString("task_name");
+                    String description = taskResult.getString("task_description");
+                    double hours = taskResult.getDouble("task_hours");
+                    Date deadline = taskResult.getDate("task_deadline");
+                    tasks.add(new Task(id, name, description, deadline, hours));
+                }
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return tasks;
+    }
+
+
+
+    /**HENT SUBTASK**/
+    public List<Subtask> getSubtasks(int subtaskId){
+        List<Subtask> subtasks = new ArrayList<>();
+        try {
+            String taskSQL = "SELECT subtask_id, subtask_name, subtask_description, subtask_hours, subtask_deadline " +
+                    "FROM subtasks " +
+                    "WHERE parent_task_id = ?;";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(taskSQL)) {
+                preparedStatement.setInt(1, subtaskId);
+                ResultSet taskResult = preparedStatement.executeQuery();
+                while (taskResult.next()) {
+                    int id = taskResult.getInt("subtask_id");
+                    String name = taskResult.getString("subtask_name");
+                    String description = taskResult.getString("subtask_description");
+                    double hours = taskResult.getDouble("subtask_hours");
+                    Date deadline = taskResult.getDate("subtask_deadline");
+                    subtasks.add(new Subtask(id, name, description, deadline, hours));
+                }
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return subtasks;
+    }
+
 
 
 
