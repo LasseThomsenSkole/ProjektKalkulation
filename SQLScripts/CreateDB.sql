@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users(
     password varchar(50) -- hvis den er hashed bliver den hashed med 12 chars
     );
 CREATE TABLE IF NOT EXISTS projects(
-    projects_id          int auto_increment primary key,
+    project_id          int auto_increment primary key,
     project_name        varchar(50) not null ,
     project_description varchar(500) not null ,
     total_hours double not null default 0,
