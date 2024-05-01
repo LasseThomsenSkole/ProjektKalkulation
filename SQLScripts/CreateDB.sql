@@ -57,7 +57,7 @@ BEGIN
     -- Update the total_hours in the projects table
     UPDATE projects
     SET total_hours = total_subproject_hours
-    WHERE projects_id = NEW.parent_project_id;
+    WHERE project_id = NEW.parent_project_id;
 END;
 //
 
@@ -75,7 +75,7 @@ BEGIN
     -- Update the total_hours in the projects table
     UPDATE projects
     SET total_hours = total_subproject_hours
-    WHERE projects_id = NEW.parent_project_id;
+    WHERE project_id = NEW.parent_project_id;
 END;
 
 -- Create a trigger to update subproject_hours in subprojects table when task hours change
