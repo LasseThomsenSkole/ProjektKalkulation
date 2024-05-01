@@ -6,14 +6,15 @@ import model.Subproject;
 import model.Subtask;
 import model.Task;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 
 import javax.crypto.spec.PSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@org.springframework.stereotype.Repository
-public class Repository {
+@Repository
+public class ProjectRepository {
     @Value("${spring.datasource.url}")
     private String db_url;
     @Value("${spring.application.name}")
@@ -23,6 +24,32 @@ public class Repository {
     private Connection connection = ConnectionManager.getConnection(db_url, username, pwd);
     public void test(){
         System.out.println(username);
+    }
+
+    /**GET ALL PROJECTS**/
+    public List<Project> findAllProjects() {
+        List<Project> projects = new ArrayList<>();
+        String query = "SELECT projects_id, project_name, project_description, total_hours, project_deadline FROM projects;";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet rs = preparedStatement.executeQuery()) {
+            while (rs.next()) {
+                projects.add(mapProject(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return projects;
+    }
+
+    private Project mapProject(ResultSet rs) throws SQLException {
+        int id = rs.getInt("projects_id");
+        String name = rs.getString("project_name");
+        String description = rs.getString("project_description");
+        double totalHours = rs.getDouble("total_hours");
+        Date deadline = rs.getDate("project_deadline");
+        List<Task> tasks = getTasks(id);
+        List<Subproject> subprojects = getSubprojects(id);
+        return new Project(id, name, description, tasks, subprojects, totalHours, deadline);
     }
 
 
