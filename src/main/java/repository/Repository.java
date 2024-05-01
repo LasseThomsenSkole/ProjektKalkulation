@@ -115,6 +115,41 @@ public class Repository {
 
 
 
+    /**EDIT PROJECT**/
+    public void editProject(int projectId,Project updatedProject){
+        try {
+            String SQL = "UPDATE projects " + "SET project_name = ?, project_description = ?, project_deadline = ? " +
+                    "WHERE project_id = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(4,projectId);
+            preparedStatement.setString(1, updatedProject.getName());
+            preparedStatement.setString(2, updatedProject.getDescription());
+            preparedStatement.setDate(3, updatedProject.getDeadline());
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    /**SLET PROJECT**/
+    public void deleteProject(int projectId){
+        try {
+            String SQL = "DELETE FROM projects" +
+                    "WHERE projects_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, projectId);
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+
     /**OPRET SUBPROJECT**/
     public void createSubproject(String name, String description, double hours, Date deadline, int parentProjectId){
         try {
@@ -133,20 +168,6 @@ public class Repository {
         }
     }
 
-    public void editProject(int projectId,Project updatedProject){
-        try {
-            String SQL = "UPDATE projects " + "SET project_name = ?, project_description = ?, project_deadline = ? " +
-                    "WHERE project_id = ?;";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(4,projectId);
-            preparedStatement.setString(1, updatedProject.getName());
-            preparedStatement.setString(2, updatedProject.getDescription());
-            preparedStatement.setDate(3, updatedProject.getDeadline());
-            preparedStatement.executeUpdate();
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
 
 
     /**OPRET TASK**/
@@ -165,6 +186,23 @@ public class Repository {
         catch (SQLException e){
             throw new RuntimeException(e);
         }
+    }
+
+
+
+    /**SLET SUBPROJECT**/
+    public void deleteSubproject(int subprojectId){
+        try {
+            String SQL = "DELETE FROM subprojects" +
+                    "WHERE subprojects_id = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, subprojectId);
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
     }
 
 
