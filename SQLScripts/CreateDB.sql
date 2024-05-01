@@ -3,7 +3,7 @@ USE AlphaManagement;
 CREATE TABLE IF NOT EXISTS users(
     user_id int auto_increment primary key,
     user_name varchar(50),
-    password varchar(12) -- hvis den er hashed bliver den hashed med 12 chars
+    password varchar(50) -- hvis den er hashed bliver den hashed med 12 chars
     );
 CREATE TABLE IF NOT EXISTS projects(
     projects_id          int auto_increment primary key,
