@@ -81,4 +81,11 @@ public class Project {
         this.totalHours = totalHours;
     }
 
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
 }

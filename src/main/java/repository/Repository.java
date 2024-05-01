@@ -6,7 +6,7 @@ import model.Subproject;
 import model.Task;
 import org.springframework.beans.factory.annotation.Value;
 
-
+import javax.crypto.spec.PSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +19,7 @@ public class Repository {
     private String username;
     @Value("${spring.datasource.password}")
     private String pwd;
-
-    Connection connection = ConnectionManager.getConnection(db_url, username, pwd);
-
+    private Connection connection = ConnectionManager.getConnection(db_url, username, pwd);
     public void test(){
         System.out.println(username);
     }
@@ -135,6 +133,20 @@ public class Repository {
         }
     }
 
+    public void editProject(int projectId,Project updatedProject){
+        try {
+            String SQL = "UPDATE projects " + "SET project_name = ?, project_description = ?, project_deadline = ? " +
+                    "WHERE project_id = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(4,projectId);
+            preparedStatement.setString(1, updatedProject.getName());
+            preparedStatement.setString(2, updatedProject.getDescription());
+            preparedStatement.setDate(3, updatedProject.getDeadline());
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 
 
     /**OPRET TASK**/
