@@ -234,6 +234,29 @@ public class Repository {
 
 
 
+    /**DELETE CHECK SUBPROJECT**/
+    public boolean isSubprojectDeletedFromProjects(int subprojectId){
+        try {
+            String SQL = "SELECT count(*) AS count" +
+                    "FROM subprojects" +
+                    "LEFT JOIN projects ON subprojects.parent_project_id = projects.project_id" +
+                    "WHERE subprojects.subproject_id = ? AND projects.project_id = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, subprojectId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                int count = resultSet.getInt("count");
+                return count == 0; // return true hvis det er ikke er noget
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
+
+
     /**OPRET TASK**/
     public void createTask(String name, String description, double hours, Date deadline, int subprojectId){
         try {
