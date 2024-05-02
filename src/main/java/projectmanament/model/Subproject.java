@@ -1,28 +1,28 @@
-package model;
+package projectmanament.model;
 
 import java.util.Date;
 import java.util.List;
 
-public class Task {
+public class Subproject {
     private int id;
     private String name;
     private String description;
-    private List<Subtask> subtasks;
+    private List<Task> tasks;
     private Date deadline;
     private double hours;
 
-    public Task() {} //thymeleaf
+    public Subproject(){} //thymeleaf
 
-    public Task(int id, String name, String description, List<Subtask> subtasks, Date deadline, double hours) {
+    public Subproject(int id, String name, String description, List<Task> tasks, Date deadline, int hours) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.subtasks = subtasks;
+        this.tasks = tasks;
         this.deadline = deadline;
         this.hours = hours;
     }
 
-    public Task(int id, String name, String description, Date deadline, double hours) {
+    public Subproject(int id, String name, String description, double hours, Date deadline) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -54,11 +54,26 @@ public class Task {
         this.description = description;
     }
 
-    public List<Subtask> getSubtasks() {
-        return subtasks;
+    public List<Task> getTasks() {
+        return tasks;
     }
 
-    public void setSubtasks(List<Subtask> subtasks) {
-        this.subtasks = subtasks;
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
+    public double getHours() {
+        return hours;
+    }
+
+    public void setHours(double hours) {
+        this.hours = hours;
     }
 }

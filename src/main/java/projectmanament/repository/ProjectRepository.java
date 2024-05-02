@@ -1,14 +1,13 @@
-package repository;
+package projectmanament.repository;
 
-import manager.ConnectionManager;
-import model.Project;
-import model.Subproject;
-import model.Subtask;
-import model.Task;
+import projectmanament.manager.ConnectionManager;
+import projectmanament.model.Project;
+import projectmanament.model.Subproject;
+import projectmanament.model.Subtask;
+import projectmanament.model.Task;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import javax.crypto.spec.PSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
 public class ProjectRepository {
     @Value("${spring.datasource.url}")
     private String db_url;
-    @Value("${spring.application.name}")
+    @Value("${spring.datasource.username}")
     private String username;
     @Value("${spring.datasource.password}")
     private String pwd;

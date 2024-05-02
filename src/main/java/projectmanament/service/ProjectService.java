@@ -1,9 +1,9 @@
-package service;
+package projectmanament.service;
 
 
-import model.Project;
+import projectmanament.model.Project;
 import org.springframework.stereotype.Service;
-import repository.ProjectRepository;
+import projectmanament.repository.ProjectRepository;
 
 import java.util.List;
 

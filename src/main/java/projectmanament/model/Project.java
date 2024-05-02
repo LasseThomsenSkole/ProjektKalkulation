@@ -1,7 +1,6 @@
-package model;
+package projectmanament.model;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class Project {
