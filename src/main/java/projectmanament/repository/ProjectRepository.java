@@ -15,11 +15,11 @@ import java.util.List;
 @Repository
 public class ProjectRepository {
     @Value("${spring.datasource.url}")
-    private String db_url;
+    private String db_url = "jdbc:mysql://localhost:3306/AlphaManagement";
     @Value("${spring.datasource.username}")
-    private String username;
+    private String username = "root";
     @Value("${spring.datasource.password}")
-    private String pwd;
+    private String pwd = "root";
     private Connection connection = ConnectionManager.getConnection(db_url, username, pwd);
     public void test(){
         System.out.println(username);
