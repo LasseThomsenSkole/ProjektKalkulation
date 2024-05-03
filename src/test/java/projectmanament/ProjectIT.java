@@ -1,4 +1,4 @@
-package com.example.projektkalkulation;
+package projectmanament;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringJUnitConfig
 public class ProjectIT {
 
-    //@Autowired
+    @Autowired
     private ProjectRepository repository;
 
     @Value("jdbc:mysql://localhost:3306/AlphaManagement")
