@@ -36,7 +36,7 @@ public class ProjectRepository {
     /**GET ALL PROJECTS**/
     public List<Project> findAllProjects() {
         List<Project> projects = new ArrayList<>();
-        String query = "SELECT projects_id, project_name, project_description, total_hours, project_deadline FROM projects;";
+        String query = "SELECT project_id, project_name, project_description, total_hours, project_deadline FROM projects;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery()) {
             while (rs.next()) {
@@ -49,7 +49,7 @@ public class ProjectRepository {
     }
 
     private Project mapProject(ResultSet rs) throws SQLException {
-        int id = rs.getInt("projects_id");
+        int id = rs.getInt("project_id");
         String name = rs.getString("project_name");
         String description = rs.getString("project_description");
         double totalHours = rs.getDouble("total_hours");
@@ -67,15 +67,15 @@ public class ProjectRepository {
         List<Subproject> subprojects = new ArrayList<>();
 
         try {
-            String SQL = "SELECT projects_id, project_name, project_description, total_hours, project_deadline " +
+            String SQL = "SELECT project_id, project_name, project_description, total_hours, project_deadline " +
                     "FROM projects " +
-                    "WHERE projects_id = ?;";
+                    "WHERE project_id = ?;";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
                 preparedStatement.setInt(1, projectId);
                 ResultSet projectResult = preparedStatement.executeQuery();
                 if (projectResult.next()) {
-                    int id = projectResult.getInt("projects_id");
+                    int id = projectResult.getInt("project_id");
                     String name = projectResult.getString("project_name");
                     String description = projectResult.getString("project_description");
                     double totalHours = projectResult.getDouble("total_hours");
@@ -218,7 +218,7 @@ public class ProjectRepository {
     public void deleteProject(int projectId){
         try {
             String SQL = "DELETE FROM projects" +
-                    "WHERE projects_id = ?";
+                    "WHERE project_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, projectId);
             preparedStatement.executeUpdate();
