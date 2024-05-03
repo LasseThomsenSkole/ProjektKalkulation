@@ -1,5 +1,6 @@
 package projectmanament.repository;
 
+import jakarta.annotation.PostConstruct;
 import projectmanament.manager.ConnectionManager;
 import projectmanament.model.Project;
 import projectmanament.model.Subproject;
@@ -15,12 +16,19 @@ import java.util.List;
 @Repository
 public class ProjectRepository {
     @Value("${spring.datasource.url}")
-    private String db_url = "jdbc:mysql://localhost:3306/AlphaManagement";
+    private String db_url;
+
     @Value("${spring.datasource.username}")
-    private String username = "root";
+    private String username;
+
     @Value("${spring.datasource.password}")
-    private String pwd = "root";
-    private Connection connection = ConnectionManager.getConnection(db_url, username, pwd);
+    private String pwd;
+    private Connection connection;
+
+    @PostConstruct
+    public void init() {
+        connection = ConnectionManager.getConnection(db_url, username, pwd);
+    }
     public void test(){
         System.out.println(username);
     }

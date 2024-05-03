@@ -5,39 +5,33 @@
     <link rel="icon" href="/img/logo_alpha.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/main.css" type="text/css">
 </head>
-<body>
 <div th:insert="~{fragments/header :: header}"></div>
 
-<section>
-    <h1>Projekter</h1>
-    <div>
-        <table>
-            <thead>
-            <tr>
-                <th>Projektnavn</th>
-                <th>Beskrivelse</th>
-                <th>Total Timer</th>
-                <th>Deadline</th>
-                <th>Handlinger</th>
-            </tr>
-            </thead>
-            <tbody th:each="project : ${projects}">
-            <tr>
-                <td th:text="${project.name}">Projektnavn</td>
-                <td th:text="${project.description}">Beskrivelse</td>
-                <td th:text="${project.totalHours}">Total Timer</td>
-                <td th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}">Deadline</td>
-                <td>
-                    <a th:href="@{|/editProject/${project.id}|}">Rediger</a>
-                    <a th:href="@{|/deleteProject/${project.id}|}" onclick="return confirm('Er du sikker på at du vil slette dette projekt?');">Slet</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</section>
+<title>Projekter Oversigt</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<div class="container mt-5">
+    <h2>Projekter Oversigt</h2>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Navn</th>
+            <th>Beskrivelse</th>
+            <th>Total Timer</th>
+            <th>Deadline</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="project : ${projects}">
+            <td th:text="${project.id}"></td>
+            <td th:text="${project.name}"></td>
+            <td th:text="${project.description}"></td>
+            <td th:text="${project.totalHours}"></td>
+            <td th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <div th:insert="~{fragments/footer :: footer}"></div>
-
-</body>
 </html>

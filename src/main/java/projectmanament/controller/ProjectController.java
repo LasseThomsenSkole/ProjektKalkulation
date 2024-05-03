@@ -1,6 +1,5 @@
 package projectmanament.controller;
 
-import org.springframework.beans.factory.annotation.Value;
 import projectmanament.model.Project;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
