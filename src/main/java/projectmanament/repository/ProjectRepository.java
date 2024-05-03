@@ -15,6 +15,7 @@ import java.util.List;
 
 @Repository
 public class ProjectRepository {
+
     @Value("${spring.datasource.url}")
     private String db_url;
 
@@ -199,7 +200,8 @@ public class ProjectRepository {
     /**EDIT PROJECT**/
     public void editProject(int projectId,Project updatedProject){
         try {
-            String SQL = "UPDATE projects " + "SET project_name = ?, project_description = ?, project_deadline = ? " +
+            String SQL = "UPDATE projects " +
+                    "SET project_name = ?, project_description = ?, project_deadline = ? " +
                     "WHERE project_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(4,projectId);
@@ -214,10 +216,34 @@ public class ProjectRepository {
 
 
 
-    /**SLET PROJECT**/ //todo gør så den sletter det som hører til også
+    /**SLET PROJECT**/
     public void deleteProject(int projectId){
         try {
-            String SQL = "DELETE FROM projects" +
+            //sletter subprojects fra projects
+            String deleteSubprojects = "DELETE FROM subprojects " +
+                    "WHERE parent_project_id = ?";
+            PreparedStatement deleteSubprojectsStatement = connection.prepareStatement(deleteSubprojects);
+            deleteSubprojectsStatement.setInt(1, projectId);
+            deleteSubprojectsStatement.executeUpdate();
+
+            //sletter tasks fra subprojects
+            String deleteTasks = "DELETE FROM tasks " +
+                    "WHERE subproject_id " +
+                    "IN (SELECT subproject_id FROM subprojects WHERE parent_project_id = ?)";
+            PreparedStatement deleteTasksStatement = connection.prepareStatement(deleteTasks);
+            deleteTasksStatement.setInt(1, projectId);
+            deleteTasksStatement.executeUpdate();
+
+            //sletter subtasks fra tasks
+            String deleteSubtasks = "DELETE FROM subtasks " +
+                    "WHERE parent_task_id " +
+                    "IN (SELECT task_id FROM tasks WHERE subproject_id IN (SELECT subproject_id FROM subprojects WHERE parent_project_id = ?))";
+            PreparedStatement deleteSubtasksStatement = connection.prepareStatement(deleteSubtasks);
+            deleteSubtasksStatement.setInt(1, projectId);
+            deleteSubtasksStatement.executeUpdate();
+
+            //sletter selve projectet
+            String SQL = "DELETE FROM projects " +
                     "WHERE project_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, projectId);
@@ -253,7 +279,7 @@ public class ProjectRepository {
     /**SLET SUBPROJECT**/
     public void deleteSubproject(int subprojectId){
         try {
-            String SQL = "DELETE FROM subprojects" +
+            String SQL = "DELETE FROM subprojects " +
                     "WHERE subprojects_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, subprojectId);
@@ -313,7 +339,7 @@ public class ProjectRepository {
     /**SLET TASK**/
     public void deleteTask(int taskId){
         try {
-            String SQL = "DELETE FROM tasks" +
+            String SQL = "DELETE FROM tasks " +
                     "WHERE task_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, taskId);
@@ -349,7 +375,7 @@ public class ProjectRepository {
     /**SLET SUBTASK**/
     public void deleteSubtask(int subtaskId){
         try {
-            String SQL = "DELETE FROM subtasks" +
+            String SQL = "DELETE FROM subtasks " +
                     "WHERE subtask_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, subtaskId);
