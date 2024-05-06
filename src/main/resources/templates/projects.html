@@ -19,6 +19,7 @@
             <th>Beskrivelse</th>
             <th>Total Timer</th>
             <th>Deadline</th>
+            <th>Status</th>
         </tr>
         </thead>
         <tbody>
@@ -28,6 +29,7 @@
             <td th:text="${project.description}"></td>
             <td th:text="${project.totalHours}"></td>
             <td th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></td>
+            <td th:text="${project.status.displayName}"></td>
         </tr>
         </tbody>
     </table>

@@ -36,7 +36,7 @@ public class ProjectRepository {
     /**GET ALL PROJECTS**/
     public List<Project> findAllProjects() {
         List<Project> projects = new ArrayList<>();
-        String query = "SELECT project_id, project_name, project_description, total_hours, project_deadline, status FROM projects;";
+        String query = "SELECT project_id, project_name, project_description, total_hours, project_deadline, project_status FROM projects;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery()) {
             while (rs.next()) {
@@ -54,7 +54,7 @@ public class ProjectRepository {
         String description = rs.getString("project_description");
         double totalHours = rs.getDouble("total_hours");
         Date deadline = rs.getDate("project_deadline");
-        Status status = Status.valueOf(rs.getString("status")); // Assuming you have added a 'status' column to your projects table
+        Status status = Status.valueOf(rs.getString("project_status")); // Assuming you have added a 'status' column to your projects table
 
         List<Task> tasks = getTasks(id);
         List<Subproject> subprojects = getSubprojects(id);
@@ -68,7 +68,7 @@ public class ProjectRepository {
         Project project = null;
 
         try {
-            String SQL = "SELECT project_id, project_name, project_description, total_hours, project_deadline, status " +
+            String SQL = "SELECT project_id, project_name, project_description, total_hours, project_deadline, project_status " +
                     "FROM projects WHERE project_id = ?;";
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
                 preparedStatement.setInt(1, projectId);
@@ -179,6 +179,20 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
         return subtasks;
+    }
+
+    public List<Project> findArchivedProjects() {
+        List<Project> archivedProjects = new ArrayList<>();
+        String query = "SELECT project_id, project_name, project_description, total_hours, project_deadline, project_status FROM projects WHERE project_status = 'ARCHIVED';";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet rs = preparedStatement.executeQuery()) {
+            while (rs.next()) {
+                archivedProjects.add(mapProject(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding archived projects", e);
+        }
+        return archivedProjects;
     }
 
 
@@ -447,7 +461,7 @@ public class ProjectRepository {
 
     public List<Project> findAllProjectsByStatus(Status status) {
         List<Project> projects = new ArrayList<>();
-        String query = "SELECT project_id, project_name, project_description, total_hours, project_deadline, status FROM projects WHERE status = ?;";
+        String query = "SELECT project_id, project_name, project_description, total_hours, project_deadline, project_status FROM projects WHERE project_status = ?;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, status.toString());
             try (ResultSet rs = preparedStatement.executeQuery()) {

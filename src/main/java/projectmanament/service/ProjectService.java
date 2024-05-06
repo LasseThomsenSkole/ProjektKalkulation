@@ -31,5 +31,9 @@ public class ProjectService {
         return projectRepository.findAllProjectsByStatus(status);
     }
 
+    public List<Project> findArchivedProjects() {
+        return projectRepository.findArchivedProjects();
+    }
+
 
 }

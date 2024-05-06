@@ -63,4 +63,11 @@ public class ProjectController {
         model.addAttribute("projects", projects);
         return "projects"; // View name
     }
+
+    @GetMapping("/archivedprojects")
+    public String showArchivedProjects(Model model) {
+        List<Project> archivedProjects = projectService.findArchivedProjects();
+        model.addAttribute("archivedProjects", archivedProjects);
+        return "archived-projects";
+    }
 }
