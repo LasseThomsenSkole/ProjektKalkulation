@@ -359,6 +359,21 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
     }
+    /** EDIT TASK **/
+    public void editTask(int taskId, Task edittedTask){
+        try{
+            String SQL = "UPDATE tasks " +
+                    "SET task_name = ?, task_description = ?, task_deadline = ? " +
+                    "WHERE task_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(4, taskId);
+            preparedStatement.setString(1, edittedTask.getName());
+            preparedStatement.setString(2,edittedTask.getDescription());
+            preparedStatement.setDate(3, new Date(edittedTask.getDeadline().getTime())); //java date => SQL date
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 
 
 
