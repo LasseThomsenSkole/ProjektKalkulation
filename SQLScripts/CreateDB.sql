@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS projects(
     project_description varchar(500) not null ,
     total_hours double not null default 0,
     project_deadline    date,
-    project_status enum('DONE', 'IN_PROGESS','TODO','ARCHIVED')
+    project_status enum('DONE', 'IN_PROGRESS','TODO','ARCHIVED', 'NOT_STARTED') not null default 'NOT_STARTED'
     );
 CREATE TABLE IF NOT EXISTS subprojects(
     subproject_id int auto_increment primary key,
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS subprojects(
     subproject_description varchar(500) not null,
     subproject_hours double not null default 0,
     subproject_deadline date,
-    subproject_status enum('DONE', 'IN_PROGESS','TODO','ARCHIVED'),
+    subproject_status enum('DONE', 'IN_PROGRESS','TODO','ARCHIVED','NOT_STARTED') not null default 'NOT_STARTED',
     parent_project_id int not null
     );
 CREATE TABLE IF NOT EXISTS tasks(
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS tasks(
     task_description varchar(500) not null,
     task_hours double not null default 0,
     task_deadline date,
-    task_status enum('DONE', 'IN_PROGESS','TODO','ARCHIVED'),
+    task_status enum('DONE', 'IN_PROGRESS','TODO','ARCHIVED','NOT_STARTED') not null default 'NOT_STARTED',
     subproject_id int not null
     );
 CREATE TABLE IF NOT EXISTS subtasks(
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS subtasks(
     subtask_description varchar(500) not null,
     subtask_hours double not null default 0,
     subtask_deadline date,
-    subtask_status enum('DONE', 'IN_PROGESS','TODO','ARCHIVED'),
+    subtask_status enum('DONE', 'IN_PROGRESS','TODO','ARCHIVED', 'NOT_STARTED') not null default 'NOT_STARTED',
     parent_task_id int not null
     );
 CREATE TABLE IF NOT EXISTS user_project_relation(
