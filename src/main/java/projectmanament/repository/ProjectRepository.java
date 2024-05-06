@@ -182,13 +182,13 @@ public class ProjectRepository {
     /**OPRET PROJECT**/
     public void createProject(String name, String description, Date deadline) {
         try {
-            String SQL = "INSERT INTO projects (project_name, project_description, total_hours, deadline)" +
-                    "VALUES (?, ?, ?, ?);";
+            String SQL = "INSERT INTO projects (project_name, project_description, " +
+                    "total_hours, project_deadline) VALUES (?, ?, 0, ?);"; // sets total hours to zero
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, description);
             preparedStatement.setDate(3, deadline);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
         }
         catch (SQLException e){
             throw new RuntimeException(e);
