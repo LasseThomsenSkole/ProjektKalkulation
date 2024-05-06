@@ -2,11 +2,11 @@ USE
 AlphaManagement;
 
 -- Inserting test data into the 'users' table
-INSERT INTO users (user_name, password)
-VALUES ('test', 'test'),
-       ('john_doe', 'password123'),
-       ('jane_smith', 'letmein'),
-       ('mike_jones', 'securepwd');
+INSERT INTO users ( is_admin, user_name, password)
+VALUES (true, 'admin', 'admin'),
+       (false, 'john_doe', 'password123'),
+       (false, 'jane_smith', 'letmein'),
+       (false, 'mike_jones', 'securepwd');
 
 -- Inserting test data into the 'projects' table
 INSERT INTO projects (project_name, project_description, project_deadline)

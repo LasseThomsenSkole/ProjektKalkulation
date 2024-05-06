@@ -2,6 +2,7 @@ CREATE SCHEMA IF NOT EXISTS AlphaManagement;
 USE AlphaManagement;
 CREATE TABLE IF NOT EXISTS users(
     user_id int auto_increment primary key,
+    is_admin BOOL not null default false,
     user_name varchar(50),
     password varchar(50) -- hvis den er hashed bliver den hashed med 12 chars
     );
