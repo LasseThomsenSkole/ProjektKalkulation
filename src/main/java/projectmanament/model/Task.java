@@ -61,4 +61,20 @@ public class Task {
     public void setSubtasks(List<Subtask> subtasks) {
         this.subtasks = subtasks;
     }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public double getHours() {
+        return hours;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setHours(double hours) {
+        this.hours = hours;
+    }
 }
