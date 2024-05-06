@@ -482,7 +482,17 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
     }
-    /** change status
+    /** change status for task **/
+    public void changeTaskStatus(int taskID, Status newStatus){
+        try{
+            String SQL = "UPDATE tasks SET task_status = ? WHERE task_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik a enums så vi skal bruge .name()
+            preparedStatement.setInt(2, taskID);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 
