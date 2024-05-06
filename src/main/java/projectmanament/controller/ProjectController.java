@@ -1,13 +1,10 @@
 package projectmanament.controller;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import projectmanament.model.Project;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import projectmanament.service.ProjectService;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 
 import java.sql.Date;
@@ -45,5 +42,12 @@ public class ProjectController {
     public String createProject(@RequestParam String name, @RequestParam String description, @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline, Model model) {
         projectService.createProject(name, description, Date.valueOf(deadline));
         return "redirect:/teamprojects";
+    }
+
+    @GetMapping("/project/{id}")
+    public String showProjectDetails(@PathVariable int id, Model model) {
+        Project project = projectService.getProject(id);
+        model.addAttribute("project", project);
+        return "project-detail";
     }
 }

@@ -22,5 +22,9 @@ public class ProjectService {
         projectRepository.createProject(name, description, deadline);
     }
 
+    public Project getProject(int id) {
+        return projectRepository.getProject(id);
+    }
+
 
 }
