@@ -394,6 +394,22 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
     }
+    /** EDIT SUBTASKS **/
+    public void editSubtask(int subtaskId,Subtask edittedSubtask){
+        try{
+            String SQL = "UPDATE subtasks " +
+                    "SET subtask_name = ?, subtask_description = ?, subtask_deadline = ? " +
+                    "WHERE subtask_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(4, subtaskId);
+            preparedStatement.setString(1, edittedSubtask.getName());
+            preparedStatement.setString(2, edittedSubtask.getDescription());
+            preparedStatement.setDate(3, new Date(edittedSubtask.getDeadline().getTime())); //java date => SQL date
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     /**SLET SUBTASK**/
