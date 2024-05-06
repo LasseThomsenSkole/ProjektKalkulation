@@ -53,12 +53,11 @@ nav ul li {
     padding: 5px 15px; /* Reduced size of buttons */
     border-radius: 5px;
     border: 2px solid #c7156f; /* Pink color for border */
-    transition: background-color 0.3s, color 0.3s;
 }
 
 .nav-button:hover {
     background-color: #d01275; /* Pink hover background */
-    color: white;
+    color: transparent;
 }
 
 /* Section and text styling */
@@ -70,7 +69,7 @@ section {
     border-radius: 8px;
 }
 
-h1 {
+h1, h2, h3 {
     color: #0c0c0c;
     font-size: 2.0em;
     margin-bottom: 0.5em;
@@ -84,4 +83,117 @@ p {
 
 footer {
     font-size: 0.9em;
+}
+
+/* Styling for tables within containers for consistent appearance */
+.table {
+    width: 100%; /* Ensure table uses all available space in the container */
+    margin-top: 20px; /* Space above the table */
+    border-collapse: collapse; /* Ensures borders between cells are merged */
+}
+
+.table th, .table td {
+    padding: 8px; /* Padding inside cells for better readability */
+    text-align: left; /* Align text to the left */
+    border-bottom: 1px solid #dee2e6; /* Light grey border for separation */
+}
+
+.table thead th {
+    background-color: #d01275; /* Use a blue background for header */
+    color: white; /* White text for contrast */
+    border-bottom: 2px solid #c7156f; /* Darker blue border for a clear separation */
+}
+
+/* Enhance the hover effect for table rows */
+.table tbody tr:hover {
+    background-color: #f8f9fa; /* Light grey background on hover for better user interaction feedback */
+}
+
+/* Main container for layout alignment and padding */
+.main-content {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+/* Use grid layout for sectioning large pieces of information */
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* two columns of equal width */
+    gap: 20px;
+}
+
+/* Styling for headings to make them stand out more */
+h2, h3 {
+    color: #333;
+    border-bottom: 2px solid #c7156f; /* thematic color underline */
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+/* Improved list styling */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.main-content li {
+    background-color: #f8f9fa; /* subtle background for each list item */
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Styling for task and subproject entries to make them visually distinct */
+span {
+    display: block; /* makes span behave like a block for better control */
+    margin-bottom: 5px;
+}
+
+/* Hover effects for interaction feedback */
+li:hover {
+    background-color: #e9ecef;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .details-grid {
+        grid-template-columns: 1fr; /* stack columns on smaller screens */
+    }
+}
+
+/* Button styling for a consistent look across all pages */
+.btn-success, .btn-primary {
+    background-color: #d01275;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+.btn-success:hover, .btn-primary:hover {
+    background-color: #c7156f; /* Darker blue on hover */
+}
+
+/* Form styling for better visual integration */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"], input[type="date"], textarea {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    padding: 8px;
+}
+
+textarea {
+    resize: vertical; /* Allows resizing only vertically */
 }

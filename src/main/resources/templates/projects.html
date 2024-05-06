@@ -3,19 +3,19 @@
 <head>
     <title>Alle Projekter</title>
     <link rel="icon" href="/img/logo_alpha.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/main.css" type="text/css">
 </head>
+<body>
 <div th:insert="~{fragments/header :: header}"></div>
 
-<div class="container mt-3">
+<div class="main-content mt-3">
     <a href="/teamprojects/create" class="btn btn-success">Opret Nyt Projekt</a>
 </div>
 
-<title>Projekter Oversigt</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<div class="container mt-5">
+<div class="main-content mt-5">
     <h2>Projekter Oversigt</h2>
-    <table class="table table-bordered">
+    <table class="table">
         <thead class="thead-dark">
         <tr>
             <th>ID</th>
@@ -28,7 +28,7 @@
         <tbody>
         <tr th:each="project : ${projects}">
             <td th:text="${project.id}"></td>
-            <td th:text="${project.name}"></td>
+            <td><a th:href="@{/project/{id}(id=${project.id})}" th:text="${project.name}"></a></td>
             <td th:text="${project.description}"></td>
             <td th:text="${project.totalHours}"></td>
             <td th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></td>
@@ -38,4 +38,5 @@
 </div>
 
 <div th:insert="~{fragments/footer :: footer}"></div>
+</body>
 </html>
