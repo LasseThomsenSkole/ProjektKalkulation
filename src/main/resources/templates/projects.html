@@ -9,10 +9,6 @@
 <body>
 <div th:insert="~{fragments/header :: header}"></div>
 
-<div class="main-content mt-3">
-    <a href="/teamprojects/create" class="btn btn-success">Opret Nyt Projekt</a>
-</div>
-
 <div class="main-content mt-5">
     <h2>Projekter Oversigt</h2>
     <table class="table">
@@ -35,6 +31,7 @@
         </tr>
         </tbody>
     </table>
+    <a href="/teamprojects/create" class="btn btn-success">Opret Nyt Projekt</a>
 </div>
 
 <div th:insert="~{fragments/footer :: footer}"></div>
