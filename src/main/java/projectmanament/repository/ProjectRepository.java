@@ -29,11 +29,14 @@ public class ProjectRepository {
     public void init() {
         connection = ConnectionManager.getConnection(db_url, username, pwd);
     }
-    public void test(){
+
+    public void test() {
         System.out.println(username);
     }
 
-    /**GET ALL PROJECTS**/
+    /**
+     * GET ALL PROJECTS
+     **/
     public List<Project> findAllProjects() {
         List<Project> projects = new ArrayList<>();
         String query = "SELECT project_id, project_name, project_description, total_hours, project_deadline, project_status FROM projects;";
@@ -63,7 +66,9 @@ public class ProjectRepository {
     }
 
 
-    /**HENT PROJECT**/
+    /**
+     * HENT PROJECT
+     **/
     public Project getProject(int projectId) { //gets project + subproject and tasks
         Project project = null;
 
@@ -96,9 +101,10 @@ public class ProjectRepository {
     }
 
 
-
-    /**HENT SUBPROJECT**/
-    public List<Subproject> getSubprojects(int subprojectId){
+    /**
+     * HENT SUBPROJECT
+     **/
+    public List<Subproject> getSubprojects(int subprojectId) {
         List<Subproject> subprojects = new ArrayList<>();
         try {
             String SQL = "SELECT subproject_id, subproject_name, subproject_description, subproject_hours, subproject_deadline " +
@@ -113,20 +119,21 @@ public class ProjectRepository {
                     String description = subprojectResult.getString("subproject_description");
                     double hours = subprojectResult.getDouble("subproject_hours");
                     Date deadline = subprojectResult.getDate("subproject_deadline");
-                    subprojects.add(new Subproject(id, name, description, hours, deadline));
+                    Status status = Status.valueOf(subprojectResult.getString("subproject_status"));
+                    subprojects.add(new Subproject(id, name, description, hours, deadline, status));
                 }
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return subprojects;
     }
 
 
-
-    /**HENT TASK**/
-    public List<Task> getTasks(int taskId){
+    /**
+     * HENT TASK
+     **/
+    public List<Task> getTasks(int taskId) { //TODO lav om så den finder tasks ud fra taskID ??? -lasse
         List<Task> tasks = new ArrayList<>();
         try {
             String taskSQL = "SELECT task_id, task_name, task_description, task_hours, task_deadline " +
@@ -145,37 +152,35 @@ public class ProjectRepository {
                     tasks.add(new Task(id, name, description, deadline, hours));
                 }
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return tasks;
     }
 
 
-
-    /**HENT SUBTASK**/
-    public List<Subtask> getSubtasks(int subtaskId){
+    /**
+     * HENT SUBTASK
+     **/
+    public List<Subtask> getSubtasks(int subtaskId) {//TODO lav om så den finder tasks ud fra subtaskID ??? -lasse
         List<Subtask> subtasks = new ArrayList<>();
         try {
             String taskSQL = "SELECT subtask_id, subtask_name, subtask_description, subtask_hours, subtask_deadline " +
                     "FROM subtasks " +
                     "WHERE parent_task_id = ?;";
-
-            try (PreparedStatement preparedStatement = connection.prepareStatement(taskSQL)) {
-                preparedStatement.setInt(1, subtaskId);
-                ResultSet taskResult = preparedStatement.executeQuery();
-                while (taskResult.next()) {
-                    int id = taskResult.getInt("subtask_id");
-                    String name = taskResult.getString("subtask_name");
-                    String description = taskResult.getString("subtask_description");
-                    double hours = taskResult.getDouble("subtask_hours");
-                    Date deadline = taskResult.getDate("subtask_deadline");
-                    subtasks.add(new Subtask(id, name, description, deadline, hours));
-                }
+            PreparedStatement preparedStatement = connection.prepareStatement(taskSQL);
+            preparedStatement.setInt(1, subtaskId);
+            ResultSet taskResult = preparedStatement.executeQuery();
+            while (taskResult.next()) {
+                int id = taskResult.getInt("subtask_id");
+                String name = taskResult.getString("subtask_name");
+                String description = taskResult.getString("subtask_description");
+                double hours = taskResult.getDouble("subtask_hours");
+                Date deadline = taskResult.getDate("subtask_deadline");
+                subtasks.add(new Subtask(id, name, description, deadline, hours));
             }
-        }
-        catch (SQLException e){
+
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return subtasks;
@@ -208,8 +213,7 @@ public class ProjectRepository {
             preparedStatement.setString(2, description);
             preparedStatement.setDate(3, deadline);
             preparedStatement.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -226,9 +230,9 @@ public class ProjectRepository {
             preparedStatement.setString(1, updatedProject.getName());
             preparedStatement.setString(2, updatedProject.getDescription());
             preparedStatement.setDate(3, updatedProject.getDeadline());
-            preparedStatement.setInt(4,projectId);
+            preparedStatement.setInt(4, projectId);
             preparedStatement.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -267,8 +271,7 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, projectId);
             preparedStatement.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -287,8 +290,7 @@ public class ProjectRepository {
             preparedStatement.setDate(4, deadline);
             preparedStatement.setInt(5, parentProjectId);
             preparedStatement.executeQuery();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -299,8 +301,8 @@ public class ProjectRepository {
     public void editSubproject(int subprojectId, Subproject updatedSubproject) {
         try {
             String SQL = "UPDATE subprojects " +
-                            "SET subproject_name = ?, subproject_description = ?, subproject_hours = ?, subproject_deadline = ? " +
-                            "WHERE subproject_id = ?;";
+                    "SET subproject_name = ?, subproject_description = ?, subproject_hours = ?, subproject_deadline = ? " +
+                    "WHERE subproject_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, updatedSubproject.getName());
             preparedStatement.setString(2, updatedSubproject.getDescription());
@@ -309,8 +311,7 @@ public class ProjectRepository {
             preparedStatement.setInt(5, subprojectId);
             preparedStatement.executeUpdate();
 
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -325,8 +326,7 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, subprojectId);
             preparedStatement.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
@@ -344,12 +344,11 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, subprojectId);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 int count = resultSet.getInt("count");
                 return count == 0; // return true hvis det er ikke er noget
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return false;
@@ -369,8 +368,7 @@ public class ProjectRepository {
             preparedStatement.setDate(4, deadline);
             preparedStatement.setInt(5, subprojectId);
             preparedStatement.executeQuery();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -383,9 +381,9 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(4, taskId);
             preparedStatement.setString(1, edittedTask.getName());
-            preparedStatement.setString(2,edittedTask.getDescription());
+            preparedStatement.setString(2, edittedTask.getDescription());
             preparedStatement.setDate(3, new Date(edittedTask.getDeadline().getTime())); //java date => SQL date
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -400,8 +398,7 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, taskId);
             preparedStatement.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
@@ -421,8 +418,7 @@ public class ProjectRepository {
             preparedStatement.setDate(4, deadline);
             preparedStatement.setInt(5, parentTaskId);
             preparedStatement.executeQuery();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -452,8 +448,7 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, subtaskId);
             preparedStatement.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
@@ -518,7 +513,6 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
     }
-
 
 
 }
