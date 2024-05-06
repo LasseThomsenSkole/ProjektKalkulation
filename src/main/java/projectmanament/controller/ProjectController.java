@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import projectmanament.model.Project;
 import org.springframework.stereotype.Controller;
+import projectmanament.model.Status;
 import projectmanament.service.ProjectService;
 import org.springframework.ui.Model;
 
@@ -52,7 +53,7 @@ public class ProjectController {
     }
 
     @GetMapping("/projects")
-    public String showProjectsByStatus(@RequestParam(required = false) String status, Model model) {
+    public String showProjectsByStatus(@RequestParam(required = false) Status status, Model model) {
         List<Project> projects;
         if (status != null) {
             projects = projectService.findAllProjectsByStatus(status);

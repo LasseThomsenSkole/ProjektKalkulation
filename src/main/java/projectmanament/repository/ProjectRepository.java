@@ -68,7 +68,7 @@ public class ProjectRepository {
         Project project = null;
 
         try {
-            String SQL = "SELECT project_id, project_name, project_description, total_hours, project_deadline " +
+            String SQL = "SELECT project_id, project_name, project_description, total_hours, project_deadline, status " +
                     "FROM projects WHERE project_id = ?;";
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
                 preparedStatement.setInt(1, projectId);
@@ -79,13 +79,14 @@ public class ProjectRepository {
                     String description = projectResult.getString("project_description");
                     double totalHours = projectResult.getDouble("total_hours");
                     Date deadline = projectResult.getDate("project_deadline");
+                    Status status = Status.valueOf(projectResult.getString("status"));
 
                     // Fetches tasks and subprojects for a particular project
                     List<Task> tasks = getTasks(id);
                     List<Subproject> subprojects = getSubprojects(id);
 
                     // Creates project with all details
-                    project = new Project(id, name, description, tasks, subprojects, totalHours, deadline);
+                    project = new Project(id, name, description, tasks, subprojects, totalHours, deadline, status);
                 }
             }
         } catch (SQLException e) {

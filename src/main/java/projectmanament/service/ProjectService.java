@@ -4,6 +4,7 @@ package projectmanament.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import projectmanament.model.Project;
 import org.springframework.stereotype.Service;
+import projectmanament.model.Status;
 import projectmanament.repository.ProjectRepository;
 
 import java.sql.Date;
@@ -24,6 +25,10 @@ public class ProjectService {
 
     public Project getProject(int id) {
         return projectRepository.getProject(id);
+    }
+
+    public List<Project> findAllProjectsByStatus(Status status) {
+        return projectRepository.findAllProjectsByStatus(status);
     }
 
 
