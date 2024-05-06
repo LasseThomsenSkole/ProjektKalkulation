@@ -12,6 +12,9 @@ public class Subtask {
 
     public Subtask() {} //thymeleaf
 
+    public Subtask(int id, String name, String description, java.sql.Date deadline, double hours) {
+    }
+
     public Date getDeadline() {
         return deadline;
     }

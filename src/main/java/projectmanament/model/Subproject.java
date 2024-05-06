@@ -33,6 +33,9 @@ public class Subproject {
         this.status = status;
     }
 
+    public Subproject(int id, String name, String description, double hours, Date deadline) {
+    }
+
     public int getId() {
         return id;
     }

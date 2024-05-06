@@ -36,13 +36,13 @@ public class Project {
         this.status = status;
     }
 
-  /*  public Project(int id, String name, String description, double totalHours, Date deadline) {
+    public Project(int id, String name, String description, double totalHours, Date deadline) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.totalHours = totalHours;
         this.deadline = deadline;
-    }*/
+    }
 
     public int getId() {
         return id;

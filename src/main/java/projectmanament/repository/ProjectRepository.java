@@ -123,8 +123,6 @@ public class ProjectRepository {
         return subprojects;
     }
 
-
-
     /**HENT TASK**/
     public List<Task> getTasks(int taskId){
         List<Task> tasks = new ArrayList<>();
@@ -151,8 +149,6 @@ public class ProjectRepository {
         }
         return tasks;
     }
-
-
 
     /**HENT SUBTASK**/
     public List<Subtask> getSubtasks(int subtaskId){
