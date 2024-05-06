@@ -70,4 +70,11 @@ public class ProjectController {
         model.addAttribute("archivedProjects", archivedProjects);
         return "archived-projects";
     }
+
+    @PostMapping("/teamprojects/{projectId}/status")
+    public String updateProjectStatus(@PathVariable("projectId") int projectId, @RequestParam("newStatus") String statusString) {
+        Status newStatus = Status.valueOf(statusString); // Ensure this conversion is safe and valid
+        projectService.changeProjectStatus(projectId, newStatus);
+        return "redirect:/projects";
+    }
 }

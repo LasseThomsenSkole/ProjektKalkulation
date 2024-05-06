@@ -35,5 +35,24 @@ public class ProjectService {
         return projectRepository.findArchivedProjects();
     }
 
+    public void changeProjectStatus(int projectId, Status newStatus) {
+        projectRepository.changeProjectStatus(projectId, newStatus);
+    }
+
+    // Ændre status for et subprojekt
+    public void changeSubprojectStatus(int subprojectId, Status newStatus) {
+        projectRepository.changeSubprojectStatus(subprojectId, newStatus);
+    }
+
+    // Ændre status for en opgave (task)
+    public void changeTaskStatus(int taskId, Status newStatus) {
+        projectRepository.changeTaskStatus(taskId, newStatus);
+    }
+
+    // Ændre status for en subopgave (subtask)
+    public void changeSubtaskStatus(int subtaskId, Status newStatus) {
+        projectRepository.changeSubtaskStatus(subtaskId, newStatus);
+    }
+
 
 }
