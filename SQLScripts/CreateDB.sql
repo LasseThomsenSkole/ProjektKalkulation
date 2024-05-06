@@ -2,7 +2,6 @@ CREATE SCHEMA IF NOT EXISTS AlphaManagement;
 USE AlphaManagement;
 CREATE TABLE IF NOT EXISTS users(
     user_id int auto_increment primary key,
-    is_admin BOOL not null default false,
     user_name varchar(50),
     password varchar(50) -- hvis den er hashed bliver den hashed med 12 chars
     );
@@ -11,7 +10,8 @@ CREATE TABLE IF NOT EXISTS projects(
     project_name        varchar(50) not null ,
     project_description varchar(500) not null ,
     total_hours double not null default 0,
-    project_deadline    date
+    project_deadline    date,
+    project_status enum('DONE', 'IN_PROGESS','TODO','ARCHIVED')
     );
 CREATE TABLE IF NOT EXISTS subprojects(
     subproject_id int auto_increment primary key,
@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS subprojects(
     subproject_description varchar(500) not null,
     subproject_hours double not null default 0,
     subproject_deadline date,
+    subproject_status enum('DONE', 'IN_PROGESS','TODO','ARCHIVED'),
     parent_project_id int not null
     );
 CREATE TABLE IF NOT EXISTS tasks(
@@ -27,6 +28,7 @@ CREATE TABLE IF NOT EXISTS tasks(
     task_description varchar(500) not null,
     task_hours double not null default 0,
     task_deadline date,
+    task_status enum('DONE', 'IN_PROGESS','TODO','ARCHIVED'),
     subproject_id int not null
     );
 CREATE TABLE IF NOT EXISTS subtasks(
@@ -35,6 +37,7 @@ CREATE TABLE IF NOT EXISTS subtasks(
     subtask_description varchar(500) not null,
     subtask_hours double not null default 0,
     subtask_deadline date,
+    subtask_status enum('DONE', 'IN_PROGESS','TODO','ARCHIVED'),
     parent_task_id int not null
     );
 CREATE TABLE IF NOT EXISTS user_project_relation(
