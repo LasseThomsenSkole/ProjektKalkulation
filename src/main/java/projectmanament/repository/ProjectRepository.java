@@ -2,10 +2,7 @@ package projectmanament.repository;
 
 import jakarta.annotation.PostConstruct;
 import projectmanament.manager.ConnectionManager;
-import projectmanament.model.Project;
-import projectmanament.model.Subproject;
-import projectmanament.model.Subtask;
-import projectmanament.model.Task;
+import projectmanament.model.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -39,14 +36,14 @@ public class ProjectRepository {
     /**GET ALL PROJECTS**/
     public List<Project> findAllProjects() {
         List<Project> projects = new ArrayList<>();
-        String query = "SELECT project_id, project_name, project_description, total_hours, project_deadline FROM projects;";
+        String query = "SELECT project_id, project_name, project_description, total_hours, project_deadline, status FROM projects;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery()) {
             while (rs.next()) {
                 projects.add(mapProject(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error fetching all projects", e);
         }
         return projects;
     }
@@ -57,9 +54,12 @@ public class ProjectRepository {
         String description = rs.getString("project_description");
         double totalHours = rs.getDouble("total_hours");
         Date deadline = rs.getDate("project_deadline");
+        Status status = Status.valueOf(rs.getString("status")); // Assuming you have added a 'status' column to your projects table
+
         List<Task> tasks = getTasks(id);
         List<Subproject> subprojects = getSubprojects(id);
-        return new Project(id, name, description, tasks, subprojects, totalHours, deadline);
+
+        return new Project(id, name, description, tasks, subprojects, totalHours, deadline, status);
     }
 
 
@@ -442,6 +442,22 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public List<Project> findAllProjectsByStatus(Status status) {
+        List<Project> projects = new ArrayList<>();
+        String query = "SELECT project_id, project_name, project_description, total_hours, project_deadline, status FROM projects WHERE status = ?;";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, status.toString());
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    projects.add(mapProject(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding projects by status", e);
+        }
+        return projects;
     }
 
 

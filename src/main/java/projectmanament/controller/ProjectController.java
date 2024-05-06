@@ -50,4 +50,16 @@ public class ProjectController {
         model.addAttribute("project", project);
         return "project-detail";
     }
+
+    @GetMapping("/projects")
+    public String showProjectsByStatus(@RequestParam(required = false) String status, Model model) {
+        List<Project> projects;
+        if (status != null) {
+            projects = projectService.findAllProjectsByStatus(status);
+        } else {
+            projects = projectService.findAllProjects();
+        }
+        model.addAttribute("projects", projects);
+        return "projects"; // View name
+    }
 }
