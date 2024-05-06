@@ -79,7 +79,7 @@ public class ProjectRepository {
                     String description = projectResult.getString("project_description");
                     double totalHours = projectResult.getDouble("total_hours");
                     Date deadline = projectResult.getDate("project_deadline");
-                    Status status = Status.valueOf(projectResult.getString("status"));
+                    Status status = Status.valueOf(projectResult.getString("project_status"));
 
                     // Fetches tasks and subprojects for a particular project
                     List<Task> tasks = getTasks(id);

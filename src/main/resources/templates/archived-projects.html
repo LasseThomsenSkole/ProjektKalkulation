@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arkiverede Projekter</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
+<div th:insert="~{fragments/header :: header}"></div>
 <h1>Arkiverede Projekter</h1>
 <table>
     <thead>
@@ -18,16 +21,17 @@
     </tr>
     </thead>
     <tbody>
-    <!-- Her vil hver arkiverede projekt blive vist -->
-    <tr>
-        <td>Projekt Navn 1</td>
-        <td>Beskrivelse af projekt 1</td>
-        <td>50</td>
-        <td>2024-05-31</td>
-        <td>Arkiveret</td> <!-- Viser statusen for det arkiverede projekt -->
+    <!-- Iterer gennem arkiverede projekter og vis detaljer for hver -->
+    <tr th:each="archivedProject : ${archivedProjects}">
+        <td th:text="${archivedProject.name}"></td>
+        <td th:text="${archivedProject.description}"></td>
+        <td th:text="${archivedProject.totalHours}"></td>
+        <td th:text="${#dates.format(archivedProject.deadline, 'yyyy-MM-dd')}"></td>
+        <td>Arkiveret</td>
     </tr>
-    <!-- Fortsæt med at tilføje rækker for hvert arkiverede projekt -->
     </tbody>
 </table>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 </html>
