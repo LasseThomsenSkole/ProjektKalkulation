@@ -13,6 +13,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//import static com.sun.beans.introspect.PropertyInfo.Name.description;
+
 @Repository
 public class ProjectRepository {
 
@@ -204,10 +206,10 @@ public class ProjectRepository {
                     "SET project_name = ?, project_description = ?, project_deadline = ? " +
                     "WHERE project_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(4,projectId);
             preparedStatement.setString(1, updatedProject.getName());
             preparedStatement.setString(2, updatedProject.getDescription());
             preparedStatement.setDate(3, updatedProject.getDeadline());
+            preparedStatement.setInt(4,projectId);
             preparedStatement.executeUpdate();
         }catch (SQLException e){
             throw new RuntimeException(e);
@@ -271,6 +273,28 @@ public class ProjectRepository {
         }
         catch (SQLException e){
             throw new RuntimeException(e);
+        }
+    }
+
+
+
+    /**EDIT SUBPROJECT**/
+    public void editSubproject(int subprojectId, Subproject updatedSubproject) {
+        try {
+            String SQL = "UPDATE subprojects " +
+                            "SET subproject_name = ?, subproject_description = ?, subproject_hours = ?, subproject_deadline = ? " +
+                            "WHERE subproject_id = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, updatedSubproject.getName());
+            preparedStatement.setString(2, updatedSubproject.getDescription());
+            preparedStatement.setDouble(3, updatedSubproject.getHours());
+            preparedStatement.setDate(4, updatedSubproject.getDeadline());
+            preparedStatement.setInt(5, subprojectId);
+            preparedStatement.executeUpdate();
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

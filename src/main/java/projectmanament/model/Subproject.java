@@ -1,6 +1,6 @@
 package projectmanament.model;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class Subproject {
@@ -8,12 +8,12 @@ public class Subproject {
     private String name;
     private String description;
     private List<Task> tasks;
-    private Date deadline;
+    private java.sql.Date deadline;
     private double hours;
 
     public Subproject(){} //thymeleaf
 
-    public Subproject(int id, String name, String description, List<Task> tasks, Date deadline, int hours) {
+    public Subproject(int id, String name, String description, List<Task> tasks, java.sql.Date deadline, int hours) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -22,7 +22,7 @@ public class Subproject {
         this.hours = hours;
     }
 
-    public Subproject(int id, String name, String description, double hours, Date deadline) {
+    public Subproject(int id, String name, String description, double hours, java.sql.Date deadline) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -61,7 +61,7 @@ public class Subproject {
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
-    public Date getDeadline() {
+    public java.sql.Date getDeadline() {
         return deadline;
     }
 
