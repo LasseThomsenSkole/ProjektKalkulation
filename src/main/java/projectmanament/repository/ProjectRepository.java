@@ -493,6 +493,17 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
     }
+    /** change subtask status **/
+    public void changeSubtaskStatus(int subtaskID, Status newStatus){
+        try{
+            String SQL = "UPDATE subtasks SET subtask_status = ? WHERE subtask_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik a enums så vi skal bruge .name()
+            preparedStatement.setInt(2, subtaskID);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 
