@@ -170,16 +170,16 @@ public class ProjectRepository {
                     "WHERE parent_task_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(taskSQL);
             preparedStatement.setInt(1, subtaskId);
-            ResultSet taskResult = preparedStatement.executeQuery();
-            while (taskResult.next()) {
-                int id = taskResult.getInt("subtask_id");
-                String name = taskResult.getString("subtask_name");
-                String description = taskResult.getString("subtask_description");
-                double hours = taskResult.getDouble("subtask_hours");
-                Date deadline = taskResult.getDate("subtask_deadline");
-                subtasks.add(new Subtask(id, name, description, deadline, hours));
+            ResultSet subtaskResult = preparedStatement.executeQuery();
+            while (subtaskResult.next()) {
+                int id = subtaskResult.getInt("subtask_id");
+                String name = subtaskResult.getString("subtask_name");
+                String description = subtaskResult.getString("subtask_description");
+                double hours = subtaskResult.getDouble("subtask_hours");
+                Date deadline = subtaskResult.getDate("subtask_deadline");
+                Status status = Status.valueOf(subtaskResult.getString("subtask_status"));
+                subtasks.add(new Subtask(id, name, description, deadline, hours, status));
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

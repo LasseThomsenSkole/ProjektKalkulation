@@ -8,6 +8,8 @@ public class Subtask {
     private String description;
     private Date deadline;
     private double hours;
+    private Status status;
+
     public Subtask() {} //thymeleaf
 
     public Date getDeadline() {
@@ -26,12 +28,13 @@ public class Subtask {
         this.hours = hours;
     }
 
-    public Subtask(int id, String name, String description, Date deadline, double hours) {
+    public Subtask(int id, String name, String description, Date deadline, double hours, Status status) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.deadline = deadline;
         this.hours = hours;
+        this.status = status;
     }
 
     public int getId() {
