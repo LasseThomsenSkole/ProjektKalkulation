@@ -198,3 +198,12 @@ input[type="text"], input[type="date"], textarea {
 textarea {
     resize: vertical; /* Allows resizing only vertically */
 }
+
+.table a {
+    color: black; /* link color to black */
+    text-decoration: none; /* removes underline from links */
+}
+
+.table a:hover {
+    color: gray; /* changes color on hover for better user interaction */
+}

@@ -11,11 +11,21 @@ public class Project {
     private List<Subproject> subprojects;
     private double totalHours;
     private Date deadline;
+    private Status status;
+
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public Project() {} //til thymeleaf
 
     public Project(int id, String name, String description, List<Task> tasks, List<Subproject> subprojects,
-                   double totalHours, Date deadline) {
+                   double totalHours, Date deadline, Status status) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -23,15 +33,16 @@ public class Project {
         this.subprojects = subprojects;
         this.totalHours = totalHours;
         this.deadline = deadline;
+        this.status = status;
     }
 
-  /*  public Project(int id, String name, String description, double totalHours, Date deadline) {
+    public Project(int id, String name, String description, double totalHours, Date deadline) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.totalHours = totalHours;
         this.deadline = deadline;
-    }*/
+    }
 
     public int getId() {
         return id;

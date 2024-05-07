@@ -1,5 +1,6 @@
 package projectmanament;
 
+import jakarta.annotation.PostConstruct;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,15 +9,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import projectmanament.manager.ConnectionManager;
+import projectmanament.model.IncorrectProjectIDException;
 import projectmanament.model.Project;
 import projectmanament.repository.ProjectRepository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class) // extender JUnit
@@ -26,25 +29,28 @@ public class ProjectIT {
     @Autowired
     private ProjectRepository repository;
 
-    @Value("jdbc:mysql://localhost:3306/AlphaManagement")
+    @Value("${spring.datasource.url}")
     private String db_url;
 
-    @Value("root")
-    private String uid;
+    @Value("${spring.datasource.username}")
+    private String username;
 
-    @Value("Andrea1999!")
+    @Value("${spring.datasource.password}")
     private String pwd;
+    private Connection connection;
 
+    @PostConstruct
+    public void init() {
+        connection = ConnectionManager.getConnection(db_url, username, pwd);
+    }
 
     /** Setup af Database **/
     @BeforeEach
-    public void setup() {
-        try (
-                Connection conn =
-                        DriverManager.getConnection(db_url, uid, pwd)) {
-            Statement stmt = conn.createStatement();
+    public void setup() throws SQLException {
 
-            String initSchema = "CREATE SCHEMA IF NOT EXISTS AlphaManagementDB";
+            Statement stmt = connection.createStatement();
+
+            String initSchema = "CREATE SCHEMA IF NOT EXISTS AlphaManagement";
             String dropTableUsers = "drop table if exists users";
             String dropTableProjects = "drop table if exists projects";
             String dropTableSubProjects = "drop table if exists subprojects";
@@ -58,36 +64,45 @@ public class ProjectIT {
             stmt.addBatch(dropTableTasks);
             stmt.addBatch(dropTableSubTasks);
             stmt.addBatch(dropTableUserProjectRelation);
-            String createTable = "CREATE TABLE projects " +
-                    "(project_id INTEGER, " +
-                    " project_name VARCHAR(30), " +
-                    " project_description VARCHAR(30), " +
-                    " total_hours INTEGER, " +
-                    "project_deadline DATE" +
-                    " PRIMARY KEY ( project_id ))";
-            stmt.addBatch(createTable);
+            String createTable = "CREATE TABLE projects (" +
+                "project_id INTEGER PRIMARY KEY, " +
+                "project_name VARCHAR(30), " +
+                "project_description VARCHAR(30), " +
+                "total_hours INTEGER, " +
+                "project_deadline DATE" +
+                ");";
+        stmt.addBatch(createTable);
             stmt.executeBatch();
             System.out.println("Database created");
 
-            String sqlInsertRow = "INSERT INTO projects VALUES (10,'En test','Test', 11, 2024-11-01)";
+            String sqlInsertRow = "INSERT INTO projects VALUES (10,'En test','Test', 11, '2024-11-01')";
             stmt.addBatch(sqlInsertRow);
-            sqlInsertRow = "INSERT INTO projects VALUES (20,'To test','Test test', 21, 2024-11-02)";
+            sqlInsertRow = "INSERT INTO projects VALUES (20,'To test','Test test', 21, '2024-11-02')";
             stmt.addBatch(sqlInsertRow);
-            sqlInsertRow = "INSERT INTO projects VALUES (30,'Tre test','Test test test', 31, 2024-11-03)";
+            sqlInsertRow = "INSERT INTO projects VALUES (30,'Tre test','Test test test', 31, '2024-11-03')";
             stmt.addBatch(sqlInsertRow);
-            sqlInsertRow = "INSERT INTO projects VALUES(40,'Fire test','Test test test test', 41, 2024-11-04)";
+            sqlInsertRow = "INSERT INTO projects VALUES(40,'Fire test','Test test test test', 41, '2024-11-04')";
             stmt.addBatch(sqlInsertRow);
             int rows[] = stmt.executeBatch();
             System.out.println("Inserted " + rows.length + " records into the table");
-        } catch (SQLException e) {
-            System.out.println("Database call went wrong" + e.getMessage());
-        }
+
     }
 
     @Test
     void findProjectByID() throws SQLException {
         Project found = repository.getProject(10);
         assertEquals("En test", found.getName());
+    }
+
+    @Test
+    void deleteProject20() throws IncorrectProjectIDException {
+        repository.deleteProject(20);
+    }
+
+    @Test
+    void findDepartment40() throws IncorrectProjectIDException, SQLException {
+        Project found = repository.getProject(30);
+        assertNotNull(found);
     }
 
 

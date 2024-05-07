@@ -4,6 +4,7 @@ package projectmanament.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import projectmanament.model.Project;
 import org.springframework.stereotype.Service;
+import projectmanament.model.Status;
 import projectmanament.repository.ProjectRepository;
 
 import java.sql.Date;
@@ -28,6 +29,33 @@ public class ProjectService {
 
     public void editProject(int id, Project updatedProject){
         projectRepository.editProject(id, updatedProject);
+    }
+
+    public List<Project> findAllProjectsByStatus(Status status) {
+        return projectRepository.findAllProjectsByStatus(status);
+    }
+
+    public List<Project> findArchivedProjects() {
+        return projectRepository.findArchivedProjects();
+    }
+
+    public void changeProjectStatus(int projectId, Status newStatus) {
+        projectRepository.changeProjectStatus(projectId, newStatus);
+    }
+
+    // Ændre status for et subprojekt
+    public void changeSubprojectStatus(int subprojectId, Status newStatus) {
+        projectRepository.changeSubprojectStatus(subprojectId, newStatus);
+    }
+
+    // Ændre status for en opgave (task)
+    public void changeTaskStatus(int taskId, Status newStatus) {
+        projectRepository.changeTaskStatus(taskId, newStatus);
+    }
+
+    // Ændre status for en subopgave (subtask)
+    public void changeSubtaskStatus(int subtaskId, Status newStatus) {
+        projectRepository.changeSubtaskStatus(subtaskId, newStatus);
     }
 
 
