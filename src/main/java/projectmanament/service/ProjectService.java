@@ -30,6 +30,14 @@ public class ProjectService {
         return projectRepository.getSubprojectById(id);
     }
 
+    public Task getTaskById(int id){
+        return projectRepository.getTaskById(id);
+    }
+
+    public Subtask getSubtaskById(int id){
+        return projectRepository.getSubtaskById(id);
+    }
+
     public void editProject(int id, Project updatedProject){
         projectRepository.editProject(id, updatedProject);
     }
