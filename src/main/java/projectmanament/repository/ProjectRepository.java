@@ -342,7 +342,7 @@ public class ProjectRepository {
 
 
     /**SLET SUBPROJECT**/
-    public void deleteSubproject(int subprojectId){
+    public void deleteSubproject(int subprojectId){ //todo den burde også slette tasks og subtasks som ligger under
         try {
             String SQL = "DELETE FROM subprojects " +
                     "WHERE subprojects_id = ?;";
