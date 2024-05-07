@@ -153,7 +153,7 @@ public class ProjectRepository {
     public List<Task> getTasks(int taskId){
         List<Task> tasks = new ArrayList<>();
         try {
-            String taskSQL = "SELECT task_id, task_name, task_description, task_hours, task_deadline " +
+            String taskSQL = "SELECT task_id, task_name, task_description, task_hours, task_deadline, task_status " +
                     "FROM tasks " +
                     "WHERE subproject_id = ?;";
 
