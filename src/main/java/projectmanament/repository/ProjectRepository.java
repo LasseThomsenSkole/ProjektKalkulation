@@ -417,7 +417,7 @@ public class ProjectRepository {
 
 
     /**SLET TASK**/
-    public void deleteTask(int taskId){
+    public void deleteTask(int taskId){ //todo den skal også slette subtasks som ligger under
         try {
             String SQL = "DELETE FROM tasks " +
                     "WHERE task_id = ?;";
