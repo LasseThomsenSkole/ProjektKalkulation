@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import projectmanament.model.Project;
 import org.springframework.stereotype.Controller;
 import projectmanament.model.Status;
+import projectmanament.model.Subproject;
 import projectmanament.service.ProjectService;
 import org.springframework.ui.Model;
 
@@ -78,7 +79,8 @@ public class ProjectController {
         return "redirect:/projects";
     }
 
-    @GetMapping("/edit-project-form/{id}")
+    /**EDIT**/
+    @GetMapping("/edit-project/{id}")
     public String editProjectForm(@PathVariable int id, Model model){
         Project project = projectService.getProject(id);
         model.addAttribute("project", project);
@@ -87,7 +89,19 @@ public class ProjectController {
     @PostMapping("/edit-project/{id}")
     public String editProject(@PathVariable int id, @ModelAttribute Project updatedProject){
         projectService.editProject(id, updatedProject);
-        return "redirect:/teamprojects";
+        return "redirect:/project/" + id;
+    }
+
+    @GetMapping("/edit-subproject/{id}")
+    public String editSubprojectForm(@PathVariable int id, Model model){
+        Subproject subproject = projectService.getSubprojectById(id);
+        model.addAttribute("subproject", subproject);
+        return "edit-subproject";
+    }
+    @PostMapping("/edit-subproject/{id}")
+    public String editSubproject(@PathVariable int id, @ModelAttribute Subproject updatedSubproject){
+        projectService.editSubproject(id, updatedSubproject);
+        return "redirect:/project/" + id;
     }
 
 

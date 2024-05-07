@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ændre oplysninger på subprojekt</title>
+  <link rel="icon" href="/img/logo_alpha.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/main.css" type="text/css">
+</head>
+<body>
+<div class="main-content">
+  <h2>Ændre oplysninger på subprojektet <span th:text="${subproject.name}"></span></h2>
+  <form th:action="@{'/edit-subproject/' + ${subproject.id}}" method="post">
+    <div class="form-group">
+      <label for="name">Navn:</label>
+      <input type="text" class="form-control" id="name" name="name" th:value="${subproject.name}">
+    </div>
+    <div class="form-group">
+      <label for="description">Beskrivelse:</label>
+      <textarea class="form-control" id="description" name="description" th:text="${subproject.description}"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="deadline">Deadline:</label>
+      <input type="date" class="form-control" id="deadline" name="deadline" th:value="${#dates.format(subproject.deadline, 'yyyy-MM-dd')}">
+    </div>
+    <div class="form-group">
+      <label for="hours">Antal timer:</label>
+      <input type="text" class="form-control" id="hours" name="hours" th:value="${subproject.hours}">
+    </div>
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <select class="form-control" id="status" name="status">
+        <option value="DONE" th:selected="${subproject.status == 'DONE'}">Færdig</option>
+        <option value="IN_PROGRESS" th:selected="${subproject.status == 'IN_PROGRESS'}">I gang</option>
+        <option value="TODO" th:selected="${subproject.status == 'TODO'}">Todo</option>
+        <option value="ARCHIVED" th:selected="${subproject.status == 'ARCHIVED'}">Arkiveret</option>
+        <option value="NOT_STARTED" th:selected="${subproject.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Gem Ændringer</button>
+  </form>
+</div>
+</body>
+</html>

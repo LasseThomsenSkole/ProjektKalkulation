@@ -97,7 +97,7 @@ public class ProjectRepository {
 
 
 
-    /**HENT SUBPROJECT**/
+    /**HENT SUBPROJECTS**/
     public List<Subproject> getSubprojects(int subprojectId){
         List<Subproject> subprojects = new ArrayList<>();
         try {
@@ -122,6 +122,31 @@ public class ProjectRepository {
         }
         return subprojects;
     }
+
+    public Subproject getSubprojectById(int subprojectId) {
+        Subproject subproject = null;
+        try {
+            String SQL = "SELECT subproject_id, subproject_name, subproject_description, subproject_hours, subproject_deadline " +
+                    "FROM subprojects " +
+                    "WHERE subproject_id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+                preparedStatement.setInt(1, subprojectId);
+                ResultSet subprojectResult = preparedStatement.executeQuery();
+                if (subprojectResult.next()) {
+                    int id = subprojectResult.getInt("subproject_id");
+                    String name = subprojectResult.getString("subproject_name");
+                    String description = subprojectResult.getString("subproject_description");
+                    double hours = subprojectResult.getDouble("subproject_hours");
+                    Date deadline = subprojectResult.getDate("subproject_deadline");
+                    subproject = new Subproject(id, name, description, hours, deadline);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return subproject;
+    }
+
 
     /**HENT TASK**/
     public List<Task> getTasks(int taskId){
