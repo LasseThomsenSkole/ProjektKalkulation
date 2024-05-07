@@ -529,7 +529,7 @@ public class ProjectRepository {
         try{
             String SQL = "UPDATE tasks SET task_status = ? WHERE task_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik a enums så vi skal bruge .name()
+            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik af enums så vi skal bruge .name()
             preparedStatement.setInt(2, taskID);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -540,7 +540,7 @@ public class ProjectRepository {
         try{
             String SQL = "UPDATE subtasks SET subtask_status = ? WHERE subtask_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik a enums så vi skal bruge .name()
+            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik af enums så vi skal bruge .name()
             preparedStatement.setInt(2, subtaskID);
         } catch (SQLException e) {
             throw new RuntimeException(e);
