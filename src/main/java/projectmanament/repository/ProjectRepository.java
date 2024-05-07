@@ -153,11 +153,11 @@ public class ProjectRepository {
     public List<Task> getTasks(int taskId){
         List<Task> tasks = new ArrayList<>();
         try {
-            String taskSQL = "SELECT task_id, task_name, task_description, task_hours, task_deadline, task_status " +
+            String SQL = "SELECT task_id, task_name, task_description, task_hours, task_deadline, task_status " +
                     "FROM tasks " +
                     "WHERE subproject_id = ?;";
 
-            try (PreparedStatement preparedStatement = connection.prepareStatement(taskSQL)) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
                 preparedStatement.setInt(1, taskId);
                 ResultSet taskResult = preparedStatement.executeQuery();
                 while (taskResult.next()) {
@@ -175,6 +175,34 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
         return tasks;
+    }
+
+    //hent kun én task
+    public Task getTaskById(int taskId){
+        Task task = null;
+        try {
+            String SQL = "SELECT task_id, task_name, task_description, task_hours, task_deadline " +
+                    "FROM tasks " +
+                    "WHERE task_id = ?;";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+                preparedStatement.setInt(1, taskId);
+                ResultSet taskResult = preparedStatement.executeQuery();
+                while (taskResult.next()) {
+                    int id = taskResult.getInt("task_id");
+                    String name = taskResult.getString("task_name");
+                    String description = taskResult.getString("task_description");
+                    double hours = taskResult.getDouble("task_hours");
+                    Date deadline = taskResult.getDate("task_deadline");
+                    Status status = Status.valueOf(taskResult.getString("task_status"));
+                    task = new Task(id, name, description, deadline, hours, status);
+                }
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return task;
     }
 
     /**HENT SUBTASK**/
@@ -204,6 +232,36 @@ public class ProjectRepository {
         }
         return subtasks;
     }
+
+    //hent kun én subtask
+    public Subtask getSubtaskById(int subtaskId){
+        Subtask subtask = null;
+        try {
+            String taskSQL = "SELECT subtask_id, subtask_name, subtask_description, subtask_hours, subtask_deadline " +
+                    "FROM subtasks " +
+                    "WHERE subtask_id = ?;";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(taskSQL)) {
+                preparedStatement.setInt(1, subtaskId);
+                ResultSet taskResult = preparedStatement.executeQuery();
+                while (taskResult.next()) {
+                    int id = taskResult.getInt("subtask_id");
+                    String name = taskResult.getString("subtask_name");
+                    String description = taskResult.getString("subtask_description");
+                    double hours = taskResult.getDouble("subtask_hours");
+                    Date deadline = taskResult.getDate("subtask_deadline");
+                    subtask = new Subtask(id, name, description, deadline, hours);
+                }
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return subtask;
+    }
+
+
+
 
     public List<Project> findArchivedProjects() {
         List<Project> archivedProjects = new ArrayList<>();
