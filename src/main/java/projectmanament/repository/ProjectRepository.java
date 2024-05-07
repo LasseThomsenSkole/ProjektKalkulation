@@ -226,7 +226,7 @@ public class ProjectRepository {
     public void createProject(String name, String description, Date deadline) {
         try {
             String SQL = "INSERT INTO projects (project_name, project_description, " +
-                    "total_hours, project_deadline) VALUES (?, ?, 0, ?);"; // sets total hours to zero
+                    "project_deadline) VALUES (?, ?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, description);
