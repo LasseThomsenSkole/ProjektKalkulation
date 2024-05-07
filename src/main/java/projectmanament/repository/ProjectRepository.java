@@ -123,6 +123,7 @@ public class ProjectRepository {
         return subprojects;
     }
 
+    //til når vi skal edit ét subproject
     public Subproject getSubprojectById(int subprojectId) {
         Subproject subproject = null;
         try {
