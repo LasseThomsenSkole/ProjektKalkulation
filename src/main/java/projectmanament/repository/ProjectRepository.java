@@ -149,7 +149,7 @@ public class ProjectRepository {
     }
 
 
-    /**HENT TASK**/
+    /**HENT TASKS**/
     public List<Task> getTasks(int subprojectId){
         List<Task> tasks = new ArrayList<>();
         try {
@@ -206,7 +206,7 @@ public class ProjectRepository {
     }
 
     /**HENT SUBTASK**/
-    public List<Subtask> getSubtask(int subtaskId){
+    public List<Subtask> getSubtasks(int parentTaskId){
         List<Subtask> subtasks = new ArrayList<>();
         try {
             String taskSQL = "SELECT subtask_id, subtask_name, subtask_description, subtask_hours, subtask_deadline, subtask_status " +
@@ -214,7 +214,7 @@ public class ProjectRepository {
                     "WHERE parent_task_id = ?;";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(taskSQL)) {
-                preparedStatement.setInt(1, subtaskId);
+                preparedStatement.setInt(1, parentTaskId);
                 ResultSet taskResult = preparedStatement.executeQuery();
                 while (taskResult.next()) {
                     int id = taskResult.getInt("subtask_id");
