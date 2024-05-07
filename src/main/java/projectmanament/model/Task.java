@@ -80,4 +80,12 @@ public class Task {
     public void setHours(double hours) {
         this.hours = hours;
     }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }
