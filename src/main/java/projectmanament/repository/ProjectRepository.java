@@ -150,7 +150,7 @@ public class ProjectRepository {
 
 
     /**HENT TASK**/
-    public List<Task> getTasks(int taskId){
+    public List<Task> getTasks(int subprojectId){
         List<Task> tasks = new ArrayList<>();
         try {
             String SQL = "SELECT task_id, task_name, task_description, task_hours, task_deadline, task_status " +
@@ -158,7 +158,7 @@ public class ProjectRepository {
                     "WHERE subproject_id = ?;";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
-                preparedStatement.setInt(1, taskId);
+                preparedStatement.setInt(1, subprojectId);
                 ResultSet taskResult = preparedStatement.executeQuery();
                 while (taskResult.next()) {
                     int id = taskResult.getInt("task_id");
