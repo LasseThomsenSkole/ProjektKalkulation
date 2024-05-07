@@ -140,7 +140,8 @@ public class ProjectRepository {
                     String description = taskResult.getString("task_description");
                     double hours = taskResult.getDouble("task_hours");
                     Date deadline = taskResult.getDate("task_deadline");
-                    tasks.add(new Task(id, name, description, deadline, hours));
+                    Status status = Status.valueOf(taskResult.getString("task_status"));
+                    tasks.add(new Task(id, name, description, deadline, hours, status));
                 }
             }
         }
