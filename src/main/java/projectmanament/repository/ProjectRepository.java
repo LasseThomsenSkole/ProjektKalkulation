@@ -417,11 +417,16 @@ public class ProjectRepository {
 
 
     /**SLET TASK**/
-    public void deleteTask(int taskId){ //todo den skal også slette subtasks som ligger under
+    public void deleteTask(int taskId){ //todo preparedStatement skal måske close ????
         try {
+            String deleteSubtaskSQL = "DELETE FROM subtasks WHERE parent_task_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteSubtaskSQL);
+            preparedStatement.setInt(1, taskId);
+            preparedStatement.executeUpdate();
+
             String SQL = "DELETE FROM tasks " +
                     "WHERE task_id = ?;";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, taskId);
             preparedStatement.executeUpdate();
         }
