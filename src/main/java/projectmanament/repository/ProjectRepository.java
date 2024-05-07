@@ -195,7 +195,7 @@ public class ProjectRepository {
                     double hours = taskResult.getDouble("subtask_hours");
                     Date deadline = taskResult.getDate("subtask_deadline");
                     Status status = Status.valueOf(taskResult.getString("subtask_status"));
-                    subtasks.add(new Subtask(id, name, description, deadline, hours));
+                    subtasks.add(new Subtask(id, name, description, deadline, hours, status));
                 }
             }
         }
