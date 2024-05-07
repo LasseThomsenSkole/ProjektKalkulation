@@ -24,7 +24,7 @@
         <tbody>
         <tr th:each="project : ${projects}">
             <td th:text="${project.id}"></td>
-            <td><a th:href="@{/project/{id}(id=${project.id})}" th:text="${project.name}"></a></td>
+            <td><a th:href="@{/project/{id}(id=${project.id})}" th:text="${project.name}" style="color: #c7156f"></a></td>
             <td th:text="${project.description}"></td>
             <td th:text="${project.totalHours}"></td>
             <td th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></td>

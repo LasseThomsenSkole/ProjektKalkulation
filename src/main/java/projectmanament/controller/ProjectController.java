@@ -50,4 +50,19 @@ public class ProjectController {
         model.addAttribute("project", project);
         return "project-detail";
     }
+
+    @GetMapping("/edit-project-form/{id}")
+    public String editProjectForm(@PathVariable int id, Model model){
+        Project project = projectService.getProject(id);
+        model.addAttribute("project", project);
+        return "edit-project";
+    }
+    @PostMapping("/edit-project/{id}")
+    public String editProject(@PathVariable int id, @ModelAttribute Project updatedProject){
+        projectService.editProject(id, updatedProject);
+        return "redirect:/teamprojects";
+    }
+
+
+
 }
