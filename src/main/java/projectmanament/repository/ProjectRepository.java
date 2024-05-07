@@ -178,10 +178,10 @@ public class ProjectRepository {
     }
 
     /**HENT SUBTASK**/
-    public List<Subtask> getSubtasks(int subtaskId){
+    public List<Subtask> getSubtask(int subtaskId){
         List<Subtask> subtasks = new ArrayList<>();
         try {
-            String taskSQL = "SELECT subtask_id, subtask_name, subtask_description, subtask_hours, subtask_deadline " +
+            String taskSQL = "SELECT subtask_id, subtask_name, subtask_description, subtask_hours, subtask_deadline, subtask_status " +
                     "FROM subtasks " +
                     "WHERE parent_task_id = ?;";
 
@@ -194,6 +194,7 @@ public class ProjectRepository {
                     String description = taskResult.getString("subtask_description");
                     double hours = taskResult.getDouble("subtask_hours");
                     Date deadline = taskResult.getDate("subtask_deadline");
+                    Status status = Status.valueOf(taskResult.getString("subtask_status"));
                     subtasks.add(new Subtask(id, name, description, deadline, hours));
                 }
             }
