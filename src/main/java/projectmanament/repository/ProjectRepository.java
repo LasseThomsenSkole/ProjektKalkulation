@@ -58,7 +58,6 @@ public class ProjectRepository {
 
         List<Task> tasks = getTasks(id);
         List<Subproject> subprojects = getSubprojects(id);
-        System.out.println(subprojects);
         return new Project(id, name, description, tasks, subprojects, totalHours, deadline, status);
     }
 
