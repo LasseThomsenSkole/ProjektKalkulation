@@ -1,5 +1,6 @@
 package projectmanament.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import projectmanament.model.*;
@@ -20,16 +21,38 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
+    private boolean isLoggedIn(HttpSession session){
+        return session.getAttribute("user") != null;
+    }
+
     @GetMapping("")
     public String index(){
         return "index";
     }
+    @GetMapping("/login")
+    public String login(HttpSession session){
+        return "login";
+    }
+    @PostMapping("/login")
+    public String login(@RequestParam("userId") int userId,
+                        @RequestParam("password") String password,
+                        @RequestParam("username") String name,
+                        HttpSession session, Model model){
 
+        if (projectService.login(userId,password)){
+            session.setAttribute("user", new User(userId, name, true, password )); //TODO DEN SKAL IKKE VÆRE TRUE MEN DET FORDI JEG IKKE ANER HVORDAN VI SKAL SE OM DET ER EN ADMIN
+            session.setMaxInactiveInterval(30); //30 sekunder
+            return "redirect:/teamprojects";
+        }
+        model.addAttribute("wrongCredentials", true); //det her kan vi tjekke for i html !!!!
+        return "login";
+    }
     @GetMapping("/teamprojects")
-    public String showProjects(Model model) {
+    public String showProjects(Model model, HttpSession session) {
         List<Project> projects = projectService.findAllProjects();
         model.addAttribute("projects", projects);
-        return "projects";
+        //return "projects";
+        return isLoggedIn(session) ? "projects" : "login"; //hvis isLoggedIn returns false så return til login
     }
 
     @GetMapping("/teamprojects/create")
