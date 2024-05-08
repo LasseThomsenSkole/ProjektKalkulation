@@ -150,7 +150,7 @@ public class ProjectRepository {
 
 
     /**HENT TASK**/
-    public List<Task> getTasks(int taskId){
+    public List<Task> getTasks(int subprojectId){
         List<Task> tasks = new ArrayList<>();
         try {
             String SQL = "SELECT task_id, task_name, task_description, task_hours, task_deadline, task_status " +
@@ -158,7 +158,7 @@ public class ProjectRepository {
                     "WHERE subproject_id = ?;";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
-                preparedStatement.setInt(1, taskId);
+                preparedStatement.setInt(1, subprojectId);
                 ResultSet taskResult = preparedStatement.executeQuery();
                 while (taskResult.next()) {
                     int id = taskResult.getInt("task_id");
@@ -475,11 +475,16 @@ public class ProjectRepository {
 
 
     /**SLET TASK**/
-    public void deleteTask(int taskId){ //todo den skal også slette subtasks som ligger under
+    public void deleteTask(int taskId){ //todo preparedStatement skal måske close ????
         try {
+            String deleteSubtaskSQL = "DELETE FROM subtasks WHERE parent_task_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteSubtaskSQL);
+            preparedStatement.setInt(1, taskId);
+            preparedStatement.executeUpdate();
+
             String SQL = "DELETE FROM tasks " +
                     "WHERE task_id = ?;";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, taskId);
             preparedStatement.executeUpdate();
         }
@@ -587,7 +592,7 @@ public class ProjectRepository {
         try{
             String SQL = "UPDATE tasks SET task_status = ? WHERE task_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik a enums så vi skal bruge .name()
+            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik af enums så vi skal bruge .name()
             preparedStatement.setInt(2, taskID);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -598,7 +603,7 @@ public class ProjectRepository {
         try{
             String SQL = "UPDATE subtasks SET subtask_status = ? WHERE subtask_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik a enums så vi skal bruge .name()
+            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik af enums så vi skal bruge .name()
             preparedStatement.setInt(2, subtaskID);
         } catch (SQLException e) {
             throw new RuntimeException(e);
