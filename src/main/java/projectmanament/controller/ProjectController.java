@@ -2,10 +2,8 @@ package projectmanament.controller;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import projectmanament.model.Project;
+import projectmanament.model.*;
 import org.springframework.stereotype.Controller;
-import projectmanament.model.Status;
-import projectmanament.model.Subproject;
 import projectmanament.service.ProjectService;
 import org.springframework.ui.Model;
 
@@ -79,28 +77,46 @@ public class ProjectController {
     }
 
     /**EDIT**/
-    @GetMapping("/edit-project/{id}")
-    public String editProjectForm(@PathVariable int id, Model model){
-        Project project = projectService.getProject(id);
-        model.addAttribute("project", project);
-        return "edit-project";
+    @GetMapping("/edit/{entity}/{id}")
+    public String editForm(@PathVariable String entity, @PathVariable int id, Model model) {
+        switch (entity) {
+            case "project":
+                Project project = projectService.getProject(id);
+                model.addAttribute("project", project);
+                return "edit-project";
+            case "subproject":
+                Subproject subproject = projectService.getSubprojectById(id);
+                model.addAttribute("subproject", subproject);
+                return "edit-subproject";
+            case "task":
+                Task task = projectService.getTaskById(id);
+                model.addAttribute("task", task);
+                return "edit-task";
+            case "subtask":
+                Subtask subtask = projectService.getSubtaskById(id);
+                model.addAttribute("subtask", subtask);
+                return "edit-subtask";
+            default:
+                return null;
+        }
     }
-    @PostMapping("/edit-project/{id}")
-    public String editProject(@PathVariable int id, @ModelAttribute Project updatedProject){
-        projectService.editProject(id, updatedProject);
-        return "redirect:/project/" + id;
-    }
-
-    @GetMapping("/edit-subproject/{id}")
-    public String editSubprojectForm(@PathVariable int id, Model model){
-        Subproject subproject = projectService.getSubprojectById(id);
-        model.addAttribute("subproject", subproject);
-        return "edit-subproject";
-    }
-    @PostMapping("/edit-subproject/{id}")
-    public String editSubproject(@PathVariable int id, @ModelAttribute Subproject updatedSubproject){
-        projectService.editSubproject(id, updatedSubproject);
-        return "redirect:/project/" + id;
+    @PostMapping("/edit/{entity}/{id}")
+    public String editEntity(@PathVariable String entity, @PathVariable int id, @ModelAttribute Object updatedEntity){
+        switch (entity) {
+            case "project":
+                projectService.editProject(id, (Project) updatedEntity);
+                break;
+            case "subproject":
+                projectService.editSubproject(id, (Subproject) updatedEntity);
+                break;
+            case "task":
+                projectService.editTask(id, (Task) updatedEntity);
+                break;
+            case "subtask":
+                projectService.editSubtask(id, (Subtask) updatedEntity);
+                break;
+        }
+        return "redirect:/" + entity + "/" + id;
     }
 
 

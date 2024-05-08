@@ -9,7 +9,7 @@
 <body>
 <div class="main-content">
     <h2>Ændre oplysninger på projektet <span th:text="${project.name}"></span></h2>
-    <form th:action="@{'/edit-project/' + ${project.id}}" method="post">
+    <form th:action="@{'/edit/project/' + ${project.id}}" method="post">
         <div class="form-group">
             <label for="name">Navn:</label>
             <input type="text" class="form-control" id="name" name="name" th:value="${project.name}">
