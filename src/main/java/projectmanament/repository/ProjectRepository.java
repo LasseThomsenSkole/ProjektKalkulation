@@ -35,14 +35,32 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
-            int id = resultSet.getInt("user_id");
-            String name = resultSet.getString("user_name");
-            boolean isAdmin = resultSet.getBoolean("is_admin");
-            String password = resultSet.getString("password");
-            return new User(id, name, isAdmin, password);
+            if (resultSet.next()){
+                int id = resultSet.getInt("user_id");
+                String name = resultSet.getString("user_name");
+                boolean isAdmin = resultSet.getBoolean("is_admin");
+                String password = resultSet.getString("password");
+                return new User(id, name, isAdmin, password);
+            }
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
+        return null;
+    }
+    public int getIdFromUser(String name, String password){
+        try{
+            String SQL = "SELECT user_id FROM users WHERE user_name = ? AND password = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                return resultSet.getInt(1);
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return 0;
     }
 
     /**GET ALL PROJECTS**/
