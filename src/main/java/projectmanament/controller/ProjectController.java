@@ -34,11 +34,11 @@ public class ProjectController {
         return "login";
     }
     @PostMapping("/login")
-    public String login(@RequestParam("userId") int userId,
+    public String login(
                         @RequestParam("password") String password,
                         @RequestParam("username") String name,
                         HttpSession session, Model model){
-
+        int userId = projectService.getIdFromUser(name, password);
         if (projectService.login(userId,password)){
             session.setAttribute("user", new User(userId, name, true, password )); //TODO DEN SKAL IKKE VÆRE TRUE MEN DET FORDI JEG IKKE ANER HVORDAN VI SKAL SE OM DET ER EN ADMIN
             session.setMaxInactiveInterval(30); //30 sekunder

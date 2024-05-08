@@ -47,7 +47,7 @@ public class ProjectRepository {
         }
         return null;
     }
-    public int getIdFromUser(String name, String password){
+    public int getIdFromUser(String name, String password){ //TODO HVIS DER ER EN BEDRE MÅDE SÅ SKAL DET HER VÆK
         try{
             String SQL = "SELECT user_id FROM users WHERE user_name = ? AND password = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);

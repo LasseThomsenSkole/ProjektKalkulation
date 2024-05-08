@@ -24,7 +24,9 @@ public class ProjectService {
         }
         return false;
     }
-
+    public int getIdFromUser(String name, String password){
+        return projectRepository.getIdFromUser(name, password);
+    }
     public void createProject(String name, String description, Date deadline) {
         projectRepository.createProject(name, description, deadline);
     }
