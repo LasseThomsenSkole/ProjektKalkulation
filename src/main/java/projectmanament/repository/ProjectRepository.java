@@ -579,7 +579,9 @@ public class ProjectRepository {
 
     public List<Project> findAllProjectsByStatus(Status status) {
         List<Project> projects = new ArrayList<>();
-        String query = "SELECT project_id, project_name, project_description, total_hours, project_deadline, project_status FROM projects WHERE project_status = ?;";
+        String query = "SELECT project_id, project_name, project_description, total_hours, project_deadline, project_status " +
+                "FROM projects " +
+                "WHERE project_status = ?;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, status.toString());
             try (ResultSet rs = preparedStatement.executeQuery()) {
@@ -594,7 +596,9 @@ public class ProjectRepository {
     }
     /** Change status for project **/
     public void changeProjectStatus(int projectID, Status newStatus) {
-        String SQL = "UPDATE projects SET project_status = ? WHERE project_id = ?";
+        String SQL = "UPDATE projects " +
+                "SET project_status = ? " +
+                "WHERE project_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
             preparedStatement.setString(1, newStatus.name());
             preparedStatement.setInt(2, projectID);
@@ -610,7 +614,9 @@ public class ProjectRepository {
     /** change status for subproject **/
     public void changeSubprojectStatus(int subprojectID, Status newStatus){
         try{
-            String SQL = "UPDATE subprojects SET subproject_status = ? WHERE subproject_id = ?";
+            String SQL = "UPDATE subprojects " +
+                    "SET subproject_status = ? " +
+                    "WHERE subproject_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik a enums så vi skal bruge .name()
             preparedStatement.setInt(2, subprojectID);
@@ -618,10 +624,13 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
     }
+
     /** change status for task **/
     public void changeTaskStatus(int taskID, Status newStatus){
         try{
-            String SQL = "UPDATE tasks SET task_status = ? WHERE task_id = ?";
+            String SQL = "UPDATE tasks " +
+                    "SET task_status = ? " +
+                    "WHERE task_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik af enums så vi skal bruge .name()
             preparedStatement.setInt(2, taskID);
@@ -629,16 +638,50 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
     }
+
     /** change subtask status **/
     public void changeSubtaskStatus(int subtaskID, Status newStatus){
         try{
-            String SQL = "UPDATE subtasks SET subtask_status = ? WHERE subtask_id = ?";
+            String SQL = "UPDATE subtasks " +
+                    "SET subtask_status = ? " +
+                    "WHERE subtask_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik af enums så vi skal bruge .name()
             preparedStatement.setInt(2, subtaskID);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Project> getProjectsFromUser(int userId){
+        List<Project> projects = new ArrayList<>();
+        try {
+            String SQL = "SELECT project_id, project_name, project_description, total_hours, project_deadline, project_status " +
+                    "FROM projects " +
+                    "JOIN user_project_relation " +
+                    "ON project.project_id = user_project_relation.project_id " +
+                    "WHERE user_project_relation.user_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("project_id");
+                String name = resultSet.getString("project_name");
+                String description = resultSet.getString("project_description");
+                double totalHours = resultSet.getDouble("total_hours");
+                Date deadline = resultSet.getDate("project_deadline");
+                Status status = Status.valueOf(resultSet.getString("project_status"));
+
+                List<Task> tasks = getTasks(id);
+                List<Subproject> subprojects = getSubprojects(id);
+                Project project = new Project(id, name,description, tasks, subprojects, totalHours, deadline, status);
+                projects.add(project);
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return projects;
     }
 
 
