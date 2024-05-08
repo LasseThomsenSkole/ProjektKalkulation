@@ -25,6 +25,10 @@ public class ProjectService {
         return false;
     }
 
+    public List<Project> getProjectsFromUser(int id){
+        return projectRepository.getProjectsFromUser(id);
+    }
+
     public void createProject(String name, String description, Date deadline) {
         projectRepository.createProject(name, description, deadline);
     }
