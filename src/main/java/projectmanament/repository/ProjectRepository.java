@@ -212,7 +212,7 @@ public class ProjectRepository {
     public Task getTaskById(int taskId){
         Task task = null;
         try {
-            String SQL = "SELECT task_id, task_name, task_description, task_hours, task_deadline " +
+            String SQL = "SELECT task_id, task_name, task_description, task_hours, task_deadline, task_status " +
                     "FROM tasks " +
                     "WHERE task_id = ?;";
 
