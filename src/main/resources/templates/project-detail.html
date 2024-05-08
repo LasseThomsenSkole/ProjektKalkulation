@@ -17,15 +17,16 @@
             <h3>Subprojects</h3>
             <ul>
                 <li th:each="subproject : ${project.subprojects}">
-                    <a th:href="@{'/subproject/' + ${subproject.id}}">
-                        <span th:text="${subproject.name}">Subproject Name</span>
-                        <span th:text="${subproject.description}">Description</span>
+                    <a th:href="@{'/subproject/' + ${subproject.id}}" class="no-underline">
+                        <span th:text="${subproject.name}" style="color: #c7156f">Subproject Name</span>
                     </a>
+                    <span th:text="${subproject.description}">Description</span>
                 </li>
             </ul>
         </div>
-        <div>
-            <a th:href="@{'/edit/project/' + ${project.id}}" style="color: white" class="btn btn-success">Ændre projekt</a>
+        <div class="button-container">
+            <a th:href="@{'/edit/project/' + ${project.id}}" class="btn btn-success">Ændre projekt</a>
+            <a th:href="@{'/teamprojects'}" class="btn btn-primary">Tilbage</a>
         </div>
     </div>
 </div>
