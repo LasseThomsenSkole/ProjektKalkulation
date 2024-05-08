@@ -24,7 +24,7 @@ header, footer {
 
 .logo {
     height: 40px;
-    margin-right: 10px; /* Space between logo and logo text */
+    margin-right: 10px;
 }
 
 .logo-text {
@@ -33,7 +33,6 @@ header, footer {
     color: #0c0c0c;
 }
 
-/* Navigation menu styling */
 nav ul {
     list-style: none;
     padding: 0;
@@ -42,26 +41,24 @@ nav ul {
     align-items: center;
 }
 
-
 nav ul li {
-    margin: 0 5px; /* Less distance between buttons */
+    margin: 0 5px;
 }
 
 .nav-button {
     background-color: transparent;
     color: #0c0c0c;
     text-decoration: none;
-    padding: 5px 15px; /* Reduced size of buttons */
+    padding: 5px 15px;
     border-radius: 5px;
-    border: 2px solid #c7156f; /* Pink color for border */
+    border: 2px solid #c7156f;
 }
 
 .nav-button:hover {
-    background-color: #d01275; /* Pink hover background */
+    background-color: #d01275;
     color: transparent;
 }
 
-/* Section and text styling */
 section {
     background-color: #f4f4f4;
     padding: 40px;
@@ -86,31 +83,28 @@ footer {
     font-size: 0.9em;
 }
 
-/* Styling for tables within containers for consistent appearance */
 .table {
-    width: 100%; /* Ensure table uses all available space in the container */
-    margin-top: 20px; /* Space above the table */
-    border-collapse: collapse; /* Ensures borders between cells are merged */
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
 }
 
 .table th, .table td {
-    padding: 8px; /* Padding inside cells for better readability */
-    text-align: left; /* Align text to the left */
-    border-bottom: 1px solid #dee2e6; /* Light grey border for separation */
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
 }
 
 .table thead th {
-    background-color: #d01275; /* Use a blue background for header */
-    color: white; /* White text for contrast */
-    border-bottom: 2px solid #c7156f; /* Darker blue border for a clear separation */
+    background-color: #d01275;
+    color: white;
+    border-bottom: 2px solid #c7156f;
 }
 
-/* Enhance the hover effect for table rows */
 .table tbody tr:hover {
-    background-color: #f8f9fa; /* Light grey background on hover for better user interaction feedback */
+    background-color: #f8f9fa;
 }
 
-/* Main container for layout alignment and padding */
 .main-content {
     max-width: 1200px;
     margin: auto;
@@ -119,66 +113,62 @@ footer {
     border-radius: 8px;
 }
 
-/* Use grid layout for sectioning large pieces of information */
 .details-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* two columns of equal width */
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 
-/* Styling for headings to make them stand out more */
 h2, h3 {
     color: #333;
-    border-bottom: 2px solid #c7156f; /* thematic color underline */
+    border-bottom: 2px solid #c7156f;
     padding-bottom: 5px;
     margin-bottom: 15px;
 }
 
-/* Improved list styling */
 ul {
     list-style: none;
     padding: 0;
 }
 
 .main-content li {
-    background-color: #f8f9fa; /* subtle background for each list item */
+    background-color: #f8f9fa;
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* Styling for task and subproject entries to make them visually distinct */
 span {
-    display: block; /* makes span behave like a block for better control */
+    display: block;
     margin-bottom: 5px;
 }
 
-/* Hover effects for interaction feedback */
 li:hover {
     background-color: #e9ecef;
 }
 
-/* Responsive tweaks */
 @media (max-width: 768px) {
     .details-grid {
-        grid-template-columns: 1fr; /* stack columns on smaller screens */
+        grid-template-columns: 1fr;
     }
 }
 
-/* Button styling for a consistent look across all pages */
-.btn-success, .btn-primary {
+.btn-success, .btn-primary, .btn-secondary {
     background-color: #d01275;
     border: none;
     padding: 8px 16px;
     border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    margin-right: 5px;
 }
 
-.btn-success:hover, .btn-primary:hover {
-    background-color: #c7156f; /* Darker blue on hover */
+.btn-success:hover, .btn-primary:hover, .btn-secondary:hover {
+    background-color: #c7156f;
+    text-decoration: none;
 }
 
-/* Form styling for better visual integration */
 .form-group {
     margin-bottom: 15px;
 }
@@ -196,14 +186,28 @@ input[type="text"], input[type="date"], textarea {
 }
 
 textarea {
-    resize: vertical; /* Allows resizing only vertically */
+    resize: vertical;
 }
 
 .table a {
-    color: black; /* link color to black */
-    text-decoration: none; /* removes underline from links */
+    color: black;
+    text-decoration: none;
 }
 
 .table a:hover {
-    color: gray; /* changes color on hover for better user interaction */
+    color: gray;
+}
+
+.no-underline {
+    text-decoration: none;
+}
+
+.no-underline:hover {
+    text-decoration: none;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
