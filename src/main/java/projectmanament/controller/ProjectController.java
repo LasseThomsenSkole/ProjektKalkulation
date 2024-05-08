@@ -73,7 +73,7 @@ public class ProjectController {
 
     @PostMapping("/teamprojects/{projectId}/status")
     public String updateProjectStatus(@PathVariable("projectId") int projectId, @RequestParam("newStatus") String statusString) {
-        Status newStatus = Status.valueOf(statusString); // Ensure this conversion is safe and valid
+        Status newStatus = Status.valueOf(statusString);
         projectService.changeProjectStatus(projectId, newStatus);
         return "redirect:/projects";
     }
