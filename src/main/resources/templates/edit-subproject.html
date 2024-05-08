@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="main-content">
-  <h2>Ændre oplysninger på subprojektet <span th:text="${subproject.name}"></span></h2>
+  <h2>Rediger <span th:text="${subproject.name}"></span></h2>
   <form th:action="@{'/edit/subproject/' + ${subproject.id}}" method="post">
     <div class="form-group">
       <label for="name">Navn:</label>
