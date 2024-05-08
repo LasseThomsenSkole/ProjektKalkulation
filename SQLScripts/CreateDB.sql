@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS user_project_relation(
     id int auto_increment primary key,
     user_id int not null,
     project_id int not null
-);
+    );
 -- Create a trigger to update total_hours in projects table when subproject hours change
 DELIMITER //
 -- Trigger for updates
