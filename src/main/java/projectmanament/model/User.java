@@ -8,11 +8,12 @@ public class User {
 
     public User(){} //thymeleaf
 
-    public User(int id, String name, String password, boolean isAdmin) {
+    public User(int id, String name, boolean isAdmin, String password) {
         this.id = id;
         this.name = name;
-        this.password = password;
         this.isAdmin = isAdmin;
+        this.password = password;
+
     }
 
 }
