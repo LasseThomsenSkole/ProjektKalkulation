@@ -24,7 +24,6 @@ public class ProjectController {
 
     @GetMapping("")
     public String index(){
-        System.out.println("asdasdasd");
         return "index";
     }
 

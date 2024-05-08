@@ -58,7 +58,7 @@ public class ProjectRepository {
 
         List<Task> tasks = getTasks(id);
         List<Subproject> subprojects = getSubprojects(id);
-
+        System.out.println(subprojects);
         return new Project(id, name, description, tasks, subprojects, totalHours, deadline, status);
     }
 
@@ -101,7 +101,7 @@ public class ProjectRepository {
     public List<Subproject> getSubprojects(int subprojectId){
         List<Subproject> subprojects = new ArrayList<>();
         try {
-            String SQL = "SELECT subproject_id, subproject_name, subproject_description, subproject_hours, subproject_deadline " +
+            String SQL = "SELECT subproject_id, subproject_name, subproject_description, subproject_hours, subproject_deadline, subproject_status " +
                     "FROM subprojects " +
                     "WHERE parent_project_id = ?;";
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
@@ -113,7 +113,8 @@ public class ProjectRepository {
                     String description = subprojectResult.getString("subproject_description");
                     double hours = subprojectResult.getDouble("subproject_hours");
                     Date deadline = subprojectResult.getDate("subproject_deadline");
-                    subprojects.add(new Subproject(id, name, description, hours, deadline));
+                    Status status = Status.valueOf(subprojectResult.getString("subproject_status"));
+                    subprojects.add(new Subproject(id, name, description, hours, deadline, status));
                 }
             }
         }
@@ -127,7 +128,7 @@ public class ProjectRepository {
     public Subproject getSubprojectById(int subprojectId) {
         Subproject subproject = null;
         try {
-            String SQL = "SELECT subproject_id, subproject_name, subproject_description, subproject_hours, subproject_deadline " +
+            String SQL = "SELECT subproject_id, subproject_name, subproject_description, subproject_hours, subproject_deadline, subproject_status " +
                     "FROM subprojects " +
                     "WHERE subproject_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
@@ -139,7 +140,8 @@ public class ProjectRepository {
                     String description = subprojectResult.getString("subproject_description");
                     double hours = subprojectResult.getDouble("subproject_hours");
                     Date deadline = subprojectResult.getDate("subproject_deadline");
-                    subproject = new Subproject(id, name, description, hours, deadline);
+                    Status status = Status.valueOf(subprojectResult.getString("subproject_status"));
+                    subproject = new Subproject(id, name, description, hours, deadline, status);
                 }
             }
         } catch (SQLException e) {
@@ -318,7 +320,7 @@ public class ProjectRepository {
 
 
     /**SLET PROJECT**/
-    public void deleteProject(int projectId){
+    public void deleteProject(int projectId){ //todo måske lav til sql trigger
         try {
             //sletter subprojects fra projects
             String deleteSubprojects = "DELETE FROM subprojects " +
