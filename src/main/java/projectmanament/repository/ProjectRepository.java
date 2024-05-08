@@ -29,8 +29,20 @@ public class ProjectRepository {
     public void init() {
         connection = ConnectionManager.getConnection(db_url, username, pwd);
     }
-    public void test(){
-        System.out.println(username);
+    public User getUserById(int userId){
+        try{
+            String SQL = "SELECT * FROM users WHERE user_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int id = resultSet.getInt("user_id");
+            String name = resultSet.getString("user_name");
+            boolean isAdmin = resultSet.getBoolean("is_admin");
+            String password = resultSet.getString("password");
+            return new User(id, name, isAdmin, password);
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
     /**GET ALL PROJECTS**/
