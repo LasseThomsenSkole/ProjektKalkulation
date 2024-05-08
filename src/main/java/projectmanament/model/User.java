@@ -16,4 +16,19 @@ public class User {
 
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
