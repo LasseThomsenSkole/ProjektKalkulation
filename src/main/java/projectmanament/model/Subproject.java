@@ -7,32 +7,33 @@ public class Subproject {
     private int id;
     private String name;
     private String description;
-    private List<Task> tasks;
-    private java.sql.Date deadline;
     private double hours;
+    private Date deadline;
     private Status status;
+    private List<Task> tasks;
 
-    public Subproject(){} //thymeleaf
+    public Subproject() {} // Thymeleaf kræver en no-args konstruktør
 
-    public Subproject(int id, String name, String description, List<Task> tasks, java.sql.Date deadline, int hours, Status status) {
+    public Subproject(int id, String name, String description, double hours, Date deadline, Status status, List<Task> tasks) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.hours = hours;
+        this.deadline = deadline;
+        this.status = status;
         this.tasks = tasks;
-        this.deadline = deadline;
-        this.hours = hours;
-        this.status = status;
     }
 
-    public Subproject(int id, String name, String description, double hours, java.sql.Date deadline, Status status) {
+    public Subproject(int id, String name, String description, double hours, Date deadline, Status status) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.deadline = deadline;
         this.hours = hours;
+        this.deadline = deadline;
         this.status = status;
     }
 
+    // Getters og setters for alle felter
     public int getId() {
         return id;
     }
@@ -57,21 +58,6 @@ public class Subproject {
         this.description = description;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
-    public java.sql.Date getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
-    }
-
     public double getHours() {
         return hours;
     }
@@ -80,7 +66,27 @@ public class Subproject {
         this.hours = hours;
     }
 
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
     public Status getStatus() {
         return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

@@ -119,6 +119,13 @@ public class ProjectController {
         return "redirect:/" + entity + "/" + id;
     }
 
+    @GetMapping("/subproject/{id}")
+    public String showSubprojectDetails(@PathVariable int id, Model model) {
+        Subproject subproject = projectService.getSubprojectById(id);
+        model.addAttribute("subproject", subproject);
+        return "subproject-detail";
+    }
+
 
 
 }

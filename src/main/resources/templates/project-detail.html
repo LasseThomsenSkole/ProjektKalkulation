@@ -14,24 +14,16 @@
 
     <div class="details-grid">
         <div>
-            <h3>Tasks</h3>
-            <ul>
-                <li th:each="task : ${project.tasks}">
-                    <span th:text="${task.name}">Task Name</span>
-                    <span th:text="${task.description}">Description</span>
-                </li>
-            </ul>
-        </div>
-        <div>
             <h3>Subprojects</h3>
             <ul>
                 <li th:each="subproject : ${project.subprojects}">
-                    <span th:text="${subproject.name}">Subproject Name</span>
-                    <span th:text="${subproject.description}">Description</span>
+                    <a th:href="@{'/subproject/' + ${subproject.id}}">
+                        <span th:text="${subproject.name}">Subproject Name</span>
+                        <span th:text="${subproject.description}">Description</span>
+                    </a>
                 </li>
             </ul>
         </div>
-        <!-- Ved ikke lige hvor den her skal være. mici -->
         <div>
             <a th:href="@{'/edit/project/' + ${project.id}}" style="color: white" class="btn btn-success">Ændre projekt</a>
         </div>
