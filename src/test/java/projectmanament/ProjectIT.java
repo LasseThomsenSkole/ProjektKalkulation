@@ -69,38 +69,38 @@ public class ProjectIT {
                 "project_name VARCHAR(30), " +
                 "project_description VARCHAR(30), " +
                 "total_hours INTEGER, " +
-                "project_deadline DATE" +
+                "project_deadline DATE," +
+                    "project_status ENUM('DONE', 'IN_PROGRESS','TODO','ARCHIVED', 'NOT_STARTED') not null default 'NOT_STARTED'" +
                 ");";
         stmt.addBatch(createTable);
             stmt.executeBatch();
             System.out.println("Database created");
 
-            String sqlInsertRow = "INSERT INTO projects VALUES (10,'En test','Test', 11, '2024-11-01')";
+            String sqlInsertRow = "INSERT INTO projects VALUES (10,'test','Test', 11, '2024-11-01', 'NOT_STARTED')";
             stmt.addBatch(sqlInsertRow);
-            sqlInsertRow = "INSERT INTO projects VALUES (20,'To test','Test test', 21, '2024-11-02')";
+            sqlInsertRow = "INSERT INTO projects VALUES (20,'To test','Test test', 21, '2024-11-02', 'IN_PROGRESS')";
             stmt.addBatch(sqlInsertRow);
-            sqlInsertRow = "INSERT INTO projects VALUES (30,'Tre test','Test test test', 31, '2024-11-03')";
+            sqlInsertRow = "INSERT INTO projects VALUES (30,'Tre test','Test test test', 31, '2024-11-03', 'DONE')";
             stmt.addBatch(sqlInsertRow);
-            sqlInsertRow = "INSERT INTO projects VALUES(40,'Fire test','Test test test test', 41, '2024-11-04')";
+            sqlInsertRow = "INSERT INTO projects VALUES(40,'Fire test','Test test test test', 41, '2024-11-04', 'DONE')";
             stmt.addBatch(sqlInsertRow);
             int rows[] = stmt.executeBatch();
             System.out.println("Inserted " + rows.length + " records into the table");
-
     }
 
     @Test
-    void findProjectByID() throws SQLException {
+    void findProject() throws SQLException {
         Project found = repository.getProject(10);
-        assertEquals("En test", found.getName());
+        assertEquals("test", found.getName());
     }
 
     @Test
-    void deleteProject20() throws IncorrectProjectIDException {
+    void deleteProject20() {
         repository.deleteProject(20);
     }
 
     @Test
-    void findDepartment40() throws IncorrectProjectIDException, SQLException {
+    void findProject30() throws SQLException {
         Project found = repository.getProject(30);
         assertNotNull(found);
     }
