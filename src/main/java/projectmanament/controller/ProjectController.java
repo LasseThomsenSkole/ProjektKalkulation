@@ -26,11 +26,15 @@ public class ProjectController {
     }
 
     @GetMapping("")
-    public String index(){
-        return "index";
+    public String index(HttpSession session, Model model){
+        if (isLoggedIn(session)){
+            model.addAttribute("user", session.getAttribute("user"));
+            return "index";
+        }
+        return "login";
     }
     @GetMapping("/login")
-    public String login(HttpSession session){
+    public String login(){
         return "login";
     }
     @PostMapping("/login")
@@ -42,7 +46,7 @@ public class ProjectController {
         if (projectService.login(userId,password)){
             session.setAttribute("user", new User(userId, name, true, password )); //TODO DEN SKAL IKKE VÆRE TRUE MEN DET FORDI JEG IKKE ANER HVORDAN VI SKAL SE OM DET ER EN ADMIN
             session.setMaxInactiveInterval(30); //30 sekunder
-            return "redirect:/teamprojects";
+            return "redirect:/";
         }
         model.addAttribute("wrongCredentials", true); //det her kan vi tjekke for i html !!!!
         return "login";
