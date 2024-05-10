@@ -27,6 +27,9 @@ public class ProjectService {
     public int getIdFromUser(String name, String password){
         return projectRepository.getIdFromUser(name, password);
     }
+    public void insertUser(String username, String password){
+        projectRepository.insertUser(username, password);
+    }
 
     public List<Project> getProjectsFromUser(int id){
         return projectRepository.getProjectsFromUser(id);
