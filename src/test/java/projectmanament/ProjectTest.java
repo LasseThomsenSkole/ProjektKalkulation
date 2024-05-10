@@ -4,10 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import projectmanament.model.IncorrectProjectIDException;
 import projectmanament.model.Project;
 import projectmanament.model.Subproject;
-import projectmanament.model.Task;
 import projectmanament.repository.ProjectRepository;
 
 import java.sql.SQLException;
@@ -36,7 +34,7 @@ public class ProjectTest {
     }
 
     @Test
-    void deleteProject3() throws IncorrectProjectIDException {
+    void deleteProject3()  {
         repository.deleteProject(3);
     }
 
