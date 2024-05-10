@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>AlphaManagement</title>
+</head>
+<body>
+<h2>Opret konto</h2>
+<form th:action="@{/createAccount}" method="post">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required autofocus/>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required/>
+    </div>
+    <button type="submit">Opret</button>
+</form>
+</body>
+</html>
