@@ -42,13 +42,21 @@ public class ProjectController {
                         @RequestParam("password") String password,
                         @RequestParam("username") String name,
                         HttpSession session, Model model){
-        int userId = projectService.getIdFromUser(name, password);
+        int userId = projectService.getIdFromUser(name, password); //todo hvis det kan laves bedre skal det være sådan
         if (projectService.login(userId,password)){
             session.setAttribute("user", new User(userId, name, true, password )); //TODO DEN SKAL IKKE VÆRE TRUE MEN DET FORDI JEG IKKE ANER HVORDAN VI SKAL SE OM DET ER EN ADMIN
             session.setMaxInactiveInterval(30); //30 sekunder
             return "redirect:/";
         }
         model.addAttribute("wrongCredentials", true); //det her kan vi tjekke for i html !!!!
+        return "login";
+    }
+    @GetMapping("/createAccount")
+    public String createAccount(HttpSession session){
+        if (isLoggedIn(session)){
+            User user = (User) session.getAttribute("user");
+            return user.isAdmin() ? "create-account" : "login"; //hvis man er admin kan man oprette accounts
+        }
         return "login";
     }
     @GetMapping("/teamprojects")
