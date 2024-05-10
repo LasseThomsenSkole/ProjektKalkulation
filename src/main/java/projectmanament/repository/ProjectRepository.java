@@ -1,6 +1,7 @@
 package projectmanament.repository;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import projectmanament.manager.ConnectionManager;
 import projectmanament.model.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,6 +62,17 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
         return 0;
+    }
+    public void insertUser(String username, String password){
+        try {
+            String SQL = "INSERT INTO users (user_name, password) VALUES (?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
     /**GET ALL PROJECTS**/
