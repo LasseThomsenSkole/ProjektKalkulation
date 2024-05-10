@@ -51,7 +51,7 @@ public class ProjectController {
         model.addAttribute("wrongCredentials", true); //det her kan vi tjekke for i html !!!!
         return "login";
     }
-    @GetMapping("/createAccount")
+    @GetMapping("/createaccount")
     public String createAccount(HttpSession session){
         if (isLoggedIn(session)){
             User user = (User) session.getAttribute("user");
@@ -59,7 +59,7 @@ public class ProjectController {
         }
         return "login";
     }
-    @PostMapping("/createAccount")
+    @PostMapping("/createaccount")
     public String createAccountPost(@RequestParam("username") String username,
                                     @RequestParam("password") String password,
                                     HttpSession session){
