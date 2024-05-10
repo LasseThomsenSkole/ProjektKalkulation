@@ -59,6 +59,19 @@ public class ProjectController {
         }
         return "login";
     }
+    @PostMapping("/createAccount")
+    public String createAccountPost(@RequestParam("username") String username,
+                                    @RequestParam("password") String password,
+                                    HttpSession session){
+        if (isLoggedIn(session)){
+            User user = (User) session.getAttribute("user");
+            if (user.isAdmin()){
+                projectService.insertUser(username, password);
+                return "redirect:/login"; //TODO måske lave en account endpoint???? -Lasse
+            }
+        }
+        return "redirect:/login";
+    }
     @GetMapping("/teamprojects")
     public String showProjects(Model model, HttpSession session) {
         List<Project> projects = projectService.findAllProjects();
