@@ -454,7 +454,7 @@ public class ProjectRepository {
 
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
