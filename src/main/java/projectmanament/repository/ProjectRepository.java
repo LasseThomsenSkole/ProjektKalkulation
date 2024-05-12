@@ -582,7 +582,7 @@ public class ProjectRepository {
 
     }
 
-    public List<Project> findAllProjectsByStatus(Status status) {
+    public List<Project> findAllProjectsByStatus(Status status) { //TODO inden vi aflevere skal vi se om vi bruger dem her
         List<Project> projects = new ArrayList<>();
         String query = "SELECT project_id, project_name, project_description, total_hours, project_deadline, project_status " +
                 "FROM projects " +
@@ -625,6 +625,10 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik a enums så vi skal bruge .name()
             preparedStatement.setInt(2, subprojectID);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new IllegalStateException("No project found with ID: " + subprojectID);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
