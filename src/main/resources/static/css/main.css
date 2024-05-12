@@ -56,7 +56,7 @@ nav ul li {
 
 .nav-button:hover {
     background-color: #d01275;
-    color: transparent;
+    color: white !important;
 }
 
 section {
@@ -195,7 +195,7 @@ textarea {
 }
 
 .table a:hover {
-    color: gray;
+    color: grey;
 }
 
 .no-underline {
