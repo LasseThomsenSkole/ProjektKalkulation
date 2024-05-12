@@ -9,6 +9,23 @@
 <body>
 <div th:insert="~{fragments/header :: header}"></div>
 
+<div class="container">
+    <h1 class="my-4">Alle Projekter</h1>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form th:action="@{/teamprojects}" method="get" class="form-inline">
+                <label for="sort" class="mr-2">Sort by:</label>
+                <select name="sort" id="sort" class="form-control mr-2">
+                    <option value="name">Name</option>
+                    <option value="deadline">Deadline</option>
+                    <option value="status">Status</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Sort</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="main-content mt-5">
     <h2>Projekter Oversigt</h2>
     <!-- Projekter Oversigt -->

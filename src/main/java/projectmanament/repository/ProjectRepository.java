@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 //import static com.sun.beans.introspect.PropertyInfo.Name.description;
@@ -86,6 +87,23 @@ public class ProjectRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error fetching all projects", e);
+        }
+        return projects;
+    }
+
+    public List<Project> findAllProjectsSorted(String sort) {
+        List<Project> projects = findAllProjects();
+        switch (sort) {
+            case "deadline":
+                projects.sort(Comparator.comparing(Project::getDeadline));
+                break;
+            case "status":
+                projects.sort(Comparator.comparing(Project::getStatus));
+                break;
+            case "name":
+            default:
+                projects.sort(Comparator.comparing(Project::getName));
+                break;
         }
         return projects;
     }

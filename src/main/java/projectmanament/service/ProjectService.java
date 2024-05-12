@@ -17,6 +17,11 @@ public class ProjectService {
     public List<Project> findAllProjects() {
         return projectRepository.findAllProjects();
     }
+
+    public List<Project> findAllProjectsSorted(String sort) {
+        return projectRepository.findAllProjectsSorted(sort);
+    }
+
     public boolean login(int userID, String password){
         User user = projectRepository.getUserById(userID);
         if (user != null){

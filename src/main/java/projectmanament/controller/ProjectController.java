@@ -73,10 +73,14 @@ public class ProjectController {
         return "redirect:/login";
     }
     @GetMapping("/teamprojects")
-    public String showProjects(Model model, HttpSession session) {
-        List<Project> projects = projectService.findAllProjects();
+    public String showAllProjects(@RequestParam(value = "sort", required = false) String sort, Model model, HttpSession session) {
+        List<Project> projects;
+        if (sort != null) {
+            projects = projectService.findAllProjectsSorted(sort);
+        } else {
+            projects = projectService.findAllProjects();
+        }
         model.addAttribute("projects", projects);
-        //return "projects";
         return isLoggedIn(session) ? "projects" : "login"; //hvis isLoggedIn returns false så return til login
     }
 
