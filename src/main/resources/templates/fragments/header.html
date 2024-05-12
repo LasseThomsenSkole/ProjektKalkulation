@@ -11,6 +11,8 @@
     </div>
     <nav>
         <ul>
+            <!-- der er nooget i css som overrider hinanden, som gør at teksten ikke bliver hvid,når man hover.
+            Kunne simpelhent ikke finde det, så har overridet med styling her i html i stedet. mici-->
             <li><a th:href="@{/myprojects}" class="nav-button" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">MINE PROJEKTER</a></li>
             <li><a th:href="@{/teamprojects}" class="nav-button" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">ALLE PROJEKTER</a></li>
             <li><a th:href="@{/archivedprojects}" class="nav-button" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">ARKIVEREDE PROJEKTER</a></li>
