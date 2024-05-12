@@ -461,7 +461,7 @@ public class ProjectRepository {
 
 
     /**SLET SUBPROJECT**/
-    public void deleteSubproject(int subprojectId){ //todo den burde også slette tasks og subtasks som ligger under
+    public void deleteSubproject(int subprojectId){ //todo den burde også slette tasks og subtasks som ligger under -LAV DET TIL EN SQL TRIGGER
         try {
             String SQL = "DELETE FROM subprojects " +
                     "WHERE subprojects_id = ?;";
@@ -472,32 +472,7 @@ public class ProjectRepository {
         catch (SQLException e){
             throw new RuntimeException(e);
         }
-
     }
-
-
-
-    /**DELETE CHECK SUBPROJECT**/
-    public boolean isSubprojectDeletedFromProjects(int subprojectId){
-        try {
-            String SQL = "SELECT count(*) AS count" +
-                    "FROM subprojects" +
-                    "LEFT JOIN projects ON subprojects.parent_project_id = projects.project_id" +
-                    "WHERE subprojects.subproject_id = ? AND projects.project_id = ?;";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, subprojectId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
-                int count = resultSet.getInt("count");
-                return count == 0; // return true hvis det er ikke er noget
-            }
-        }
-        catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-        return false;
-    }
-
 
 
     /**OPRET TASK**/
@@ -505,7 +480,7 @@ public class ProjectRepository {
         try {
             String SQL = "INSERT INTO tasks (task_name, task_description, task_hours, task_deadline, subproject_id)" +
                     "VALUES (?, ?, ?, ?, ?);";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL); //todo se lige om det skal laves til en metode
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, description);
             preparedStatement.setDouble(3, hours);
@@ -527,7 +502,7 @@ public class ProjectRepository {
             preparedStatement.setInt(4, taskId);
             preparedStatement.setString(1, edittedTask.getName());
             preparedStatement.setString(2,edittedTask.getDescription());
-            preparedStatement.setDate(3, new Date(edittedTask.getDeadline().getTime())); //java date => SQL date
+            preparedStatement.setDate(3, edittedTask.getDeadline());
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
@@ -536,7 +511,7 @@ public class ProjectRepository {
 
 
     /**SLET TASK**/
-    public void deleteTask(int taskId){ //todo preparedStatement skal måske close ????
+    public void deleteTask(int taskId){ //TODO NÅR DER KOMMER EN SQL TRIGGER SKAL DET KUN VÆRE EN TING SOM BLIVER SLETTET
         try {
             String deleteSubtaskSQL = "DELETE FROM subtasks WHERE parent_task_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(deleteSubtaskSQL);
@@ -584,7 +559,7 @@ public class ProjectRepository {
             preparedStatement.setInt(4, subtaskId);
             preparedStatement.setString(1, edittedSubtask.getName());
             preparedStatement.setString(2, edittedSubtask.getDescription());
-            preparedStatement.setDate(3, new Date(edittedSubtask.getDeadline().getTime())); //java date => SQL date
+            preparedStatement.setDate(3, edittedSubtask.getDeadline());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
