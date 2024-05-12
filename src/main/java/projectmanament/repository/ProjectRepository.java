@@ -627,7 +627,7 @@ public class ProjectRepository {
             preparedStatement.setInt(2, subprojectID);
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected == 0) {
-                throw new IllegalStateException("No project found with ID: " + subprojectID);
+                throw new IllegalStateException("No subproject found with ID: " + subprojectID);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -643,6 +643,10 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik af enums så vi skal bruge .name()
             preparedStatement.setInt(2, taskID);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new IllegalStateException("No task found with ID: " + taskID);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -657,6 +661,10 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik af enums så vi skal bruge .name()
             preparedStatement.setInt(2, subtaskID);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new IllegalStateException("No subtask found with ID: " + subtaskID);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
