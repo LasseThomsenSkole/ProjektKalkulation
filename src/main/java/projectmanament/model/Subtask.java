@@ -1,6 +1,6 @@
 package projectmanament.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Subtask {
     private int id;
