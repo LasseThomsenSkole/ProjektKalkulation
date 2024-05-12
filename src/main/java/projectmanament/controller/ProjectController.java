@@ -121,7 +121,7 @@ public class ProjectController {
     public String updateProjectStatus(@PathVariable("projectId") int projectId, @RequestParam("newStatus") String statusString) {
         Status newStatus = Status.valueOf(statusString);
         projectService.changeProjectStatus(projectId, newStatus);
-        return "redirect:/projects";
+        return "redirect:/teamprojects";
     }
 
     /**EDIT**/
