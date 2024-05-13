@@ -72,6 +72,15 @@ public class ProjectController {
         }
         return "redirect:/login";
     }
+
+    @GetMapping("/logout")
+    public String LogOut(HttpSession session){
+        //end session
+        session.invalidate();
+        return "login";
+    }
+
+
     @GetMapping("/projects")
     public String showAllProjects(@RequestParam(value = "sort", required = false) String sort, Model model, HttpSession session) {
         List<Project> projects;
