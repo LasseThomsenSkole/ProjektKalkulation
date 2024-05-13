@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
+<head>
+    <link rel="stylesheet" href="/css/fragment.css" type="text/css">
+</head>
 <header th:fragment="header">
     <div class="logo-container">
         <img src="/img/logo_alpha.png" alt="Alpha Manager Logo" class="logo">
-        <link rel="stylesheet" href="/css/fragment.css" type="text/css">
         <span class="logo-text">Alpha Manager</span>
     </div>
     <nav>
         <ul>
-            <li><a th:href="@{/myprojects}" class="nav-button">MINE PROJEKTER</a></li>
-            <li><a th:href="@{/teamprojects}" class="nav-button">ALLE PROJEKTER</a></li>
-            <li><a th:href="@{/archivedprojects}" class="nav-button">ARKIVEREDE PROJEKTER</a></li>
-            <li><a th:href="@{/tasklist}" class="nav-button">MINE OPGAVER</a></li>
-            <li><a th:href="@{/calendar}" class="nav-button">KALENDER</a></li>
+            <!-- der er nooget i css som overrider hinanden, som gør at teksten ikke bliver hvid,når man hover.
+            Kunne simpelhent ikke finde det, så har overridet med styling her i html i stedet. mici-->
+            <li><a th:href="@{/myprojects}" class="nav-button" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">MINE PROJEKTER</a></li>
+            <li><a th:href="@{/teamprojects}" class="nav-button" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">ALLE PROJEKTER</a></li>
+            <li><a th:href="@{/archivedprojects}" class="nav-button" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">ARKIVEREDE PROJEKTER</a></li>
+            <li><a th:href="@{/tasklist}" class="nav-button" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">MINE OPGAVER</a></li>
+            <li><a th:href="@{/calendar}" class="nav-button" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">KALENDER</a></li>
         </ul>
     </nav>
 </header>
