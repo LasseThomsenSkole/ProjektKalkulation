@@ -116,6 +116,22 @@ public class ProjectController {
         return "redirect:/projects";
     }
 
+    @PostMapping("/subprojects/{subprojectId}/status")
+    public String updateSubprojectStatus(@PathVariable("subprojectId") int subprojectId,
+                                         @RequestParam("newStatus") String statusString) {
+        Status newStatus = Status.valueOf(statusString);
+        projectService.changeSubprojectStatus(subprojectId, newStatus);
+        return "redirect:/subproject/" + subprojectId;
+    }
+
+    @PostMapping("/tasks/{taskId}/status")
+    public String updateTaskStatus(@PathVariable("taskId") int taskId,
+                                   @RequestParam("newStatus") String statusString) {
+        Status newStatus = Status.valueOf(statusString);
+        projectService.changeTaskStatus(taskId, newStatus);
+        return "redirect:/task/" + taskId;
+    }
+
     /**EDIT**/
     @GetMapping("/edit/{entity}/{id}")
     public String editForm(@PathVariable String entity, @PathVariable int id, Model model) {
@@ -165,6 +181,8 @@ public class ProjectController {
         model.addAttribute("subproject", subproject);
         return "subproject-detail";
     }
+
+
 
 
 
