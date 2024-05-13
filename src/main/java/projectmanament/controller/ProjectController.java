@@ -92,7 +92,7 @@ public class ProjectController {
     @PostMapping("/projects/create")
     public String createProject(@RequestParam String name, @RequestParam String description, @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline, Model model) {
         projectService.createProject(name, description, Date.valueOf(deadline));
-        return "redirect:/teamprojects";
+        return "redirect:/projects";
     }
 
     @GetMapping("/project/{id}")
