@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS projects (
     project_name VARCHAR(50) NOT NULL,
     project_description VARCHAR(255) NOT NULL,
     total_hours DOUBLE NOT NULL DEFAULT 0,
+    prject_startdate DATE,
     project_deadline DATE,
     project_status ENUM('DONE', 'IN_PROGRESS', 'TODO', 'ARCHIVED', 'NOT_STARTED') NOT NULL DEFAULT 'NOT_STARTED'
     );
@@ -22,6 +23,7 @@ CREATE TABLE IF NOT EXISTS subprojects (
     subproject_name VARCHAR(50) NOT NULL,
     subproject_description VARCHAR(255) NOT NULL,
     subproject_hours DOUBLE NOT NULL DEFAULT 0,
+    subproject_startdate DATE,
     subproject_deadline DATE,
     subproject_status ENUM('DONE', 'IN_PROGRESS', 'TODO', 'ARCHIVED', 'NOT_STARTED') NOT NULL DEFAULT 'NOT_STARTED',
     parent_project_id INT NOT NULL,
@@ -33,6 +35,7 @@ CREATE TABLE IF NOT EXISTS tasks (
     task_name VARCHAR(50) NOT NULL,
     task_description VARCHAR(255) NOT NULL,
     task_hours DOUBLE NOT NULL DEFAULT 0,
+    task_startdate DATE,
     task_deadline DATE,
     task_status ENUM('DONE', 'IN_PROGRESS', 'TODO', 'ARCHIVED', 'NOT_STARTED') NOT NULL DEFAULT 'NOT_STARTED',
     subproject_id INT NOT NULL,
@@ -44,6 +47,7 @@ CREATE TABLE IF NOT EXISTS subtasks (
     subtask_name VARCHAR(50) NOT NULL,
     subtask_description VARCHAR(255) NOT NULL,
     subtask_hours DOUBLE NOT NULL DEFAULT 0,
+    subtask_startdate DATE,
     subtask_deadline DATE,
     subtask_status ENUM('DONE', 'IN_PROGRESS', 'TODO', 'ARCHIVED', 'NOT_STARTED') NOT NULL DEFAULT 'NOT_STARTED',
     parent_task_id INT NOT NULL,
