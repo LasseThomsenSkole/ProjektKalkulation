@@ -216,7 +216,7 @@ public class ProjectController {
         model.addAttribute("subproject", task);
         return "task-detail";
     }
-    @GetMapping("/subproject/{id}")
+    @GetMapping("/subtask/{id}")
     public String showSubtaskDetails(@PathVariable int id, Model model, HttpSession session) {
         if (!isLoggedIn(session)){
             return "login";
