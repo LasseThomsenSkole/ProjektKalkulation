@@ -39,13 +39,12 @@ public class ProjectController {
     }
     @PostMapping("/login")
     public String login(
-                        @RequestParam("password") String password,
                         @RequestParam("username") String name,
+                        @RequestParam("password") String password,
                         HttpSession session, Model model){
-        int userId = projectService.getIdFromUser(name, password); //todo hvis det kan laves bedre skal det være sådan
-        if (projectService.login(userId,password)){
-            session.setAttribute("user", new User(userId, name, true, password )); //TODO DEN SKAL IKKE VÆRE TRUE MEN DET FORDI JEG IKKE ANER HVORDAN VI SKAL SE OM DET ER EN ADMIN
-            session.setMaxInactiveInterval(30); //30 sekunder
+        if (projectService.login(name,password)){
+            session.setAttribute("user", projectService.getUserFromName(name)); //todo spørg om der er en bedre måde at gøre det her på
+            session.setMaxInactiveInterval(300); //30 sekunder
             return "redirect:/";
         }
         model.addAttribute("wrongCredentials", true); //det her kan vi tjekke for i html !!!!
