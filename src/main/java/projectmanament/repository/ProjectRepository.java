@@ -754,7 +754,18 @@ public class ProjectRepository {
         }
         return projects;
     }
-
+    //bruges til at tjekke om en bruger allerede eksisterer - til når man skal oprette en bruger
+    public boolean userAlreadyExists(String username){
+        try {
+            String SQL = "SELECT * FROM users WHERE user_name = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 
 
 

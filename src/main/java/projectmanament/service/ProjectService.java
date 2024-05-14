@@ -108,5 +108,8 @@ public class ProjectService {
         projectRepository.changeSubtaskStatus(subtaskId, newStatus);
     }
 
+    public boolean userAlreadyExists(String username){
+        return projectRepository.userAlreadyExists(username);
+    }
 
 }
