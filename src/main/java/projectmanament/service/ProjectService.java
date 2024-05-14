@@ -22,8 +22,8 @@ public class ProjectService {
         return projectRepository.findAllProjectsSorted(sort);
     }
 
-    public boolean login(int userID, String password){
-        User user = projectRepository.getUserById(userID);
+    public boolean login(String name, String password){ //TODO MÅSKE LAV OM
+        User user = projectRepository.getUserFromName(name);
         if (user != null){
             return user.getPassword().equals(password);
         }
