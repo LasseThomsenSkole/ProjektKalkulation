@@ -6,12 +6,12 @@
     <title>AlphaManagement - Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/main.css">
-    <div class="logo-container">
-        <img src="/img/logo_alpha.png" alt="Alpha Manager Logo" class="logo">
-        <span class="logo-text">Alpha Manager</span>
-    </div>
 </head>
 <body>
+<div class="logo-container">
+    <img src="/img/logo_alpha.png" alt="Alpha Manager Logo" class="logo">
+    <span class="logo-text">Alpha Manager</span>
+</div>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -25,6 +25,10 @@
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" class="form-control" required/>
                 </div>
+                <div class="text-center" style="color: #b80000" th:if="${wrongCredentials}">
+                    Forkert brugernavn eller adgangskode.
+                </div>
+                <br>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Login</button>
                 </div>
