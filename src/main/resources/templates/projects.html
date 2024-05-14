@@ -59,9 +59,9 @@
                 <form th:action="@{'/projects/' + ${project.id} + '/status'}" method="post">
                     <label>
                         <select name="newStatus">
-                            <option value="DONE" th:selected="${project.status == 'DONE'}">Færdig</option>
-                            <option value="IN_PROGRESS" th:selected="${project.status == 'IN_PROGRESS'}">I gang</option>
-                            <option value="TO_DO" th:selected="${project.status == 'TO_DO'}">At gøre</option>
+                            <option value="DONE" th:selected="${project.status == 'DONE'}">Afsluttet</option>
+                            <option value="IN_PROGRESS" th:selected="${project.status == 'IN_PROGRESS'}">Påbegyndt</option>
+                            <option value="TO_DO" th:selected="${project.status == 'TO_DO'}">To do</option>
                             <option value="ARCHIVED" th:selected="${project.status == 'ARCHIVED'}">Arkiveret</option>
                             <option value="NOT_STARTED" th:selected="${project.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
                         </select>

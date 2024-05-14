@@ -1,11 +1,11 @@
 package projectmanament.model;
 
 public enum Status {
-    DONE("Done"),
-    IN_PROGRESS("In Progress"),
-    TO_DO("To Do"),
-    ARCHIVED("Archived"),
-    NOT_STARTED("Not Started");
+    DONE("Afsluttet"),
+    IN_PROGRESS("påbegyndt"),
+    TO_DO("To do"),
+    ARCHIVED("Arkiveret"),
+    NOT_STARTED("Ikke påbegyndt");
 
     private final String displayName;
 
