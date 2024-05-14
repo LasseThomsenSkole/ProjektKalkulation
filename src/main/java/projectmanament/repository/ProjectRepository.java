@@ -369,22 +369,38 @@ public class ProjectRepository {
 
 
     /**OPRET PROJECT**/
-    public void createProject(String name, String description, Date startDate, Date deadline) {
+    public int createProject(String name, String description, Date startDate, Date deadline) {
+        int projectId = 0;
         try {
             String SQL = "INSERT INTO projects (project_name, project_description, project_startdate, project_deadline) " +
                     "VALUES (?, ?, ?, ?);";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, description);
             preparedStatement.setDate(3, startDate);
             preparedStatement.setDate(4, deadline);
             preparedStatement.executeUpdate();
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                projectId = generatedKeys.getInt(1);
+            }
         }
         catch (SQLException e){
             throw new RuntimeException(e);
         }
+        return projectId;
     }
-
+    public void createProjectRelation(int userId, int projectId){
+        try {
+            String SQL = "INSERT INTO user_project_relation (user_id, project_id) VALUES (?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, projectId);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 
 
     /**EDIT PROJECT**/
