@@ -46,10 +46,10 @@ public class ProjectController {
                         HttpSession session, Model model){
         if (projectService.login(name,password)){
             session.setAttribute("user", projectService.getUserFromName(name)); //todo spørg om der er en bedre måde at gøre det her på
-            session.setMaxInactiveInterval(300); //30 sekunder
+            session.setMaxInactiveInterval(300); // 5 minutter
             return "redirect:/";
         }
-        model.addAttribute("wrongCredentials", true); //det her kan vi tjekke for i html !!!!
+        model.addAttribute("wrongCredentials", true);
         return "login";
     }
 
@@ -153,7 +153,10 @@ public class ProjectController {
     }
 
     @GetMapping("/edit/{entity}/{id}")
-    public String editForm(@PathVariable String entity, @PathVariable int id, Model model) {
+    public String editForm(@PathVariable String entity, @PathVariable int id, Model model, HttpSession session) {
+        if (!isLoggedIn(session)){
+            return "login";
+        }
         switch (entity) {
             case "project":
                 Project project = projectService.getProject(id);
@@ -172,7 +175,7 @@ public class ProjectController {
                 model.addAttribute("subtask", subtask);
                 return "edit-subtask";
             default:
-                return null;
+                return "redirect:/projects";
         }
     }
 
