@@ -71,7 +71,16 @@ public class ProjectController {
         }
         return "redirect:/login";
     }
-    @GetMapping("/teamprojects")
+
+    @GetMapping("/logout")
+    public String LogOut(HttpSession session){
+        //end session
+        session.invalidate();
+        return "login";
+    }
+
+
+    @GetMapping("/projects")
     public String showAllProjects(@RequestParam(value = "sort", required = false) String sort, Model model, HttpSession session) {
         List<Project> projects;
         if (sort != null) {
@@ -83,15 +92,15 @@ public class ProjectController {
         return isLoggedIn(session) ? "projects" : "login"; //hvis isLoggedIn returns false så return til login
     }
 
-    @GetMapping("/teamprojects/create")
+    @GetMapping("/projects/create")
     public String createProjectForm() {
         return "create-project";
     }
 
-    @PostMapping("/teamprojects/create")
+    @PostMapping("/projects/create")
     public String createProject(@RequestParam String name, @RequestParam String description, @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline, Model model) {
         projectService.createProject(name, description, Date.valueOf(deadline));
-        return "redirect:/teamprojects";
+        return "redirect:/projects";
     }
 
     @GetMapping("/project/{id}")
@@ -101,18 +110,6 @@ public class ProjectController {
         return "project-detail";
     }
 
-    @GetMapping("/projects")
-    public String showProjectsByStatus(@RequestParam(required = false) Status status, Model model) {
-        List<Project> projects;
-        if (status != null) {
-            projects = projectService.findAllProjectsByStatus(status);
-        } else {
-            projects = projectService.findAllProjects();
-        }
-        model.addAttribute("projects", projects);
-        return "projects"; // View name
-    }
-
     @GetMapping("/archivedprojects")
     public String showArchivedProjects(Model model) {
         List<Project> archivedProjects = projectService.findArchivedProjects();
@@ -120,11 +117,27 @@ public class ProjectController {
         return "archived-projects";
     }
 
-    @PostMapping("/teamprojects/{projectId}/status")
+    @PostMapping("/projects/{projectId}/status")
     public String updateProjectStatus(@PathVariable("projectId") int projectId, @RequestParam("newStatus") String statusString) {
         Status newStatus = Status.valueOf(statusString);
         projectService.changeProjectStatus(projectId, newStatus);
-        return "redirect:/teamprojects";
+        return "redirect:/projects";
+    }
+
+    @PostMapping("/subprojects/{subprojectId}/status")
+    public String updateSubprojectStatus(@PathVariable("subprojectId") int subprojectId,
+                                         @RequestParam("newStatus") String statusString) {
+        Status newStatus = Status.valueOf(statusString);
+        projectService.changeSubprojectStatus(subprojectId, newStatus);
+        return "redirect:/subproject/" + subprojectId;
+    }
+
+    @PostMapping("/tasks/{taskId}/status")
+    public String updateTaskStatus(@PathVariable("taskId") int taskId,
+                                   @RequestParam("newStatus") String statusString) {
+        Status newStatus = Status.valueOf(statusString);
+        projectService.changeTaskStatus(taskId, newStatus);
+        return "redirect:/task/" + taskId;
     }
 
     /**EDIT**/
@@ -176,6 +189,8 @@ public class ProjectController {
         model.addAttribute("subproject", subproject);
         return "subproject-detail";
     }
+
+
 
 
 

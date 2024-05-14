@@ -9,25 +9,25 @@
 <body>
 <div th:insert="~{fragments/header :: header}"></div>
 
-<div class="container">
-    <h1 class="my-4">Alle Projekter</h1>
-    <div class="row mb-4">
-        <div class="col-md-6">
-            <form th:action="@{/teamprojects}" method="get" class="form-inline">
-                <label for="sort" class="mr-2">Sort by:</label>
-                <select name="sort" id="sort" class="form-control mr-2">
-                    <option value="name">Name</option>
-                    <option value="deadline">Deadline</option>
-                    <option value="status">Status</option>
-                </select>
-                <button type="submit" class="btn btn-primary">Sort</button>
-            </form>
+<div class="main-content mt-5">
+    <h2>Projekt Oversigt</h2>
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <form th:action="@{/projects}" method="get" class="form-inline">
+                    <label for="sort" class="mr-2">Sort by:</label>
+                    <select name="sort" id="sort" class="form-control mr-2">
+                        <option value="name">Name</option>
+                        <option value="deadline">Deadline</option>
+                        <option value="status">Status</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Sort</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="main-content mt-5">
-    <h2>Projekter Oversigt</h2>
+
     <!-- Projekter Oversigt -->
     <table class="table">
         <!-- Table header -->
@@ -56,12 +56,12 @@
             <td th:text="${project.status.displayName}"></td>
             <td>
                 <!-- Formular to change status -->
-                <form th:action="@{'/teamprojects/' + ${project.id} + '/status'}" method="post">
+                <form th:action="@{'/projects/' + ${project.id} + '/status'}" method="post">
                     <label>
                         <select name="newStatus">
-                            <option value="DONE" th:selected="${project.status == 'DONE'}">Færdig</option>
-                            <option value="IN_PROGRESS" th:selected="${project.status == 'IN_PROGRESS'}">I gang</option>
-                            <option value="TO_DO" th:selected="${project.status == 'TO_DO'}">At gøre</option>
+                            <option value="DONE" th:selected="${project.status == 'DONE'}">Afsluttet</option>
+                            <option value="IN_PROGRESS" th:selected="${project.status == 'IN_PROGRESS'}">Påbegyndt</option>
+                            <option value="TO_DO" th:selected="${project.status == 'TO_DO'}">To do</option>
                             <option value="ARCHIVED" th:selected="${project.status == 'ARCHIVED'}">Arkiveret</option>
                             <option value="NOT_STARTED" th:selected="${project.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
                         </select>
@@ -72,7 +72,7 @@
         </tr>
         </tbody>
     </table>
-    <a href="/teamprojects/create" class="btn btn-primary">Tilføj Nyt Projekt</a>
+    <a href="/projects/create" class="btn btn-primary">Tilføj Nyt Projekt</a>
 </div>
 
 <div th:insert="~{fragments/footer :: footer}"></div>

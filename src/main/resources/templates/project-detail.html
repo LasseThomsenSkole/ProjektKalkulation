@@ -3,30 +3,71 @@
 <head>
     <title>Projektdetaljer</title>
     <link rel="icon" href="/img/logo_alpha.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/main.css" type="text/css">
 </head>
 <body>
 <div th:insert="~{fragments/header :: header}"></div>
 
-<div class="main-content mt-5">
-    <h2 th:text="${project.name}">Project Name</h2>
-    <p th:text="${project.description}">Project Description</p>
+<div class="container mt-5">
+    <h2 th:text="${project.name}">Projektnavn</h2>
+    <p th:text="${project.description}">Projektbeskrivelse</p>
 
-    <div class="details-grid">
-        <div>
-            <h3>Subprojects</h3>
-            <ul>
-                <li th:each="subproject : ${project.subprojects}">
-                    <a th:href="@{'/subproject/' + ${subproject.id}}" class="no-underline">
-                        <span th:text="${subproject.name}" style="color: #c7156f">Subproject Name</span>
-                    </a>
-                    <span th:text="${subproject.description}">Description</span>
-                </li>
-            </ul>
+    <div class="mb-4">
+        <div class="card">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="card-title mb-0">Total Timer:</h5>
+                    <p class="card-text display-4 font-weight-bold" th:text="${project.totalHours}">0</p>
+                </div>
+                <div>
+                    <h5 class="card-title mb-0">Deadline:</h5>
+                    <p class="card-text display-4 font-weight-bold">
+                        <span th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}">DD-MM-YYYY</span>
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="button-container">
-            <a th:href="@{'/edit/project/' + ${project.id}}" class="btn btn-success">Ændre projekt</a>
-            <a th:href="@{'/teamprojects'}" class="btn btn-primary">Tilbage</a>
+    </div>
+
+    <div class="mb-3 d-flex align-items-center">
+        <a th:href="@{'/edit/project/' + ${project.id}}" class="btn btn-success mr-2">Rediger Projekt</a>
+        <span class="mr-2">Status:</span>
+        <form th:action="@{'/projects/' + ${project.id} + '/status'}" method="post" class="form-inline">
+            <select name="newStatus" class="form-control mr-2">
+                <option value="NOT_STARTED" th:selected="${project.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
+                <option value="IN_PROGRESS" th:selected="${project.status == 'IN_PROGRESS'}">I gang</option>
+                <option value="DONE" th:selected="${project.status == 'DONE'}">Færdig</option>
+                <option value="ARCHIVED" th:selected="${project.status == 'ARCHIVED'}">Arkiveret</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Gem</button>
+        </form>
+    </div>
+
+    <div class="subprojects-section">
+        <h3>Subprojekter</h3>
+        <div class="subprojects-grid">
+            <div class="card mb-3" th:each="subproject : ${project.subprojects}">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a th:href="@{'/subproject/' + ${subproject.id}}" class="text-decoration-none" th:text="${subproject.name}">Subprojektnavn</a>
+                    </h5>
+                    <p class="card-text" th:text="${subproject.description}">Subprojektbeskrivelse</p>
+                    <div class="mb-2 d-flex align-items-center">
+                        <a th:href="@{'/edit/subproject/' + ${subproject.id}}" class="btn btn-secondary mr-2">Rediger</a>
+                        <span class="mr-2">Status:</span>
+                        <form th:action="@{'/subprojects/' + ${subproject.id} + '/status'}" method="post" class="form-inline">
+                            <select name="newStatus" class="form-control mr-2">
+                                <option value="NOT_STARTED" th:selected="${subproject.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
+                                <option value="IN_PROGRESS" th:selected="${subproject.status == 'IN_PROGRESS'}">I gang</option>
+                                <option value="DONE" th:selected="${subproject.status == 'DONE'}">Færdig</option>
+                                <option value="ARCHIVED" th:selected="${subproject.status == 'ARCHIVED'}">Arkiveret</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">Gem</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
