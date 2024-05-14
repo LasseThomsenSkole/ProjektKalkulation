@@ -75,6 +75,23 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
     }
+    public User getUserFromName(String name){
+        try {
+            String SQL = "SELECT * FROM users WHERE user_name = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                int id = resultSet.getInt("user_id");
+                boolean isAdmin = resultSet.getBoolean("is_admin");
+                String password = resultSet.getString("password");
+                return new User(id, name, isAdmin, password);
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 
     /**GET ALL PROJECTS**/
     public List<Project> findAllProjects() {
