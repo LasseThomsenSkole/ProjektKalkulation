@@ -199,10 +199,31 @@ public class ProjectController {
     }
 
     @GetMapping("/subproject/{id}")
-    public String showSubprojectDetails(@PathVariable int id, Model model) {
+    public String showSubprojectDetails(@PathVariable int id, Model model, HttpSession session) {
+        if (!isLoggedIn(session)){
+            return "login";
+        }
         Subproject subproject = projectService.getSubprojectById(id);
         model.addAttribute("subproject", subproject);
         return "subproject-detail";
+    }
+    @GetMapping("/task/{id}")
+    public String showTaskDetails(@PathVariable int id, Model model, HttpSession session) {
+        if (!isLoggedIn(session)){
+            return "login";
+        }
+        Task task = projectService.getTaskById(id);
+        model.addAttribute("subproject", task);
+        return "task-detail";
+    }
+    @GetMapping("/subproject/{id}")
+    public String showSubtaskDetails(@PathVariable int id, Model model, HttpSession session) {
+        if (!isLoggedIn(session)){
+            return "login";
+        }
+        Subtask subtask = projectService.getSubtaskById(id);
+        model.addAttribute("subproject", subtask);
+        return "subtask-detail";
     }
 
 
