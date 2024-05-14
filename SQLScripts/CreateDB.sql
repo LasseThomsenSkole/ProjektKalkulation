@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS projects (
     project_name VARCHAR(50) NOT NULL,
     project_description VARCHAR(255) NOT NULL,
     total_hours DOUBLE NOT NULL DEFAULT 0,
-    prject_startdate DATE,
+    project_startdate DATE,
     project_deadline DATE,
     project_status ENUM('DONE', 'IN_PROGRESS', 'TODO', 'ARCHIVED', 'NOT_STARTED') NOT NULL DEFAULT 'NOT_STARTED'
     );
