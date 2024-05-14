@@ -56,7 +56,7 @@
             <div class="card mb-3" th:each="task : ${subproject.tasks}">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <a th:href="@{'/subproject/' + ${task.id}}" class="text-decoration-none" th:text="${task.name}">Tasknavn</a>
+                        <a th:href="@{'/task/' + ${task.id}}" class="text-decoration-none" th:text="${task.name}">Tasknavn</a>
                     </h5>
                     <p class="card-text" th:text="${task.description}">Taskbeskrivelse</p>
                     <div class="mb-2 d-flex align-items-center">
@@ -76,6 +76,7 @@
             </div>
         </div>
     </div>
+    <button onclick="history.back()" class="btn btn-primary">Gå tilbage</button>
 </div>
 
 <div th:insert="~{fragments/footer :: footer}"></div>
