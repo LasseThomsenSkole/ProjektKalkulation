@@ -95,14 +95,23 @@ public class ProjectController {
     }
 
     @GetMapping("/projects/create")
-    public String createProjectForm() {
+    public String createProjectForm(HttpSession session) {
+        if (!isLoggedIn(session)){
+            return "login";
+        }
         return "create-project";
     }
 
     @PostMapping("/projects/create")
     public String createProject(@RequestParam String name, @RequestParam String description, @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline,
-                                @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, Model model) {
-        projectService.createProject(name, description, Date.valueOf(startDate), Date.valueOf(deadline));
+                                @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, HttpSession session) { //todo måske skal det være et Project objekt som parameter - lasse
+        if (isLoggedIn(session)){
+            User user = (User) session.getAttribute("user");
+
+            int projectId = projectService.createProject(name, description, Date.valueOf(startDate), Date.valueOf(deadline));
+            projectService.createProjectRelation(user.getId(),projectId);
+        }
+
         return "redirect:/projects";
     }
 
