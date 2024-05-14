@@ -53,7 +53,7 @@ public class ProjectController {
         return "login";
     }
 
-    @GetMapping("/createaccount")
+    @GetMapping("/create-account")
     public String createAccount(HttpSession session){
         if (isLoggedIn(session)){
             User user = (User) session.getAttribute("user");
@@ -62,15 +62,19 @@ public class ProjectController {
         return "login";
     }
 
-    @PostMapping("/createaccount")
+    @PostMapping("/create-account")
     public String createAccountPost(@RequestParam("username") String username,
                                     @RequestParam("password") String password,
-                                    HttpSession session){
-        if (isLoggedIn(session)){
+                                    HttpSession session, Model model){
+        if (isLoggedIn(session)){ //det her er fuld spaghetti kode men jeg kan ikke finde en bedre måde at gøre det på - Lasse
             User user = (User) session.getAttribute("user");
             if (user.isAdmin()){
+                if (projectService.userAlreadyExists(username)){
+                    model.addAttribute("userAlreadyExists", true);
+                    return "create-account";
+                }
                 projectService.insertUser(username, password);
-                return "redirect:/login"; //TODO måske lave en account endpoint???? -Lasse
+                return "redirect:/login"; //todo måske redirect tilbage til createaccount ????? - lasse
             }
         }
         return "redirect:/login";
