@@ -10,6 +10,7 @@ public class Project {
     private List<Task> tasks;
     private List<Subproject> subprojects;
     private double totalHours;
+    private Date startDate;
     private Date deadline;
     private Status status;
 
@@ -25,21 +26,23 @@ public class Project {
     public Project() {} //til thymeleaf
 
     public Project(int id, String name, String description, List<Task> tasks, List<Subproject> subprojects,
-                   double totalHours, Date deadline, Status status) {
+                   double totalHours, Date startDate, Date deadline, Status status) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.tasks = tasks;
         this.subprojects = subprojects;
         this.totalHours = totalHours;
+        this.startDate = startDate;
         this.deadline = deadline;
         this.status = status;
     }
 
-    public Project(int id, String name, String description, double totalHours, Date deadline) {
+    public Project(int id, String name, String description, double totalHours, Date startDate, Date deadline) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.startDate = startDate;
         this.totalHours = totalHours;
         this.deadline = deadline;
     }
@@ -97,5 +100,13 @@ public class Project {
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 }

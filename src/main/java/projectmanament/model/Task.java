@@ -8,26 +8,29 @@ public class Task {
     private String name;
     private String description;
     private List<Subtask> subtasks;
+    private Date startDate;
     private Date deadline;
     private double hours;
     private Status status;
 
     public Task() {} //thymeleaf
 
-    public Task(int id, String name, String description, List<Subtask> subtasks, Date deadline, double hours, Status status) {
+    public Task(int id, String name, String description, List<Subtask> subtasks, Date startDate, Date deadline, double hours, Status status) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.subtasks = subtasks;
+        this.startDate = startDate;
         this.deadline = deadline;
         this.hours = hours;
         this.status = status;
     }
 
-    public Task(int id, String name, String description, Date deadline, double hours, Status status) {
+    public Task(int id, String name, String description, Date startDate, Date deadline, double hours, Status status) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.startDate = startDate;
         this.deadline = deadline;
         this.hours = hours;
         this.status = status;
@@ -87,5 +90,13 @@ public class Task {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 }

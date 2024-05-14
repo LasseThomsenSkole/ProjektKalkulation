@@ -33,10 +33,12 @@ public class ProjectController {
         }
         return "login";
     }
+
     @GetMapping("/login")
     public String login(){
         return "login";
     }
+
     @PostMapping("/login")
     public String login(
                         @RequestParam("username") String name,
@@ -50,6 +52,7 @@ public class ProjectController {
         model.addAttribute("wrongCredentials", true); //det her kan vi tjekke for i html !!!!
         return "login";
     }
+
     @GetMapping("/createaccount")
     public String createAccount(HttpSession session){
         if (isLoggedIn(session)){
@@ -58,6 +61,7 @@ public class ProjectController {
         }
         return "login";
     }
+
     @PostMapping("/createaccount")
     public String createAccountPost(@RequestParam("username") String username,
                                     @RequestParam("password") String password,
@@ -74,11 +78,9 @@ public class ProjectController {
 
     @GetMapping("/logout")
     public String LogOut(HttpSession session){
-        //end session
         session.invalidate();
         return "login";
     }
-
 
     @GetMapping("/projects")
     public String showAllProjects(@RequestParam(value = "sort", required = false) String sort, Model model, HttpSession session) {
@@ -98,8 +100,9 @@ public class ProjectController {
     }
 
     @PostMapping("/projects/create")
-    public String createProject(@RequestParam String name, @RequestParam String description, @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline, Model model) {
-        projectService.createProject(name, description, Date.valueOf(deadline));
+    public String createProject(@RequestParam String name, @RequestParam String description, @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline,
+                                @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, Model model) {
+        projectService.createProject(name, description, Date.valueOf(startDate), Date.valueOf(deadline));
         return "redirect:/projects";
     }
 
@@ -140,7 +143,6 @@ public class ProjectController {
         return "redirect:/task/" + taskId;
     }
 
-    /**EDIT**/
     @GetMapping("/edit/{entity}/{id}")
     public String editForm(@PathVariable String entity, @PathVariable int id, Model model) {
         switch (entity) {
@@ -164,6 +166,7 @@ public class ProjectController {
                 return null;
         }
     }
+
     @PostMapping("/edit/{entity}/{id}")
     public String editEntity(@PathVariable String entity, @PathVariable int id, @ModelAttribute Object updatedEntity){
         switch (entity) {

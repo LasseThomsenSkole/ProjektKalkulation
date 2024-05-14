@@ -43,8 +43,8 @@ public class ProjectService {
         return projectRepository.getProjectsFromUser(id);
     }
 
-    public void createProject(String name, String description, Date deadline) {
-        projectRepository.createProject(name, description, deadline);
+    public void createProject(String name, String description, Date startDate, Date deadline) {
+        projectRepository.createProject(name, description, startDate, deadline);
     }
 
     public Project getProject(int id) {

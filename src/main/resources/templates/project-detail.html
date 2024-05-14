@@ -21,6 +21,12 @@
                     <p class="card-text display-4 font-weight-bold" th:text="${project.totalHours}">0</p>
                 </div>
                 <div>
+                    <h5 class="card-title mb-0">Startdato:</h5>
+                    <p class="card-text display-4 font-weight-bold">
+                        <span th:text="${#dates.format(project.startDate, 'dd-MM-yyyy')}">DD-MM-YYYY</span>
+                    </p>
+                </div>
+                <div>
                     <h5 class="card-title mb-0">Deadline:</h5>
                     <p class="card-text display-4 font-weight-bold">
                         <span th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}">DD-MM-YYYY</span>

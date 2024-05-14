@@ -6,13 +6,14 @@ public class Subtask {
     private int id;
     private String name;
     private String description;
+    private Date startDate;
     private Date deadline;
     private double hours;
     private Status status;
 
     public Subtask() {} //thymeleaf
 
-    public Subtask(int id, String name, String description, java.sql.Date deadline, double hours) {
+    public Subtask(int id, String name, String description, Date startDate, java.sql.Date deadline, double hours) {
     }
 
     public Date getDeadline() {
@@ -31,10 +32,11 @@ public class Subtask {
         this.hours = hours;
     }
 
-    public Subtask(int id, String name, String description, Date deadline, double hours, Status status) {
+    public Subtask(int id, String name, String description, Date startDate, Date deadline, double hours, Status status) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.startDate = startDate;
         this.deadline = deadline;
         this.hours = hours;
         this.status = status;
@@ -62,5 +64,13 @@ public class Subtask {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 }

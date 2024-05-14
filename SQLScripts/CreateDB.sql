@@ -2,41 +2,45 @@ CREATE SCHEMA IF NOT EXISTS AlphaManagement;
 USE AlphaManagement;
 CREATE TABLE IF NOT EXISTS users(
     user_id int auto_increment primary key,
-    user_name varchar(50) not null unique,
+    user_name varchar(20) not null unique,
     is_admin BOOL not null default false,
-    password varchar(50) not null
+    password varchar(20) not null
     );
 CREATE TABLE IF NOT EXISTS projects(
     project_id          int auto_increment primary key,
-    project_name        varchar(20) not null ,
+    project_name        varchar(50) not null ,
     project_description varchar(255) not null ,
     total_hours double not null default 0,
+    project_startdate date,
     project_deadline    date,
     project_status enum('DONE', 'IN_PROGRESS','TODO','ARCHIVED', 'NOT_STARTED') not null default 'NOT_STARTED'
     );
 CREATE TABLE IF NOT EXISTS subprojects(
     subproject_id int auto_increment primary key,
-    subproject_name varchar(20) not null,
+    subproject_name varchar(50) not null,
     subproject_description varchar(255) not null,
     subproject_hours double not null default 0,
+    subproject_startdate date,
     subproject_deadline date,
     subproject_status enum('DONE', 'IN_PROGRESS','TODO','ARCHIVED','NOT_STARTED') not null default 'NOT_STARTED',
     parent_project_id int not null
     );
 CREATE TABLE IF NOT EXISTS tasks(
     task_id int auto_increment primary key,
-    task_name varchar(20) not null,
+    task_name varchar(50) not null,
     task_description varchar(255) not null,
     task_hours double not null default 0,
+    task_startdate date,
     task_deadline date,
     task_status enum('DONE', 'IN_PROGRESS','TODO','ARCHIVED','NOT_STARTED') not null default 'NOT_STARTED',
     subproject_id int not null
     );
 CREATE TABLE IF NOT EXISTS subtasks(
     subtask_id int auto_increment primary key,
-    subtask_name varchar(20) not null,
+    subtask_name varchar(50) not null,
     subtask_description varchar(255) not null,
     subtask_hours double not null default 0,
+    subtask_startdate date,
     subtask_deadline date,
     subtask_status enum('DONE', 'IN_PROGRESS','TODO','ARCHIVED', 'NOT_STARTED') not null default 'NOT_STARTED',
     parent_task_id int not null
