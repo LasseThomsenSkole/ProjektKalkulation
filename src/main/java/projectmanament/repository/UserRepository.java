@@ -120,7 +120,7 @@ public class UserRepository {
             throw new RuntimeException(e);
         }
     }
-
+    /** Tildeler en task til en user, ved at indsætte user_id og project_id i user_task_relation **/
     public void assignUserToTask(int userId, int taskId) {
         try {
             String SQL = "INSERT INTO user_task_relation (user_id, task_id) VALUES (?, ?)";
@@ -132,7 +132,7 @@ public class UserRepository {
             throw new RuntimeException(e);
         }
     }
-
+    /** Finder tasks som en user er tildelt ved brug af user_task_relation **/
     public List<Task> getTasksFromUser(int userId) {
         List<Task> tasks = new ArrayList<>();
         try {

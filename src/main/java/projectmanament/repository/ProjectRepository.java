@@ -35,6 +35,7 @@ public class ProjectRepository {
     }
 
     /**GET ALL PROJECTS**/
+    /** Den finder informationer fra alle projekter og viser dem.**/
     public List<Project> findAllProjects() {
         List<Project> projects = new ArrayList<>();
         String query = "SELECT project_id, project_name, project_description, total_hours, project_startdate, project_deadline, project_status FROM projects;";
@@ -48,7 +49,7 @@ public class ProjectRepository {
         }
         return projects;
     }
-    /** Den finder informationer fra alle projekter og viser dem.**/
+    /** Kalder på findAllProjects og sorterer dem efter deadline, status eller name**/
     public List<Project> findAllProjectsSorted(String sort) {
         List<Project> projects = findAllProjects();
         switch (sort) {
@@ -65,7 +66,7 @@ public class ProjectRepository {
         }
         return projects;
     }
-
+    /**  **/
     public Project mapProject(ResultSet rs) throws SQLException {
         int id = rs.getInt("project_id");
         String name = rs.getString("project_name");
