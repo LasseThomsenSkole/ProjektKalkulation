@@ -18,6 +18,7 @@
                     <label for="sort" class="mr-2">Sort by:</label>
                     <select name="sort" id="sort" class="form-control mr-2">
                         <option value="name">Name</option>
+                        <option value="startdate">Startdato</option>
                         <option value="deadline">Deadline</option>
                         <option value="status">Status</option>
                     </select>
@@ -38,6 +39,7 @@
             <th>Navn</th>
             <th>Beskrivelse</th>
             <th>Total Timer</th>
+            <th>Startdato</th>
             <th>Deadline</th>
             <th>Status</th>
             <th>Ændre Status</th> <!-- Tilføjede kolonne til redigeringsknapper -->
@@ -52,6 +54,7 @@
             <td><a th:href="@{/project/{id}(id=${project.id})}" th:text="${project.name}" style="color: #c7156f"></a></td>
             <td th:text="${project.description}"></td>
             <td th:text="${project.totalHours}"></td>
+            <td th:text="${#dates.format(project.startDate, 'dd-MM-yyyy')}"></td>
             <td th:text="${#dates.format(project.deadline, 'dd-MM-yyyy')}"></td>
             <td th:text="${project.status.displayName}"></td>
             <td>

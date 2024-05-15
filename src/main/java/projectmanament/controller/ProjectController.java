@@ -33,25 +33,27 @@ public class ProjectController {
         }
         return "login";
     }
+
     @GetMapping("/login")
     public String login(){
         return "login";
     }
+
     @PostMapping("/login")
     public String login(
-                        @RequestParam("password") String password,
                         @RequestParam("username") String name,
+                        @RequestParam("password") String password,
                         HttpSession session, Model model){
-        int userId = projectService.getIdFromUser(name, password); //todo hvis det kan laves bedre skal det være sådan
-        if (projectService.login(userId,password)){
-            session.setAttribute("user", new User(userId, name, true, password )); //TODO DEN SKAL IKKE VÆRE TRUE MEN DET FORDI JEG IKKE ANER HVORDAN VI SKAL SE OM DET ER EN ADMIN
-            session.setMaxInactiveInterval(30); //30 sekunder
+        if (projectService.login(name,password)){
+            session.setAttribute("user", projectService.getUserFromName(name)); //todo spørg om der er en bedre måde at gøre det her på
+            session.setMaxInactiveInterval(300); // 5 minutter
             return "redirect:/";
         }
-        model.addAttribute("wrongCredentials", true); //det her kan vi tjekke for i html !!!!
+        model.addAttribute("wrongCredentials", true);
         return "login";
     }
-    @GetMapping("/createaccount")
+
+    @GetMapping("/create-account")
     public String createAccount(HttpSession session){
         if (isLoggedIn(session)){
             User user = (User) session.getAttribute("user");
@@ -59,15 +61,20 @@ public class ProjectController {
         }
         return "login";
     }
-    @PostMapping("/createaccount")
+
+    @PostMapping("/create-account")
     public String createAccountPost(@RequestParam("username") String username,
                                     @RequestParam("password") String password,
-                                    HttpSession session){
-        if (isLoggedIn(session)){
+                                    HttpSession session, Model model){
+        if (isLoggedIn(session)){ //det her er fuld spaghetti kode men jeg kan ikke finde en bedre måde at gøre det på - Lasse
             User user = (User) session.getAttribute("user");
             if (user.isAdmin()){
+                if (projectService.userAlreadyExists(username)){
+                    model.addAttribute("userAlreadyExists", true);
+                    return "create-account";
+                }
                 projectService.insertUser(username, password);
-                return "redirect:/login"; //TODO måske lave en account endpoint???? -Lasse
+                return "redirect:/login"; //todo måske redirect tilbage til createaccount ????? - lasse
             }
         }
         return "redirect:/login";
@@ -75,11 +82,9 @@ public class ProjectController {
 
     @GetMapping("/logout")
     public String LogOut(HttpSession session){
-        //end session
         session.invalidate();
         return "login";
     }
-
 
     @GetMapping("/projects")
     public String showAllProjects(@RequestParam(value = "sort", required = false) String sort, Model model, HttpSession session) {
@@ -94,13 +99,23 @@ public class ProjectController {
     }
 
     @GetMapping("/projects/create")
-    public String createProjectForm() {
+    public String createProjectForm(HttpSession session) {
+        if (!isLoggedIn(session)){
+            return "login";
+        }
         return "create-project";
     }
 
     @PostMapping("/projects/create")
-    public String createProject(@RequestParam String name, @RequestParam String description, @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline, Model model) {
-        projectService.createProject(name, description, Date.valueOf(deadline));
+    public String createProject(@RequestParam String name, @RequestParam String description, @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline,
+                                @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, HttpSession session) { //todo måske skal det være et Project objekt som parameter - lasse
+        if (isLoggedIn(session)){
+            User user = (User) session.getAttribute("user");
+
+            int projectId = projectService.createProject(name, description, Date.valueOf(startDate), Date.valueOf(deadline));
+            projectService.createProjectRelation(user.getId(),projectId);
+        }
+
         return "redirect:/projects";
     }
 
@@ -141,9 +156,11 @@ public class ProjectController {
         return "redirect:/task/" + taskId;
     }
 
-    /**EDIT**/
     @GetMapping("/edit/{entity}/{id}")
-    public String editForm(@PathVariable String entity, @PathVariable int id, Model model) {
+    public String editForm(@PathVariable String entity, @PathVariable int id, Model model, HttpSession session) {
+        if (!isLoggedIn(session)){
+            return "login";
+        }
         switch (entity) {
             case "project":
                 Project project = projectService.getProject(id);
@@ -162,9 +179,10 @@ public class ProjectController {
                 model.addAttribute("subtask", subtask);
                 return "edit-subtask";
             default:
-                return null;
+                return "redirect:/projects";
         }
     }
+
     @PostMapping("/edit/{entity}/{id}")
     public String editEntity(@PathVariable String entity, @PathVariable int id, @ModelAttribute Object updatedEntity){
         switch (entity) {
@@ -185,10 +203,31 @@ public class ProjectController {
     }
 
     @GetMapping("/subproject/{id}")
-    public String showSubprojectDetails(@PathVariable int id, Model model) {
+    public String showSubprojectDetails(@PathVariable int id, Model model, HttpSession session) {
+        if (!isLoggedIn(session)){
+            return "login";
+        }
         Subproject subproject = projectService.getSubprojectById(id);
         model.addAttribute("subproject", subproject);
         return "subproject-detail";
+    }
+    @GetMapping("/task/{id}")
+    public String showTaskDetails(@PathVariable int id, Model model, HttpSession session) {
+        if (!isLoggedIn(session)){
+            return "login";
+        }
+        Task task = projectService.getTaskById(id);
+        model.addAttribute("subproject", task);
+        return "task-detail";
+    }
+    @GetMapping("/subtask/{id}")
+    public String showSubtaskDetails(@PathVariable int id, Model model, HttpSession session) {
+        if (!isLoggedIn(session)){
+            return "login";
+        }
+        Subtask subtask = projectService.getSubtaskById(id);
+        model.addAttribute("subproject", subtask);
+        return "subtask-detail";
     }
 
 

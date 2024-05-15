@@ -1,54 +1,70 @@
 CREATE SCHEMA IF NOT EXISTS AlphaManagement;
 USE AlphaManagement;
-CREATE TABLE IF NOT EXISTS users(
-    user_id int auto_increment primary key,
-    user_name varchar(50),
-    is_admin BOOL not null default false,
-    password varchar(50) -- hvis den er hashed bliver den hashed med 12 chars
+
+CREATE TABLE IF NOT EXISTS users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_name VARCHAR(50) NOT NULL UNIQUE,
+    is_admin BOOL NOT NULL DEFAULT FALSE,
+    password VARCHAR(50) NOT NULL
     );
-CREATE TABLE IF NOT EXISTS projects(
-    project_id          int auto_increment primary key,
-    project_name        varchar(50) not null ,
-    project_description varchar(500) not null ,
-    total_hours double not null default 0,
-    project_deadline    date,
-    project_status enum('DONE', 'IN_PROGRESS','TODO','ARCHIVED', 'NOT_STARTED') not null default 'NOT_STARTED'
+
+CREATE TABLE IF NOT EXISTS projects (
+    project_id INT AUTO_INCREMENT PRIMARY KEY,
+    project_name VARCHAR(50) NOT NULL,
+    project_description VARCHAR(255) NOT NULL,
+    total_hours DOUBLE NOT NULL DEFAULT 0,
+    project_startdate DATE,
+    project_deadline DATE,
+    project_status ENUM('DONE', 'IN_PROGRESS', 'TODO', 'ARCHIVED', 'NOT_STARTED') NOT NULL DEFAULT 'NOT_STARTED'
     );
-CREATE TABLE IF NOT EXISTS subprojects(
-    subproject_id int auto_increment primary key,
-    subproject_name varchar(50) not null,
-    subproject_description varchar(500) not null,
-    subproject_hours double not null default 0,
-    subproject_deadline date,
-    subproject_status enum('DONE', 'IN_PROGRESS','TODO','ARCHIVED','NOT_STARTED') not null default 'NOT_STARTED',
-    parent_project_id int not null
+
+CREATE TABLE IF NOT EXISTS subprojects (
+    subproject_id INT AUTO_INCREMENT PRIMARY KEY,
+    subproject_name VARCHAR(50) NOT NULL,
+    subproject_description VARCHAR(255) NOT NULL,
+    subproject_hours DOUBLE NOT NULL DEFAULT 0,
+    subproject_startdate DATE,
+    subproject_deadline DATE,
+    subproject_status ENUM('DONE', 'IN_PROGRESS', 'TODO', 'ARCHIVED', 'NOT_STARTED') NOT NULL DEFAULT 'NOT_STARTED',
+    parent_project_id INT NOT NULL,
+    FOREIGN KEY (parent_project_id) REFERENCES projects(project_id) ON DELETE CASCADE
     );
-CREATE TABLE IF NOT EXISTS tasks(
-    task_id int auto_increment primary key,
-    task_name varchar(50) not null,
-    task_description varchar(500) not null,
-    task_hours double not null default 0,
-    task_deadline date,
-    task_status enum('DONE', 'IN_PROGRESS','TODO','ARCHIVED','NOT_STARTED') not null default 'NOT_STARTED',
-    subproject_id int not null
+
+CREATE TABLE IF NOT EXISTS tasks (
+    task_id INT AUTO_INCREMENT PRIMARY KEY,
+    task_name VARCHAR(50) NOT NULL,
+    task_description VARCHAR(255) NOT NULL,
+    task_hours DOUBLE NOT NULL DEFAULT 0,
+    task_startdate DATE,
+    task_deadline DATE,
+    task_status ENUM('DONE', 'IN_PROGRESS', 'TODO', 'ARCHIVED', 'NOT_STARTED') NOT NULL DEFAULT 'NOT_STARTED',
+    subproject_id INT NOT NULL,
+    FOREIGN KEY (subproject_id) REFERENCES subprojects(subproject_id) ON DELETE CASCADE
     );
-CREATE TABLE IF NOT EXISTS subtasks(
-    subtask_id int auto_increment primary key,
-    subtask_name varchar(50) not null,
-    subtask_description varchar(500) not null,
-    subtask_hours double not null default 0,
-    subtask_deadline date,
-    subtask_status enum('DONE', 'IN_PROGRESS','TODO','ARCHIVED', 'NOT_STARTED') not null default 'NOT_STARTED',
-    parent_task_id int not null
+
+CREATE TABLE IF NOT EXISTS subtasks (
+    subtask_id INT AUTO_INCREMENT PRIMARY KEY,
+    subtask_name VARCHAR(50) NOT NULL,
+    subtask_description VARCHAR(255) NOT NULL,
+    subtask_hours DOUBLE NOT NULL DEFAULT 0,
+    subtask_startdate DATE,
+    subtask_deadline DATE,
+    subtask_status ENUM('DONE', 'IN_PROGRESS', 'TODO', 'ARCHIVED', 'NOT_STARTED') NOT NULL DEFAULT 'NOT_STARTED',
+    parent_task_id INT NOT NULL,
+    FOREIGN KEY (parent_task_id) REFERENCES tasks(task_id) ON DELETE CASCADE
     );
-CREATE TABLE IF NOT EXISTS user_project_relation(
-    id int auto_increment primary key,
-    user_id int not null,
-    project_id int not null
+
+CREATE TABLE IF NOT EXISTS user_project_relation (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    project_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (project_id) REFERENCES projects(project_id) ON DELETE CASCADE
     );
--- Create a trigger to update total_hours in projects table when subproject hours change
+
 DELIMITER //
--- Trigger for updates
+
+-- Trigger for updates on subprojects
 CREATE TRIGGER update_total_hours_after_update AFTER UPDATE ON subprojects
     FOR EACH ROW
 BEGIN
@@ -66,7 +82,7 @@ BEGIN
 END;
 //
 
--- Trigger for inserts
+-- Trigger for inserts on subprojects
 CREATE TRIGGER update_total_hours_after_insert AFTER INSERT ON subprojects
     FOR EACH ROW
 BEGIN
@@ -82,8 +98,9 @@ BEGIN
     SET total_hours = total_subproject_hours
     WHERE project_id = NEW.parent_project_id;
 END;
+//
 
--- Create a trigger to update subproject_hours in subprojects table when task hours change
+-- Trigger for updates on tasks
 CREATE TRIGGER update_subproject_hours_after_update AFTER UPDATE ON tasks
     FOR EACH ROW
 BEGIN
@@ -101,7 +118,7 @@ BEGIN
 END;
 //
 
--- Trigger for inserts
+-- Trigger for inserts on tasks
 CREATE TRIGGER update_subproject_hours_after_insert AFTER INSERT ON tasks
     FOR EACH ROW
 BEGIN
@@ -118,8 +135,8 @@ BEGIN
     WHERE subproject_id = NEW.subproject_id;
 END;
 //
--- Create a trigger to update task_hours in tasks table when subtask hours change
--- Trigger for updates
+
+-- Trigger for updates on subtasks
 CREATE TRIGGER update_task_hours_after_update AFTER UPDATE ON subtasks
     FOR EACH ROW
 BEGIN
@@ -137,7 +154,7 @@ BEGIN
 END;
 //
 
--- Trigger for inserts
+-- Trigger for inserts on subtasks
 CREATE TRIGGER update_task_hours_after_insert AFTER INSERT ON subtasks
     FOR EACH ROW
 BEGIN
@@ -156,5 +173,3 @@ END;
 //
 
 DELIMITER ;
-
-

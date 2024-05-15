@@ -8,27 +8,30 @@ public class Subproject {
     private String name;
     private String description;
     private double hours;
+    private Date startDate;
     private Date deadline;
     private Status status;
     private List<Task> tasks;
 
     public Subproject() {} // Thymeleaf kræver en no-args konstruktør
 
-    public Subproject(int id, String name, String description, double hours, Date deadline, Status status, List<Task> tasks) {
+    public Subproject(int id, String name, String description, double hours, Date startDate, Date deadline, Status status, List<Task> tasks) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.hours = hours;
+        this.startDate = startDate;
         this.deadline = deadline;
         this.status = status;
         this.tasks = tasks;
     }
 
-    public Subproject(int id, String name, String description, double hours, Date deadline, Status status) {
+    public Subproject(int id, String name, String description, double hours, Date startDate, Date deadline, Status status) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.hours = hours;
+        this.startDate = startDate;
         this.deadline = deadline;
         this.status = status;
     }
@@ -88,5 +91,13 @@ public class Subproject {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 }

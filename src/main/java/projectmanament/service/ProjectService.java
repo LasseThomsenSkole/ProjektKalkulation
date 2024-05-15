@@ -22,12 +22,15 @@ public class ProjectService {
         return projectRepository.findAllProjectsSorted(sort);
     }
 
-    public boolean login(int userID, String password){
-        User user = projectRepository.getUserById(userID);
+    public boolean login(String name, String password){ //TODO MÅSKE LAV OM
+        User user = projectRepository.getUserFromName(name);
         if (user != null){
             return user.getPassword().equals(password);
         }
         return false;
+    }
+    public User getUserFromName(String name){
+        return projectRepository.getUserFromName(name);
     }
     public int getIdFromUser(String name, String password){
         return projectRepository.getIdFromUser(name, password);
@@ -40,10 +43,12 @@ public class ProjectService {
         return projectRepository.getProjectsFromUser(id);
     }
 
-    public void createProject(String name, String description, Date deadline) {
-        projectRepository.createProject(name, description, deadline);
+    public int createProject(String name, String description, Date startDate, Date deadline) {
+         return projectRepository.createProject(name, description, startDate, deadline);
     }
-
+    public void createProjectRelation(int userId, int projectId){
+        projectRepository.createProjectRelation(userId, projectId);
+    }
     public Project getProject(int id) {
         return projectRepository.getProject(id);
     }
@@ -103,5 +108,8 @@ public class ProjectService {
         projectRepository.changeSubtaskStatus(subtaskId, newStatus);
     }
 
+    public boolean userAlreadyExists(String username){
+        return projectRepository.userAlreadyExists(username);
+    }
 
 }

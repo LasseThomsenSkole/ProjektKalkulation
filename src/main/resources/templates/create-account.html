@@ -5,7 +5,7 @@
 </head>
 <body>
 <h2>Opret konto</h2>
-<form th:action="@{/createAccount}" method="post">
+<form th:action="@{/create-account}" method="post">
     <div>
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required autofocus/>
@@ -13,6 +13,9 @@
     <div>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required/>
+    </div>
+    <div class="text-center" style="color: #b80000" th:if="${userAlreadyExists}">
+        Brugernavnet er allerede i brug.
     </div>
     <button type="submit">Opret</button>
 </form>
