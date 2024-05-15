@@ -95,7 +95,7 @@ public class UserRepository {
         }
         return null;
     }
-    /** Tildeler et projekt til en user, ved at indsætte user_id og  **/
+    /** Tildeler et projekt til en user, ved at indsætte user_id og project_id i user_project_relation **/
     public void assignUserToProject(int userId, int projectId) {
         try {
             String SQL = "INSERT INTO user_project_relation (user_id, project_id) VALUES (?, ?)";
@@ -108,7 +108,7 @@ public class UserRepository {
         }
     }
 
-    //bruges til at tjekke om en bruger allerede eksisterer - til når man skal oprette en bruger
+    /**bruges til at tjekke om en bruger allerede eksisterer - til når man skal oprette en bruger**/
     public boolean userAlreadyExists(String username){
         try {
             String SQL = "SELECT * FROM users WHERE user_name = ?";
