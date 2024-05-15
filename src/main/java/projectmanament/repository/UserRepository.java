@@ -108,7 +108,7 @@ public class UserRepository {
         }
     }
 
-    /**bruges til at tjekke om en bruger allerede eksisterer - til når man skal oprette en bruger**/
+    /** Tjekker om en bruger allerede eksisterer - til når man skal oprette en bruger**/
     public boolean userAlreadyExists(String username){
         try {
             String SQL = "SELECT * FROM users WHERE user_name = ?";
