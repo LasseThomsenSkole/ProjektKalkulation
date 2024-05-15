@@ -93,6 +93,13 @@ public class ProjectController {
         return "login";
     }
 
+   /* @PostMapping("/project/{projectId}")
+    public String assignUserToProject(@PathVariable int projectId, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        assignmentService.assignUserToProject(user.getId(), projectId);
+        return "redirect:/mypage";
+    }*/
+
     @GetMapping("/projects")
     public String showAllProjects(@RequestParam(value = "sort", required = false) String sort, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
