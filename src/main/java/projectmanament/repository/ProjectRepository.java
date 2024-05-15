@@ -27,6 +27,8 @@ public class ProjectRepository {
     private String pwd;
     private Connection connection;
 
+    /** Connection Manager **/
+    /** Laver en singleton connection til vores database **/
     @PostConstruct
     public void init() {
         connection = ConnectionManager.getConnection(db_url, username, pwd);
@@ -46,7 +48,7 @@ public class ProjectRepository {
         }
         return projects;
     }
-
+    /** Den finder informationer fra alle projekter og viser dem.**/
     public List<Project> findAllProjectsSorted(String sort) {
         List<Project> projects = findAllProjects();
         switch (sort) {

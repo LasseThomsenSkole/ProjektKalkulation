@@ -23,11 +23,13 @@ public class UserRepository {
     private String pwd;
     private Connection connection;
 
+    /** Connection Manager **/
+    /** Laver en singleton connection til vores database **/
     @PostConstruct
     public void init() {
         connection = ConnectionManager.getConnection(db_url, username, pwd);
     }
-
+    /** Finder user ved brug af user_id **/
     public User getUserById(int userId) {
         try {
             String SQL = "SELECT * FROM users WHERE user_id = ?";
@@ -46,7 +48,7 @@ public class UserRepository {
         }
         return null;
     }
-
+    /** Ved brug af user_name og password henter vi information om user_id**/
     public int getIdFromUser(String name, String password) { //TODO HVIS DER ER EN BEDRE MÅDE SÅ SKAL DET HER VÆK
         try {
             String SQL = "SELECT user_id FROM users WHERE user_name = ? AND password = ?";
@@ -62,7 +64,8 @@ public class UserRepository {
         }
         return 0;
     }
-
+    /** Opretter en user ved at indsætte username og password,
+     hvorefter databasen selv tildeler useren et unikt user_id**/
     public void insertUser(String username, String password) {
         try {
             String SQL = "INSERT INTO users (user_name, password) VALUES (?,?)";
@@ -74,7 +77,7 @@ public class UserRepository {
             throw new RuntimeException(e);
         }
     }
-
+    /**Finder user_name ud fra informationer om userid, is_admin og password**/
     public User getUserFromName(String name) {
         try {
             String SQL = "SELECT * FROM users WHERE user_name = ?";
@@ -92,7 +95,7 @@ public class UserRepository {
         }
         return null;
     }
-
+    /** Tildeler et projekt til en user, ved at indsætte user_id og  **/
     public void assignUserToProject(int userId, int projectId) {
         try {
             String SQL = "INSERT INTO user_project_relation (user_id, project_id) VALUES (?, ?)";
