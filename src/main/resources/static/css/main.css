@@ -152,7 +152,7 @@ footer {
 button.btn, .btn-success, .btn-primary, .btn-secondary {
     background-color: #d01275;
     border: none;
-    padding: 8px 16px;
+    padding: 5px 10px;
     border-radius: 5px;
     text-decoration: none;
     color: white;
@@ -199,3 +199,8 @@ label {
     gap: 10px;
     margin-top: 10px;
 }
+
+
+
+
+

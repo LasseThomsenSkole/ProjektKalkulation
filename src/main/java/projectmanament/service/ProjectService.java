@@ -112,4 +112,12 @@ public class ProjectService {
         return projectRepository.userAlreadyExists(username);
     }
 
+    public int createSubproject(String name, String description, double hours, Date startDate, Date deadline, int parentProjectId) {
+        return projectRepository.createSubproject(name, description, hours, startDate, deadline, parentProjectId);
+    }
+
+    public int createTask(String name, String description, double hours, Date startDate, Date deadline, int subprojectId) {
+        return projectRepository.createTask(name, description, hours, startDate, deadline, subprojectId);
+    }
+
 }
