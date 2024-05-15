@@ -82,6 +82,7 @@ public class ProjectRepository {
 
 
     /**HENT PROJECT**/
+    /** Finder alle info om et projekt ved brug af project_id**/
     public Project getProject(int projectId) { //gets project + subproject and tasks
         Project project = null;
 
@@ -117,6 +118,7 @@ public class ProjectRepository {
 
 
     /**HENT SUBPROJECTS**/
+    /** Finder alle info om et subprojekt ved brug af subproject_id**/
     public List<Subproject> getSubprojects(int projectId) {
         List<Subproject> subprojects = new ArrayList<>();
         try {
@@ -144,6 +146,7 @@ public class ProjectRepository {
     }
 
     //til når vi skal edit ét subproject
+    /** Henter alle informationer om et subprojekt via subproject_id **/
     public Subproject getSubprojectById(int subprojectId) {
         Subproject subproject = null;
         try {
@@ -173,6 +176,7 @@ public class ProjectRepository {
 
 
     /**HENT TASKS**/
+    /** Finder alle info om tasks sat til et subprojekt ved brug af subprojects_id**/
     public List<Task> getTasks(int subprojectId){
         List<Task> tasks = new ArrayList<>();
         try {
@@ -202,6 +206,7 @@ public class ProjectRepository {
     }
 
     //hent kun én task
+    /** Finder alle info om en task ved brug af task_id**/
     public Task getTaskById(int taskId){
         Task task = null;
         try {
@@ -231,6 +236,7 @@ public class ProjectRepository {
     }
 
     /**HENT SUBTASK**/
+    /** Finder alle info om subtasks sat til en task ved brug af parent_task_id**/
     public List<Subtask> getSubtasks(int parentTaskId){
         List<Subtask> subtasks = new ArrayList<>();
         try {
@@ -260,6 +266,7 @@ public class ProjectRepository {
     }
 
     //hent kun én subtask
+    /** Finder alle info om en subtask ved brug af subtask_id**/
     public Subtask getSubtaskById(int subtaskId){
         Subtask subtask = null;
         try {
@@ -287,9 +294,7 @@ public class ProjectRepository {
         return subtask;
     }
 
-
-
-
+    /** Find alle arkiverede projekter ved at finde ud af hvilke projekter har en project_status der er sat til 'ARCHIVED' **/
     public List<Project> findArchivedProjects() {
         List<Project> archivedProjects = new ArrayList<>();
         String query = "SELECT project_id, project_name, project_description, total_hours, project_startdate, project_deadline, project_status " +
@@ -310,6 +315,8 @@ public class ProjectRepository {
 
 
     /**OPRET PROJECT**/
+    /** Indsætter informationer ind i project_name, project_description, project_startdate
+        og project_deadline for at skabe et nyt projekt **/
     public int createProject(String name, String description, Date startDate, Date deadline) {
         int projectId = 0;
         try {
@@ -331,6 +338,8 @@ public class ProjectRepository {
         }
         return projectId;
     }
+    /** Tildeler et projekt til en user, ved at indsætte user_id og project_id i user_project_relation **/
+    //TODO gør den her ikke det samme som assignUserToProject i UserRepository? Slet en af metoderne
     public void createProjectRelation(int userId, int projectId){
         try {
             String SQL = "INSERT INTO user_project_relation (user_id, project_id) VALUES (?, ?)";
@@ -345,6 +354,8 @@ public class ProjectRepository {
 
 
     /**EDIT PROJECT**/
+    /** Opdaterer informationer i et projekt ved at give muligheden for at sætte
+        en ny value i project_name, project_description, project_startdate og project_deadline via project_id**/
     public void editProject(int projectId,Project updatedProject){
         try {
             String SQL = "UPDATE projects " +
@@ -365,6 +376,8 @@ public class ProjectRepository {
 
 
     /**SLET PROJECT**/
+    /** Sletter alle informationer der har med projektet at gøre inklusivt subprojects,
+        tasks og subtasks via parent_project_id **/
     public void deleteProject(int projectId){ //todo måske lav til sql trigger
         try {
             //sletter subprojects fra projects
@@ -405,6 +418,8 @@ public class ProjectRepository {
 
 
     /**OPRET SUBPROJECT**/
+    /** Indsætter informationer ind i subproject_name, subproject_description, subproject_startdate
+     og subproject_deadline for at skabe et nyt subprojekt **/
     public int createSubproject(String name, String description, double hours, Date startDate, Date deadline, int parentProjectId) {
         int subprojectId = 0;
         try {
@@ -432,6 +447,8 @@ public class ProjectRepository {
 
 
     /**EDIT SUBPROJECT**/
+    /** Opdaterer informationer i et projekt ved at give muligheden for at sætte
+     en ny value i subproject_name, subproject_description, subproject_startdate og subproject_deadline via subproject_id**/
     public void editSubproject(int subprojectId, Subproject updatedSubproject) {
         try {
             String SQL = "UPDATE subprojects " +
@@ -455,6 +472,7 @@ public class ProjectRepository {
 
 
     /**SLET SUBPROJECT**/
+    /** Sletter alle informationer i subprojektet via subprojects_id**/
     public void deleteSubproject(int subprojectId){ //todo den burde også slette tasks og subtasks som ligger under -LAV DET TIL EN SQL TRIGGER
         try {
             String SQL = "DELETE FROM subprojects " +
@@ -470,6 +488,8 @@ public class ProjectRepository {
 
 
     /**OPRET TASK**/
+    /** Indsætter informationer ind i task_name, task_description, task_startdate
+    og task_deadline for at skabe en ny task**/
     public int createTask(String name, String description, double hours, Date startDate, Date deadline, int subprojectId) {
         int taskId = 0;
         try {
@@ -494,6 +514,8 @@ public class ProjectRepository {
         return taskId;
     }
     /** EDIT TASK **/
+    /** Opdaterer informationer i et task ved at give muligheden for at sætte
+    en ny value i task_name, task_description, task_startdate og task_deadline via task_id **/
     public void editTask(int taskId, Task edittedTask){
         try{
             String SQL = "UPDATE tasks " +
@@ -513,6 +535,7 @@ public class ProjectRepository {
 
 
     /**SLET TASK**/
+    /** Sletter alle subtasks der har med det ene task at gøre via parent_project_id **/
     public void deleteTask(int taskId){ //TODO NÅR DER KOMMER EN SQL TRIGGER SKAL DET KUN VÆRE EN TING SOM BLIVER SLETTET
         try {
             String deleteSubtaskSQL = "DELETE FROM subtasks WHERE parent_task_id = ?";
@@ -535,6 +558,8 @@ public class ProjectRepository {
 
 
     /**OPRET SUBTASKS**/
+    /** Indsætter informationer ind i subtask_name, subtask_description, subtask_startdate
+    og subtask_deadline for at skabe et nyt subtask **/
     public void createSubtask(String name, String description, double hours, Date startDate, Date deadline, int parentTaskId){
         try {
             String SQL = "INSERT INTO subtasks (subtask_name, subtask_description, subtask_hours, subtask_startdate, subtask_deadline, parent_task_id)" +
@@ -553,6 +578,8 @@ public class ProjectRepository {
         }
     }
     /** EDIT SUBTASKS **/
+    /** Opdaterer informationer i et subtask ved at give muligheden for at sætte
+    en ny value i subtask_name, subtask_description, subtask_startdate og subtask_deadline via subtask_id**/
     public void editSubtask(int subtaskId,Subtask edittedSubtask){
         try{
             String SQL = "UPDATE subtasks " +
@@ -572,6 +599,7 @@ public class ProjectRepository {
 
 
     /**SLET SUBTASK**/
+    /** Sletter alle informationer i subtask via subtask_id**/
     public void deleteSubtask(int subtaskId){
         try {
             String SQL = "DELETE FROM subtasks " +
@@ -586,6 +614,7 @@ public class ProjectRepository {
 
     }
 
+    /** Finder alle projekter med en selvvalgt status via project_status**/
     public List<Project> findAllProjectsByStatus(Status status) { //TODO inden vi aflevere skal vi se om vi bruger dem her
         List<Project> projects = new ArrayList<>();
         String query = "SELECT project_id, project_name, project_description, total_hours, project_startdate, project_deadline, project_status " +
@@ -604,7 +633,7 @@ public class ProjectRepository {
         return projects;
     }
 
-    /** Change status for project **/
+    /** Ændrer status for et project **/
     public void changeProjectStatus(int projectID, Status newStatus) {
         String SQL = "UPDATE projects " +
                 "SET project_status = ? " +
@@ -622,7 +651,7 @@ public class ProjectRepository {
         }
     }
 
-    /** change status for subproject **/
+    /** Ændrer status for et subproject **/
     public void changeSubprojectStatus(int subprojectID, Status newStatus){
         try{
             String SQL = "UPDATE subprojects " +
@@ -640,7 +669,7 @@ public class ProjectRepository {
         }
     }
 
-    /** change status for task **/
+    /** Ændrer status for en task **/
     public void changeTaskStatus(int taskID, Status newStatus){
         try{
             String SQL = "UPDATE tasks " +
@@ -658,7 +687,7 @@ public class ProjectRepository {
         }
     }
 
-    /** change subtask status **/
+    /** Ændrer status for en substask **/
     public void changeSubtaskStatus(int subtaskID, Status newStatus){
         try{
             String SQL = "UPDATE subtasks " +
@@ -676,6 +705,7 @@ public class ProjectRepository {
         }
     }
 
+    /** **/
     private Subproject mapSubproject(ResultSet rs) throws SQLException {
         int id = rs.getInt("subproject_id");
         String name = rs.getString("subproject_name");
@@ -688,6 +718,7 @@ public class ProjectRepository {
         return new Subproject(id, name, description, hours, startDate, deadline, status);
     }
 
+    /** **/
     public List<Project> getProjectsFromAssignedUser(int userId) {
         List<Project> projects = new ArrayList<>();
         try {
