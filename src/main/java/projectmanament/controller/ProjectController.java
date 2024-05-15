@@ -1,10 +1,12 @@
 package projectmanament.controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import projectmanament.model.*;
 import org.springframework.stereotype.Controller;
+import projectmanament.service.AssignmentService;
 import projectmanament.service.ProjectService;
 import org.springframework.ui.Model;
 
@@ -16,6 +18,8 @@ import java.util.List;
 @RequestMapping("")
 public class ProjectController {
     private ProjectService projectService;
+    @Autowired
+    private AssignmentService assignmentService;
 
     public ProjectController(ProjectService projectService){
         this.projectService = projectService;
@@ -27,8 +31,12 @@ public class ProjectController {
 
     @GetMapping("")
     public String index(HttpSession session, Model model){
-        if (isLoggedIn(session)){
-            model.addAttribute("user", session.getAttribute("user"));
+        if (isLoggedIn(session)) {
+            User user = (User) session.getAttribute("user");
+            model.addAttribute("user", user);
+            model.addAttribute("projects", assignmentService.getProjectsForUser(user.getId()));
+            model.addAttribute("subprojects", assignmentService.getSubprojectsForUser(user.getId()));
+            model.addAttribute("tasks", assignmentService.getTasksForUser(user.getId()));
             return "index";
         }
         return "login";
@@ -80,6 +88,7 @@ public class ProjectController {
         return "redirect:/login";
     }
 
+
     @GetMapping("/logout")
     public String logOut(HttpSession session) {
         session.invalidate();
@@ -121,9 +130,57 @@ public class ProjectController {
         if (isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");
             int projectId = projectService.createProject(name, description, Date.valueOf(startDate), Date.valueOf(deadline));
-            projectService.createProjectRelation(user.getId(), projectId);
+            assignmentService.assignUserToProject(user.getId(), projectId); // Assign user to project
         }
         return "redirect:/projects";
+    }
+
+    @GetMapping("/subprojects/create")
+    public String createSubprojectForm(@RequestParam int parentProjectId, HttpSession session, Model model) {
+        if (isLoggedIn(session)) {
+            User user = (User) session.getAttribute("user");
+            model.addAttribute("user", user);
+            model.addAttribute("parentProjectId", parentProjectId);
+            return "create-subproject";
+        }
+        return "login";
+    }
+
+    @PostMapping("/subprojects/create")
+    public String createSubproject(@RequestParam String name, @RequestParam String description, @RequestParam double hours,
+                                   @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                   @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline,
+                                   @RequestParam int parentProjectId, HttpSession session) {
+        if (isLoggedIn(session)) {
+            User user = (User) session.getAttribute("user");
+            int subprojectId = projectService.createSubproject(name, description, hours, Date.valueOf(startDate), Date.valueOf(deadline), parentProjectId);
+            assignmentService.assignUserToSubproject(user.getId(), subprojectId); // Assign user to subproject
+        }
+        return "redirect:/project/" + parentProjectId;
+    }
+
+    @GetMapping("/tasks/create")
+    public String createTaskForm(@RequestParam int subprojectId, HttpSession session, Model model) {
+        if (isLoggedIn(session)) {
+            User user = (User) session.getAttribute("user");
+            model.addAttribute("user", user);
+            model.addAttribute("subprojectId", subprojectId);
+            return "create-task";
+        }
+        return "login";
+    }
+
+    @PostMapping("/tasks/create")
+    public String createTask(@RequestParam String name, @RequestParam String description, @RequestParam double hours,
+                             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                             @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline,
+                             @RequestParam int subprojectId, HttpSession session) {
+        if (isLoggedIn(session)) {
+            User user = (User) session.getAttribute("user");
+            int taskId = projectService.createTask(name, description, hours, Date.valueOf(startDate), Date.valueOf(deadline), subprojectId);
+            assignmentService.assignUserToTask(user.getId(), taskId); // Assign user to task
+        }
+        return "redirect:/subproject/" + subprojectId;
     }
 
     @GetMapping("/project/{id}")
@@ -188,55 +245,86 @@ public class ProjectController {
         return "login";
     }
 
-    @GetMapping("/edit/{entity}/{id}")
-    public String editForm(@PathVariable String entity, @PathVariable int id, Model model, HttpSession session) {
+    @GetMapping("/edit/project/{id}")
+    public String editProjectForm(@PathVariable int id, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");
             model.addAttribute("user", user);
-            switch (entity) {
-                case "project":
-                    Project project = projectService.getProject(id);
-                    model.addAttribute("project", project);
-                    return "edit-project";
-                case "subproject":
-                    Subproject subproject = projectService.getSubprojectById(id);
-                    model.addAttribute("subproject", subproject);
-                    return "edit-subproject";
-                case "task":
-                    Task task = projectService.getTaskById(id);
-                    model.addAttribute("task", task);
-                    return "edit-task";
-                case "subtask":
-                    Subtask subtask = projectService.getSubtaskById(id);
-                    model.addAttribute("subtask", subtask);
-                    return "edit-subtask";
-                default:
-                    return "redirect:/projects";
-            }
+            Project project = projectService.getProject(id);
+            model.addAttribute("project", project);
+            return "edit-project";
         }
         return "login";
     }
 
-    @PostMapping("/edit/{entity}/{id}")
-    public String editEntity(@PathVariable String entity, @PathVariable int id, @ModelAttribute Object updatedEntity, HttpSession session, Model model) {
+    @PostMapping("/edit/project/{id}")
+    public String editProject(@PathVariable int id, @ModelAttribute Project updatedProject, HttpSession session) {
+        if (isLoggedIn(session)) {
+            projectService.editProject(id, updatedProject);
+            return "redirect:/project/" + id;
+        }
+        return "login";
+    }
+
+    @GetMapping("/edit/subproject/{id}")
+    public String editSubprojectForm(@PathVariable int id, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");
             model.addAttribute("user", user);
-            switch (entity) {
-                case "project":
-                    projectService.editProject(id, (Project) updatedEntity);
-                    break;
-                case "subproject":
-                    projectService.editSubproject(id, (Subproject) updatedEntity);
-                    break;
-                case "task":
-                    projectService.editTask(id, (Task) updatedEntity);
-                    break;
-                case "subtask":
-                    projectService.editSubtask(id, (Subtask) updatedEntity);
-                    break;
-            }
-            return "redirect:/" + entity + "/" + id;
+            Subproject subproject = projectService.getSubprojectById(id);
+            model.addAttribute("subproject", subproject);
+            return "edit-subproject";
+        }
+        return "login";
+    }
+
+    @PostMapping("/edit/subproject/{id}")
+    public String editSubproject(@PathVariable int id, @ModelAttribute Subproject updatedSubproject, HttpSession session) {
+        if (isLoggedIn(session)) {
+            projectService.editSubproject(id, updatedSubproject);
+            return "redirect:/subproject/" + id;
+        }
+        return "login";
+    }
+
+    @GetMapping("/edit/task/{id}")
+    public String editTaskForm(@PathVariable int id, Model model, HttpSession session) {
+        if (isLoggedIn(session)) {
+            User user = (User) session.getAttribute("user");
+            model.addAttribute("user", user);
+            Task task = projectService.getTaskById(id);
+            model.addAttribute("task", task);
+            return "edit-task";
+        }
+        return "login";
+    }
+
+    @PostMapping("/edit/task/{id}")
+    public String editTask(@PathVariable int id, @ModelAttribute Task updatedTask, HttpSession session) {
+        if (isLoggedIn(session)) {
+            projectService.editTask(id, updatedTask);
+            return "redirect:/task/" + id;
+        }
+        return "login";
+    }
+
+    @GetMapping("/edit/subtask/{id}")
+    public String editSubtaskForm(@PathVariable int id, Model model, HttpSession session) {
+        if (isLoggedIn(session)) {
+            User user = (User) session.getAttribute("user");
+            model.addAttribute("user", user);
+            Subtask subtask = projectService.getSubtaskById(id);
+            model.addAttribute("subtask", subtask);
+            return "edit-subtask";
+        }
+        return "login";
+    }
+
+    @PostMapping("/edit/subtask/{id}")
+    public String editSubtask(@PathVariable int id, @ModelAttribute Subtask updatedSubtask, HttpSession session) {
+        if (isLoggedIn(session)) {
+            projectService.editSubtask(id, updatedSubtask);
+            return "redirect:/subtask/" + id;
         }
         return "login";
     }

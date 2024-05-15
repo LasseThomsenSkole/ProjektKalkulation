@@ -18,9 +18,9 @@
       <textarea class="form-control" id="description" name="description" th:text="${subproject.description}"></textarea>
     </div>
     <div class="form-group">
-      <label for="deadline">Startdato:</label>
-      <input type="date" class="form-control" id="startdate" name="startdate" th:value="${#dates.format(task.startDate, 'yyyy-MM-dd')}">
-    </div>>
+      <label for="startDate">Startdato:</label>
+      <input type="date" class="form-control" id="startDate" name="startDate" th:value="${#dates.format(subproject.startDate, 'yyyy-MM-dd')}">
+    </div>
     <div class="form-group">
       <label for="deadline">Deadline:</label>
       <input type="date" class="form-control" id="deadline" name="deadline" th:value="${#dates.format(subproject.deadline, 'yyyy-MM-dd')}">
