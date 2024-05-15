@@ -1,4 +1,4 @@
-package projectmanament.manager;
+package projectmanagement.manager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

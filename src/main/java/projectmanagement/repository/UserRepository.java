@@ -1,11 +1,12 @@
-package projectmanament.repository;
+package projectmanagement.repository;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-import projectmanament.manager.ConnectionManager;
-import projectmanament.model.*;
+import projectmanagement.manager.ConnectionManager;
+import projectmanagement.model.*;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +79,7 @@ public class UserRepository {
         }
     }
     /**Finder user_name ud fra informationer om userid, is_admin og password**/
+    //TODO der er noget galt med den her - tror ikke den skal være null
     public User getUserFromName(String name) {
         try {
             String SQL = "SELECT * FROM users WHERE user_name = ?";
@@ -95,6 +97,7 @@ public class UserRepository {
         }
         return null;
     }
+
     /** Tildeler et projekt til en user, ved at indsætte user_id og project_id i user_project_relation **/
     public void assignUserToProject(int userId, int projectId) {
         try {

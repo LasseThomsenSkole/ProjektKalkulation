@@ -1,12 +1,12 @@
-package projectmanament;
+package projectmanagement;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import projectmanament.model.Project;
-import projectmanament.model.Subproject;
-import projectmanament.repository.ProjectRepository;
+import projectmanagement.model.Project;
+import projectmanagement.model.Subproject;
+import projectmanagement.repository.ProjectRepository;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -1,12 +1,12 @@
-package projectmanament.controller;
+package projectmanagement.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import projectmanament.model.*;
+import projectmanagement.model.*;
 import org.springframework.stereotype.Controller;
-import projectmanament.service.ProjectService;
+import projectmanagement.service.ProjectService;
 import org.springframework.ui.Model;
 
 import java.sql.Date;

@@ -1,4 +1,4 @@
-package projectmanament.model;
+package projectmanagement.model;
 
 public enum Status {
     DONE("Afsluttet"),

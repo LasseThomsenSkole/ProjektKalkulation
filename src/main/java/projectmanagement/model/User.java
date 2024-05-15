@@ -1,4 +1,4 @@
-package projectmanament.model;
+package projectmanagement.model;
 
 public class User {
     private int id;

@@ -1,11 +1,11 @@
-package projectmanament.service;
+package projectmanagement.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import projectmanament.model.*;
+import projectmanagement.model.*;
 import org.springframework.stereotype.Service;
-import projectmanament.repository.ProjectRepository;
-import projectmanament.repository.UserRepository;
+import projectmanagement.repository.ProjectRepository;
+import projectmanagement.repository.UserRepository;
 
 import java.sql.Date;
 import java.util.List;

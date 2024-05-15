@@ -1,9 +1,8 @@
-package projectmanament.repository;
+package projectmanagement.repository;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
-import projectmanament.manager.ConnectionManager;
-import projectmanament.model.*;
+import projectmanagement.manager.ConnectionManager;
+import projectmanagement.model.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 

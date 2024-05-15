@@ -1,4 +1,4 @@
-package projectmanament;
+package projectmanagement;
 
 import jakarta.annotation.PostConstruct;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import projectmanament.manager.ConnectionManager;
-import projectmanament.model.Project;
-import projectmanament.model.User;
-import projectmanament.repository.ProjectRepository;
+import projectmanagement.manager.ConnectionManager;
+import projectmanagement.model.Project;
+import projectmanagement.model.User;
+import projectmanagement.repository.ProjectRepository;
 
 import java.sql.Connection;
 import java.sql.SQLException;
