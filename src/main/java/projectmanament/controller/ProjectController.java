@@ -30,7 +30,7 @@ public class ProjectController {
     }
 
     @GetMapping("")
-    public String index(HttpSession session, Model model){
+    public String index(HttpSession session, Model model){ //todo kan laves om til at ik at bruge de to nederste metoder
         if (isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");
             model.addAttribute("user", user);
