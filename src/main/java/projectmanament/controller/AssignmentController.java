@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import projectmanament.model.User;
-import projectmanament.service.AssignmentService;
 
 @Controller
 @RequestMapping("/assign")

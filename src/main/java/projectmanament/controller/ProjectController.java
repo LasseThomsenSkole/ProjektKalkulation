@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import projectmanament.model.*;
 import org.springframework.stereotype.Controller;
-import projectmanament.service.AssignmentService;
 import projectmanament.service.ProjectService;
 import org.springframework.ui.Model;
 

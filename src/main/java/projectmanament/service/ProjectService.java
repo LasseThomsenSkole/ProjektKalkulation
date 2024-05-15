@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import projectmanament.model.*;
 import org.springframework.stereotype.Service;
 import projectmanament.repository.ProjectRepository;
+import projectmanament.repository.UserRepository;
 
 import java.sql.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
+    private UserRepository userRepository;
 
     public List<Project> findAllProjects() {
         return projectRepository.findAllProjects();
@@ -23,20 +25,20 @@ public class ProjectService {
     }
 
     public boolean login(String name, String password){ //TODO MÅSKE LAV OM
-        User user = projectRepository.getUserFromName(name);
+        User user = userRepository.getUserFromName(name);
         if (user != null){
             return user.getPassword().equals(password);
         }
         return false;
     }
     public User getUserFromName(String name){
-        return projectRepository.getUserFromName(name);
+        return userRepository.getUserFromName(name);
     }
     public int getIdFromUser(String name, String password){
-        return projectRepository.getIdFromUser(name, password);
+        return userRepository.getIdFromUser(name, password);
     }
     public void insertUser(String username, String password){
-        projectRepository.insertUser(username, password);
+        userRepository.insertUser(username, password);
     }
 
     public List<Project> getProjectsFromUser(int id){
