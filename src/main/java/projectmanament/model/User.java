@@ -4,6 +4,7 @@ public class User {
     private int id;
     private String name;
     private String password;
+
     private boolean isAdmin;
 
     public User(){} //thymeleaf
@@ -22,6 +23,10 @@ public class User {
 
     public boolean isAdmin() {
         return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public String getName() {

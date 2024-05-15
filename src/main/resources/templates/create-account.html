@@ -2,22 +2,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>AlphaManagement</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
 </head>
 <body>
-<h2>Opret konto</h2>
-<form th:action="@{/create-account}" method="post">
-    <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required autofocus/>
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required/>
-    </div>
-    <div class="text-center" style="color: #b80000" th:if="${userAlreadyExists}">
-        Brugernavnet er allerede i brug.
-    </div>
-    <button type="submit">Opret</button>
-</form>
+<div class="main-content">
+    <h2>Opret konto</h2>
+    <form th:action="@{/create-account}" method="post">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" class="form-control" required autofocus/>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" required/>
+        </div>
+        <div class="text-center" style="color: #b80000" th:if="${userAlreadyExists}">
+            Brugernavnet er allerede i brug.
+        </div>
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary">Opret</button>
+        </div>
+    </form>
+</div>
 </body>
 </html>
