@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Subprojektdetaljer</title>
+    <link rel="icon" href="/img/logo_alpha.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css" type="text/css">
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<div class="container mt-5">
+    <h2 th:text="${subproject.name}">Subprojektnavn</h2>
+    <p th:text="${subproject.description}">Subprojektbeskrivelse</p>
+
+    <div class="mb-3 d-flex align-items-center">
+        <a th:href="@{'/edit/subproject/' + ${subproject.id}}" class="btn btn-success mr-2">Rediger</a>
+        <span class="mr-2">Status:</span>
+        <form th:action="@{'/subprojects/' + ${subproject.id} + '/status'}" method="post" class="form-inline">
+            <select name="newStatus" class="form-control mr-2">
+                <option value="NOT_STARTED" th:selected="${subproject.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
+                <option value="IN_PROGRESS" th:selected="${subproject.status == 'IN_PROGRESS'}">I gang</option>
+                <option value="DONE" th:selected="${subproject.status == 'DONE'}">Færdig</option>
+                <option value="ARCHIVED" th:selected="${subproject.status == 'ARCHIVED'}">Arkiveret</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Gem</button>
+        </form>
+    </div>
+
+    <div class="tasks-section">
+        <h3>Tasks</h3>
+        <div class="tasks-grid">
+            <div class="card mb-3" th:each="task : ${subproject.tasks}">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a th:href="@{'/task/' + ${task.id}}" class="text-decoration-none" th:text="${task.name}">Task Navn</a>
+                    </h5>
+                    <p class="card-text" th:text="${task.description}">Task Beskrivelse</p>
+                    <div class="mb-2 d-flex align-items-center">
+                        <a th:href="@{'/edit/task/' + ${task.id}}" class="btn btn-secondary mr-2">Rediger</a>
+                        <span class="mr-2">Status:</span>
+                        <form th:action="@{'/tasks/' + ${task.id} + '/status'}" method="post" class="form-inline">
+                            <select name="newStatus" class="form-control mr-2">
+                                <option value="NOT_STARTED" th:selected="${task.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
+                                <option value="IN_PROGRESS" th:selected="${task.status == 'IN_PROGRESS'}">I gang</option>
+                                <option value="DONE" th:selected="${task.status == 'DONE'}">Færdig</option>
+                                <option value="ARCHIVED" th:selected="${task.status == 'ARCHIVED'}">Arkiveret</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">Gem</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>
