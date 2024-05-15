@@ -18,7 +18,6 @@ import java.util.List;
 public class ProjectController {
     private ProjectService projectService;
     @Autowired
-    private AssignmentService assignmentService;
 
     public ProjectController(ProjectService projectService){
         this.projectService = projectService;
@@ -33,9 +32,9 @@ public class ProjectController {
         if (isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");
             model.addAttribute("user", user);
-            model.addAttribute("projects", assignmentService.getProjectsForUser(user.getId()));
+            /*model.addAttribute("projects", assignmentService.getProjectsForUser(user.getId()));
             model.addAttribute("subprojects", assignmentService.getSubprojectsForUser(user.getId()));
-            model.addAttribute("tasks", assignmentService.getTasksForUser(user.getId()));
+            model.addAttribute("tasks", assignmentService.getTasksForUser(user.getId()));*/
             return "index";
         }
         return "login";
@@ -127,9 +126,7 @@ public class ProjectController {
                                 @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                 HttpSession session) {
         if (isLoggedIn(session)) {
-            User user = (User) session.getAttribute("user");
-            int projectId = projectService.createProject(name, description, Date.valueOf(startDate), Date.valueOf(deadline));
-            assignmentService.assignUserToProject(user.getId(), projectId); // Assign user to project
+            projectService.createProject(name, description, Date.valueOf(startDate), Date.valueOf(deadline));
         }
         return "redirect:/projects";
     }
@@ -151,9 +148,7 @@ public class ProjectController {
                                    @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline,
                                    @RequestParam int parentProjectId, HttpSession session) {
         if (isLoggedIn(session)) {
-            User user = (User) session.getAttribute("user");
-            int subprojectId = projectService.createSubproject(name, description, hours, Date.valueOf(startDate), Date.valueOf(deadline), parentProjectId);
-            assignmentService.assignUserToSubproject(user.getId(), subprojectId); // Assign user to subproject
+            projectService.createSubproject(name, description, hours, Date.valueOf(startDate), Date.valueOf(deadline), parentProjectId);
         }
         return "redirect:/project/" + parentProjectId;
     }
@@ -175,9 +170,7 @@ public class ProjectController {
                              @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline,
                              @RequestParam int subprojectId, HttpSession session) {
         if (isLoggedIn(session)) {
-            User user = (User) session.getAttribute("user");
-            int taskId = projectService.createTask(name, description, hours, Date.valueOf(startDate), Date.valueOf(deadline), subprojectId);
-            assignmentService.assignUserToTask(user.getId(), taskId); // Assign user to task
+            projectService.createTask(name, description, hours, Date.valueOf(startDate), Date.valueOf(deadline), subprojectId);
         }
         return "redirect:/subproject/" + subprojectId;
     }

@@ -41,10 +41,6 @@ public class ProjectService {
         userRepository.insertUser(username, password);
     }
 
-    public List<Project> getProjectsFromUser(int id){
-        return projectRepository.getProjectsFromUser(id);
-    }
-
     public int createProject(String name, String description, Date startDate, Date deadline) {
          return projectRepository.createProject(name, description, startDate, deadline);
     }
@@ -111,7 +107,7 @@ public class ProjectService {
     }
 
     public boolean userAlreadyExists(String username){
-        return projectRepository.userAlreadyExists(username);
+        return userRepository.userAlreadyExists(username);
     }
 
     public int createSubproject(String name, String description, double hours, Date startDate, Date deadline, int parentProjectId) {
