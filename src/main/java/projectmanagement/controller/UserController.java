@@ -1,0 +1,89 @@
+package projectmanagement.controller;
+
+import jakarta.servlet.http.HttpSession;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import projectmanagement.model.Project;
+import projectmanagement.model.User;
+import projectmanagement.service.ProjectService;
+import projectmanagement.service.UserService;
+
+import java.util.List;
+
+public class UserController {
+    private UserService userService;
+    private ProjectService projectService;
+
+
+    private boolean isLoggedIn(HttpSession session){
+        return session.getAttribute("user") != null;
+    }
+
+    @GetMapping("")
+    public String index(HttpSession session, Model model){
+        if (isLoggedIn(session)) {
+            User user = (User) session.getAttribute("user");
+            List<Project> userProjects = projectService.getProjectsForUser(user.getId());
+            model.addAttribute("user", user);
+            model.addAttribute("projects", userProjects);
+            return "index";
+        }
+        return "login";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(
+            @RequestParam("username") String name,
+            @RequestParam("password") String password,
+            HttpSession session, Model model){
+        if (userService.login(name,password)){
+            session.setAttribute("user", userService.getUserFromName(name)); //todo spørg om der er en bedre måde at gøre det her på
+            session.setMaxInactiveInterval(300); // 5 minutter
+            return "redirect:/";
+        }
+        model.addAttribute("wrongCredentials", true);
+        return "login";
+    }
+
+    @GetMapping("/create-account")
+    public String createAccount(HttpSession session){
+        if (isLoggedIn(session)){
+            User user = (User) session.getAttribute("user");
+            return user.isAdmin() ? "create-account" : "login"; //hvis man er admin kan man oprette accounts
+        }
+        return "login";
+    }
+
+    @PostMapping("/create-account")
+    public String createAccountPost(@RequestParam("username") String username,
+                                    @RequestParam("password") String password,
+                                    HttpSession session, Model model){
+        if (isLoggedIn(session)){ //det her er fuld spaghetti kode men jeg kan ikke finde en bedre måde at gøre det på - Lasse
+            User user = (User) session.getAttribute("user");
+            if (user.isAdmin()){
+                if (userService.userAlreadyExists(username)){
+                    model.addAttribute("userAlreadyExists", true);
+                    return "create-account";
+                }
+                userService.insertUser(username, password);
+                return "redirect:/login"; //todo måske redirect tilbage til createaccount ????? - lasse
+            }
+        }
+        return "redirect:/login";
+    }
+
+
+    @GetMapping("/logout")
+    public String logOut(HttpSession session) {
+        session.invalidate();
+        return "login";
+    }
+
+}
