@@ -26,15 +26,6 @@ public class ProjectService {
         return projectRepository.findAllProjectsSorted(sort);
     }
 
-    public boolean login(String name, String password){ //TODO MÅSKE LAV OM
-        User user = userRepository.getUserFromName(name);
-        if (user != null){
-            return user.getPassword().equals(password);
-        }
-        return false;
-    }
-
-
     public int createProject(String name, String description, Date startDate, Date deadline) {
          return projectRepository.createProject(name, description, startDate, deadline);
     }
@@ -112,6 +103,9 @@ public class ProjectService {
         return projectRepository.getProjectsFromAssignedUser(userId);
     }
 
+    public void assignUserToProject(int userId, int projectId){
+        userRepository.assignUserToProject(userId, projectId);
+    }
 
 
 }

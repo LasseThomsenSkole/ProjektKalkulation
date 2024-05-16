@@ -30,6 +30,7 @@ public class UserRepository {
     public void init() {
         connection = ConnectionManager.getConnection(db_url, username, pwd);
     }
+
     /** Finder user ved brug af user_id **/
     public User getUserById(int userId) {
         try {
@@ -49,6 +50,7 @@ public class UserRepository {
         }
         return null;
     }
+
     /** Ved brug af user_name og password henter vi information om user_id**/
     public int getIdFromUser(String name, String password) { //TODO HVIS DER ER EN BEDRE MÅDE SÅ SKAL DET HER VÆK
         try {
@@ -65,6 +67,7 @@ public class UserRepository {
         }
         return 0;
     }
+
     /** Opretter en user ved at indsætte username og password,
      hvorefter databasen selv tildeler useren et unikt user_id**/
     public void insertUser(String username, String password) {

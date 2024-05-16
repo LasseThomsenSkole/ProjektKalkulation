@@ -21,10 +21,8 @@ public class ProjectController {
     private UserService userService;
     @Autowired
 
-
-    public ProjectController(ProjectService projectService, UserService userService){
+    public ProjectController(ProjectService projectService){
         this.projectService = projectService;
-        this.userService = userService;
     }
 
     private boolean isLoggedIn(HttpSession session){
@@ -53,7 +51,7 @@ public class ProjectController {
                         @RequestParam("username") String name,
                         @RequestParam("password") String password,
                         HttpSession session, Model model){
-        if (projectService.login(name,password)){
+        if (userService.login(name,password)){
             session.setAttribute("user", userService.getUserFromName(name)); //todo spørg om der er en bedre måde at gøre det her på
             session.setMaxInactiveInterval(300); // 5 minutter
             return "redirect:/";

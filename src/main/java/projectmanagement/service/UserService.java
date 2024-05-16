@@ -12,6 +12,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public boolean login(String name, String password){ //TODO MÅSKE LAV OM
+        User user = userRepository.getUserFromName(name);
+        if (user != null){
+            return user.getPassword().equals(password);
+        }
+        return false;
+    }
+
     public boolean userAlreadyExists(String username){
         return userRepository.userAlreadyExists(username);
     }
@@ -28,7 +36,4 @@ public class UserService {
         userRepository.insertUser(username, password);
     }
 
-    public void assignUserToProject(int userId, int projectId){
-        userRepository.assignUserToProject(userId, projectId);
-    }
 }
