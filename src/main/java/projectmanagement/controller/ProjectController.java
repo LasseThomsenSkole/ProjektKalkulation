@@ -8,6 +8,7 @@ import projectmanagement.model.*;
 import org.springframework.stereotype.Controller;
 import projectmanagement.service.ProjectService;
 import org.springframework.ui.Model;
+import projectmanagement.service.UserService;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -17,10 +18,13 @@ import java.util.List;
 @RequestMapping("")
 public class ProjectController {
     private ProjectService projectService;
+    private UserService userService;
     @Autowired
 
-    public ProjectController(ProjectService projectService){
+
+    public ProjectController(ProjectService projectService, UserService userService){
         this.projectService = projectService;
+        this.userService = userService;
     }
 
     private boolean isLoggedIn(HttpSession session){
@@ -50,7 +54,7 @@ public class ProjectController {
                         @RequestParam("password") String password,
                         HttpSession session, Model model){
         if (projectService.login(name,password)){
-            session.setAttribute("user", projectService.getUserFromName(name)); //todo spørg om der er en bedre måde at gøre det her på
+            session.setAttribute("user", userService.getUserFromName(name)); //todo spørg om der er en bedre måde at gøre det her på
             session.setMaxInactiveInterval(300); // 5 minutter
             return "redirect:/";
         }
@@ -74,11 +78,11 @@ public class ProjectController {
         if (isLoggedIn(session)){ //det her er fuld spaghetti kode men jeg kan ikke finde en bedre måde at gøre det på - Lasse
             User user = (User) session.getAttribute("user");
             if (user.isAdmin()){
-                if (projectService.userAlreadyExists(username)){
+                if (userService.userAlreadyExists(username)){
                     model.addAttribute("userAlreadyExists", true);
                     return "create-account";
                 }
-                projectService.insertUser(username, password);
+                userService.insertUser(username, password);
                 return "redirect:/login"; //todo måske redirect tilbage til createaccount ????? - lasse
             }
         }
@@ -92,12 +96,12 @@ public class ProjectController {
         return "login";
     }
 
-   /* @PostMapping("/project/{projectId}")
+   @PostMapping("/project/{projectId}")
     public String assignUserToProject(@PathVariable int projectId, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        assignmentService.assignUserToProject(user.getId(), projectId);
+        projectService.assignUserToProject(user.getId(), projectId);
         return "redirect:/mypage";
-    }*/
+    }
 
     @GetMapping("/projects")
     public String showAllProjects(@RequestParam(value = "sort", required = false) String sort, Model model, HttpSession session) {
