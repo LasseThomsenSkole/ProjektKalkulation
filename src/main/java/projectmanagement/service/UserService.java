@@ -12,7 +12,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-
     public boolean userAlreadyExists(String username){
         return userRepository.userAlreadyExists(username);
     }
@@ -29,5 +28,7 @@ public class UserService {
         userRepository.insertUser(username, password);
     }
 
-    public void assignUserTo
+    public void assignUserToProject(int userId, int projectId){
+        userRepository.assignUserToProject(userId, projectId);
+    }
 }

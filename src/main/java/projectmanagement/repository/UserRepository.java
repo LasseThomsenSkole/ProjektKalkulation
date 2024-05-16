@@ -122,18 +122,7 @@ public class UserRepository {
             throw new RuntimeException(e);
         }
     }
-    /** Tildeler en task til en user, ved at indsætte user_id og project_id i user_task_relation **/
-    public void assignUserToTask(int userId, int taskId) {
-        try {
-            String SQL = "INSERT INTO user_task_relation (user_id, task_id) VALUES (?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, userId);
-            preparedStatement.setInt(2, taskId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     /** Finder tasks som en user er tildelt ved brug af user_task_relation **/
     public List<Task> getTasksFromUser(int userId) {
         List<Task> tasks = new ArrayList<>();
@@ -159,40 +148,6 @@ public class UserRepository {
         }
         return tasks;
     }
-
-
-    /**TODO**/
-    /*public void assignUserToSubproject(int userId, int subprojectId) {
-        try {
-            String SQL = "INSERT INTO user_subproject_relation (user_id, subproject_id) VALUES (?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, userId);
-            preparedStatement.setInt(2, subprojectId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
-
-    /*public List<Subproject> getSubprojectsFromUser(int userId) {
-        List<Subproject> subprojects = new ArrayList<>();
-        try {
-            String SQL = "SELECT s.subproject_id, s.subproject_name, s.subproject_description, s.subproject_hours, s.subproject_startdate, s.subproject_deadline, s.subproject_status " +
-                    "FROM subprojects s " +
-                    "JOIN user_subproject_relation usr ON s.subproject_id = usr.subproject_id " +
-                    "WHERE usr.user_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Subproject subproject = mapSubproject(resultSet);
-                subprojects.add(subproject);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return subprojects;
-    }*/
 }
 
 
