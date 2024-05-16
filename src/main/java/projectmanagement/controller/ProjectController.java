@@ -81,7 +81,7 @@ public class ProjectController {
                     return "create-account";
                 }
                 userService.insertUser(username, password);
-                return "redirect:/login"; //todo måske redirect tilbage til createaccount ????? - lasse
+                return "redirect:/create-account"; //todo måske redirect tilbage til createaccount ????? - lasse
             }
         }
         return "redirect:/login";
