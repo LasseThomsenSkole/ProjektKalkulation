@@ -14,6 +14,8 @@ import java.util.List;
 public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
     public List<Project> findAllProjects() {

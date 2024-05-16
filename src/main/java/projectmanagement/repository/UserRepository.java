@@ -79,7 +79,6 @@ public class UserRepository {
         }
     }
     /**Finder user_name ud fra informationer om userid, is_admin og password**/
-    //TODO der er noget galt med den her - tror ikke den skal være null
     public User getUserFromName(String name) {
         try {
             String SQL = "SELECT * FROM users WHERE user_name = ?";

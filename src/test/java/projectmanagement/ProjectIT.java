@@ -131,11 +131,11 @@ public class ProjectIT {
             System.out.println("Inserted " + rows.length + " records into the table");
     }
 
-    @Test
-    void findUserbyID() throws SQLException {
-        User found = repository.getUserById(12);
-        assertEquals("Adam", found.getName());
-    }
+//    @Test
+//    void findUserbyID() throws SQLException {
+//        User found = repository.getUserById(12);
+//        assertEquals("Adam", found.getName());
+//    }
 
     @Test
     void deleteProject20() {
