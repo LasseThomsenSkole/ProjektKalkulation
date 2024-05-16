@@ -28,13 +28,12 @@ public class ProjectController {
     }
 
     @GetMapping("")
-    public String index(HttpSession session, Model model){ //todo kan laves om til at ik at bruge de to nederste metoder
+    public String index(HttpSession session, Model model){
         if (isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");
+            List<Project> userProjects = projectService.getProjectsForUser(user.getId());
             model.addAttribute("user", user);
-            /*model.addAttribute("projects", assignmentService.getProjectsForUser(user.getId()));
-            model.addAttribute("subprojects", assignmentService.getSubprojectsForUser(user.getId()));
-            model.addAttribute("tasks", assignmentService.getTasksForUser(user.getId()));*/
+            model.addAttribute("projects", userProjects);
             return "index";
         }
         return "login";

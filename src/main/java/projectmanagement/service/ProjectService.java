@@ -120,4 +120,8 @@ public class ProjectService {
         return projectRepository.createTask(name, description, hours, startDate, deadline, subprojectId);
     }
 
+    public List<Project> getProjectsForUser(int userId) {
+        return projectRepository.getProjectsFromAssignedUser(userId);
+    }
+
 }
