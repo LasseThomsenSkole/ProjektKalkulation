@@ -33,22 +33,13 @@ public class ProjectService {
         }
         return false;
     }
-    public User getUserFromName(String name){
-        return userRepository.getUserFromName(name);
-    }
-    public int getIdFromUser(String name, String password){
-        return userRepository.getIdFromUser(name, password);
-    }
-    public void insertUser(String username, String password){
-        userRepository.insertUser(username, password);
-    }
+
 
     public int createProject(String name, String description, Date startDate, Date deadline) {
          return projectRepository.createProject(name, description, startDate, deadline);
     }
-    public void createProjectRelation(int userId, int projectId){
-        projectRepository.createProjectRelation(userId, projectId);
-    }
+
+
     public Project getProject(int id) {
         return projectRepository.getProject(id);
     }
@@ -78,6 +69,7 @@ public class ProjectService {
     }
 
     public void editSubtask(int id, Subtask updatedSubtask){
+
         projectRepository.editSubtask(id,updatedSubtask);
     }
 
@@ -108,10 +100,6 @@ public class ProjectService {
         projectRepository.changeSubtaskStatus(subtaskId, newStatus);
     }
 
-    public boolean userAlreadyExists(String username){
-        return userRepository.userAlreadyExists(username);
-    }
-
     public int createSubproject(String name, String description, double hours, Date startDate, Date deadline, int parentProjectId) {
         return projectRepository.createSubproject(name, description, hours, startDate, deadline, parentProjectId);
     }
@@ -119,9 +107,11 @@ public class ProjectService {
     public int createTask(String name, String description, double hours, Date startDate, Date deadline, int subprojectId) {
         return projectRepository.createTask(name, description, hours, startDate, deadline, subprojectId);
     }
-
+    
     public List<Project> getProjectsForUser(int userId) {
         return projectRepository.getProjectsFromAssignedUser(userId);
     }
+
+
 
 }

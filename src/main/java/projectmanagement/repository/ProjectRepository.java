@@ -338,20 +338,6 @@ public class ProjectRepository {
         }
         return projectId;
     }
-    /** Tildeler et projekt til en user, ved at indsætte user_id og project_id i user_project_relation **/
-    //TODO gør den her ikke det samme som assignUserToProject i UserRepository? Slet en af metoderne
-    public void createProjectRelation(int userId, int projectId){
-        try {
-            String SQL = "INSERT INTO user_project_relation (user_id, project_id) VALUES (?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, userId);
-            preparedStatement.setInt(2, projectId);
-            preparedStatement.executeUpdate();
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
-
 
     /**EDIT PROJECT**/
     /** Opdaterer informationer i et projekt ved at give muligheden for at sætte
@@ -472,8 +458,8 @@ public class ProjectRepository {
 
 
     /**SLET SUBPROJECT**/
-    /** Sletter alle informationer i subprojektet via subprojects_id**/
-    public void deleteSubproject(int subprojectId){ //todo den burde også slette tasks og subtasks som ligger under -LAV DET TIL EN SQL TRIGGER
+    /** Sletter alle informationer i subprojektet via subprojects_id og fordi vi gør brug af cascading delete i vores sql database**/
+    public void deleteSubproject(int subprojectId){
         try {
             String SQL = "DELETE FROM subprojects " +
                     "WHERE subprojects_id = ?;";
@@ -536,23 +522,17 @@ public class ProjectRepository {
 
     /**SLET TASK**/
     /** Sletter alle subtasks der har med det ene task at gøre via parent_project_id **/
-    public void deleteTask(int taskId){ //TODO NÅR DER KOMMER EN SQL TRIGGER SKAL DET KUN VÆRE EN TING SOM BLIVER SLETTET
+    public void deleteTask(int taskId){
         try {
-            String deleteSubtaskSQL = "DELETE FROM subtasks WHERE parent_task_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteSubtaskSQL);
-            preparedStatement.setInt(1, taskId);
-            preparedStatement.executeUpdate();
-
             String SQL = "DELETE FROM tasks " +
                     "WHERE task_id = ?;";
-            preparedStatement = connection.prepareStatement(SQL);
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, taskId);
             preparedStatement.executeUpdate();
         }
         catch (SQLException e){
             throw new RuntimeException(e);
         }
-
     }
 
 
