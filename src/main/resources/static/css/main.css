@@ -144,9 +144,8 @@ footer {
 .form-control {
     border-radius: 5px;
     border: 1px solid #ccc;
-    padding: 8px;
+    padding: 4px;
     width: 100%;
-    margin-bottom: 0px;
 }
 
 button.btn, .btn-success, .btn-primary, .btn-secondary {
@@ -198,6 +197,10 @@ label {
     display: flex;
     gap: 10px;
     margin-top: 10px;
+}
+
+.custom-margin {
+    margin-left: 4px;
 }
 
 

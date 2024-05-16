@@ -41,13 +41,13 @@
         <div class="d-flex align-items-center mb-2">
             <span class="mr-2">Status:</span>
             <form th:action="@{'/projects/' + ${project.id} + '/status'}" method="post" class="form-inline d-flex align-items-center">
-                <select name="newStatus" class="form-control mr-2">
+                <select name="newStatus" class="form-control mr-2 custom-margin">
                     <option value="NOT_STARTED" th:selected="${project.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
                     <option value="IN_PROGRESS" th:selected="${project.status == 'IN_PROGRESS'}">I gang</option>
                     <option value="DONE" th:selected="${project.status == 'DONE'}">Færdig</option>
                     <option value="ARCHIVED" th:selected="${project.status == 'ARCHIVED'}">Arkiveret</option>
                 </select>
-                <button type="submit" class="btn btn-primary">Gem</button>
+                <button type="submit" class="btn btn-primary custom-margin">Gem</button>
             </form>
         </div>
     </div>
@@ -66,13 +66,13 @@
                         <div class="d-flex align-items-center mb-2">
                             <span class="mr-2">Status:</span>
                             <form th:action="@{'/subprojects/' + ${subproject.id} + '/status'}" method="post" class="form-inline d-flex align-items-center">
-                                <select name="newStatus" class="form-control mr-2">
+                                <select name="newStatus" class="form-control mr-2 custom-margin">
                                     <option value="NOT_STARTED" th:selected="${subproject.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
                                     <option value="IN_PROGRESS" th:selected="${subproject.status == 'IN_PROGRESS'}">I gang</option>
                                     <option value="DONE" th:selected="${subproject.status == 'DONE'}">Færdig</option>
                                     <option value="ARCHIVED" th:selected="${subproject.status == 'ARCHIVED'}">Arkiveret</option>
                                 </select>
-                                <button type="submit" class="btn btn-primary">Gem</button>
+                                <button type="submit" class="btn btn-primary custom-margin">Gem</button>
                             </form>
                         </div>
                     </div>
