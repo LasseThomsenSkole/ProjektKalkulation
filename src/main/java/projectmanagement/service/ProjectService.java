@@ -86,11 +86,6 @@ public class ProjectService {
         projectRepository.changeTaskStatus(taskId, newStatus);
     }
 
-    // Ændre status for en subopgave (subtask)
-    public void changeSubtaskStatus(int subtaskId, Status newStatus) {
-        projectRepository.changeSubtaskStatus(subtaskId, newStatus);
-    }
-
     public int createSubproject(String name, String description, double hours, Date startDate, Date deadline, int parentProjectId) {
         return projectRepository.createSubproject(name, description, hours, startDate, deadline, parentProjectId);
     }
@@ -109,6 +104,10 @@ public class ProjectService {
 
     public int findSubprojectIdByTaskId(int taskId) {
         return projectRepository.findSubprojectIdByTaskId(taskId);
+    }
+
+    public void deleteProject(int projectId) {
+        projectRepository.deleteProject(projectId);
     }
 
 

@@ -316,4 +316,18 @@ public class ProjectController {
         }
         return "login";
     }
+
+    @PostMapping("/projects/{projectId}/delete")
+    public String deleteProject(@PathVariable int projectId, HttpSession session) {
+        if (isLoggedIn(session) && isAdmin(session)) {
+            projectService.deleteProject(projectId);
+            return "redirect:/projects";
+        }
+        return "login";
+    }
+
+    private boolean isAdmin(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        return user != null && user.isAdmin();
+    }
 }
