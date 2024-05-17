@@ -32,9 +32,6 @@
                     </select>
                 </form>
             </div>
-            <div style="text-align: right;">
-                <li><a th:href="@{/archivedprojects}" class="btn btn-primary" >ARKIVEREDE PROJEKTER</a></li>
-            </div>
             <!-- håndtere bredden flydende afhængig af telefon el computer -->
             <div class="table-responsive">
                 <table class="table small-text">
@@ -77,7 +74,10 @@
             </div>
         </div>
     </div>
-    <a href="/projects/create" class="btn btn-primary">Tilføj Nyt Projekt</a>
+    <div class="d-flex justify-content-between mb-3">
+        <a href="/projects/create" class="btn btn-primary">Tilføj Nyt Projekt</a>
+        <a th:href="@{/archivedprojects}" class="btn btn-primary">ARKIVEREDE PROJEKTER</a>
+    </div>
 </div>
 
 <div th:insert="~{fragments/footer :: footer}"></div>
