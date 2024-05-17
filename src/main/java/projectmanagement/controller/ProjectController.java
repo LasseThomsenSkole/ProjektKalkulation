@@ -189,7 +189,9 @@ public class ProjectController {
             model.addAttribute("user", user);
             Status newStatus = Status.valueOf(statusString);
             projectService.changeTaskStatus(taskId, newStatus);
-            return "redirect:/task/" + taskId;
+            int subprojectId = projectService.findSubprojectIdByTaskId(taskId);
+
+            return "redirect:/subproject/" + subprojectId;
         }
         return "login";
     }
@@ -252,7 +254,8 @@ public class ProjectController {
     public String editTask(@PathVariable int id, @ModelAttribute Task updatedTask, HttpSession session) {
         if (isLoggedIn(session)) {
             projectService.editTask(id, updatedTask);
-            return "redirect:/task/" + id;
+            int subprojectId = projectService.findSubprojectIdByTaskId(id);
+            return "redirect:/subproject/" + subprojectId;
         }
         return "login";
     }
@@ -290,17 +293,17 @@ public class ProjectController {
         return "login";
     }
 
-    @GetMapping("/task/{id}")
-    public String showTaskDetails(@PathVariable int id, Model model, HttpSession session) {
-        if (isLoggedIn(session)) {
-            User user = (User) session.getAttribute("user");
-            model.addAttribute("user", user);
-            Task task = projectService.getTaskById(id);
-            model.addAttribute("task", task);
-            return "task-detail";
-        }
-        return "login";
-    }
+//    @GetMapping("/task/{id}")
+//    public String showTaskDetails(@PathVariable int id, Model model, HttpSession session) {
+//        if (isLoggedIn(session)) {
+//            User user = (User) session.getAttribute("user");
+//            model.addAttribute("user", user);
+//            Task task = projectService.getTaskById(id);
+//            model.addAttribute("task", task);
+//            return "task-detail";
+//        }
+//        return "login";
+//    }
 
     @GetMapping("/subtask/{id}")
     public String showSubtaskDetails(@PathVariable int id, Model model, HttpSession session) {

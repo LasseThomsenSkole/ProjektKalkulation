@@ -107,5 +107,9 @@ public class ProjectService {
         userRepository.assignUserToProject(userId, projectId);
     }
 
+    public int findSubprojectIdByTaskId(int taskId) {
+        return projectRepository.findSubprojectIdByTaskId(taskId);
+    }
+
 
 }

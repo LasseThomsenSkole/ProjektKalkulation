@@ -718,6 +718,24 @@ public class ProjectRepository {
         return projects;
     }
 
+    /**Benyttes for at redirecte fra task status ændring til parent subproject side**/
+    public int findSubprojectIdByTaskId(int taskId) {
+        int subprojectId = 0;
+        try {
+            String SQL = "SELECT subproject_id FROM tasks WHERE task_id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+                preparedStatement.setInt(1, taskId);
+                ResultSet rs = preparedStatement.executeQuery();
+                if (rs.next()) {
+                    subprojectId = rs.getInt("subproject_id");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding subproject ID by task ID", e);
+        }
+        return subprojectId;
+    }
+
 
 
 
