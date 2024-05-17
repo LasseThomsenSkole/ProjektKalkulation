@@ -22,6 +22,12 @@ header, footer {
     align-items: center;
 }
 
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none; /* Removes underline from text */
+}
+
 .logo {
     height: 40px;
     margin-right: 10px; /* Space between logo and logo text */
@@ -31,7 +37,9 @@ header, footer {
     font-size: 1.8em;
     font-weight: bold;
     color: #0c0c0c;
+    text-decoration: none;
 }
+
 
 /* Navigation menu styling */
 nav ul {
