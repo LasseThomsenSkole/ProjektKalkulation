@@ -43,6 +43,7 @@
             <select name="newStatus" class="form-control mr-2">
                 <option value="NOT_STARTED" th:selected="${subproject.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
                 <option value="IN_PROGRESS" th:selected="${subproject.status == 'IN_PROGRESS'}">I gang</option>
+                <option value="TODO" th:selected="${subproject.status == 'TODO'}">To do</option>
                 <option value="DONE" th:selected="${subproject.status == 'DONE'}">Færdig</option>
                 <option value="ARCHIVED" th:selected="${subproject.status == 'ARCHIVED'}">Arkiveret</option>
             </select>
@@ -65,6 +66,7 @@
                         <form th:action="@{'/subprojects/' + ${task.id} + '/status'}" method="post" class="form-inline">
                             <select name="newStatus" class="form-control mr-2">
                                 <option value="NOT_STARTED" th:selected="${task.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
+                                <option value="TODO" th:selected="${task.status == 'TODO'}">To do</option>
                                 <option value="IN_PROGRESS" th:selected="${task.status == 'IN_PROGRESS'}">I gang</option>
                                 <option value="DONE" th:selected="${task.status == 'DONE'}">Færdig</option>
                                 <option value="ARCHIVED" th:selected="${task.status == 'ARCHIVED'}">Arkiveret</option>

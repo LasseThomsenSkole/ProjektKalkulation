@@ -1,6 +1,8 @@
 package projectmanagement.controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +14,12 @@ import projectmanagement.service.UserService;
 
 import java.util.List;
 
+@Controller
 public class UserController {
+
+    @Autowired
     private UserService userService;
+    @Autowired
     private ProjectService projectService;
 
 
@@ -21,17 +27,17 @@ public class UserController {
         return session.getAttribute("user") != null;
     }
 
-    @GetMapping("")
-    public String index(HttpSession session, Model model){
-        if (isLoggedIn(session)) {
-            User user = (User) session.getAttribute("user");
-            List<Project> userProjects = projectService.getProjectsForUser(user.getId());
-            model.addAttribute("user", user);
-            model.addAttribute("projects", userProjects);
-            return "index";
-        }
-        return "login";
-    }
+//    @GetMapping("")
+//    public String index(HttpSession session, Model model){
+//        if (isLoggedIn(session)) {
+//            User user = (User) session.getAttribute("user");
+//            List<Project> userProjects = projectService.getProjectsForUser(user.getId());
+//            model.addAttribute("user", user);
+//            model.addAttribute("projects", userProjects);
+//            return "index";
+//        }
+//        return "login";
+//    }
 
     @GetMapping("/login")
     public String login(){
