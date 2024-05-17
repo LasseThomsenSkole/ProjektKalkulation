@@ -39,15 +39,15 @@
     <div class="mb-3 d-flex align-items-center">
         <a th:href="@{'/edit/project/' + ${subproject.id}}" class="btn btn-success mr-2">Rediger Subprojekt</a>
         <span class="mr-2">Status:</span>
-        <form th:action="@{'/projects/' + ${subproject.id} + '/status'}" method="post" class="form-inline">
-            <select name="newStatus" class="form-control mr-2">
+        <form th:action="@{'/subprojects/' + ${subproject.id} + '/status'}" method="post" class="form-inline d-flex align-items-center">
+            <select name="newStatus" class="form-control mr-2 custom-margin" onchange="this.form.submit()">
+                <option value="" selected disabled th:text="${subproject.status.displayName}"></option>
                 <option value="NOT_STARTED" th:selected="${subproject.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
                 <option value="IN_PROGRESS" th:selected="${subproject.status == 'IN_PROGRESS'}">I gang</option>
                 <option value="TODO" th:selected="${subproject.status == 'TODO'}">To do</option>
                 <option value="DONE" th:selected="${subproject.status == 'DONE'}">Færdig</option>
                 <option value="ARCHIVED" th:selected="${subproject.status == 'ARCHIVED'}">Arkiveret</option>
             </select>
-            <button type="submit" class="btn btn-primary">Gem</button>
         </form>
     </div>
 
@@ -63,15 +63,15 @@
                     <div class="mb-2 d-flex align-items-center">
                         <a th:href="@{'/edit/subproject/' + ${task.id}}" class="btn btn-secondary mr-2">Rediger</a>
                         <span class="mr-2">Status:</span>
-                        <form th:action="@{'/subprojects/' + ${task.id} + '/status'}" method="post" class="form-inline">
-                            <select name="newStatus" class="form-control mr-2">
+                        <form th:action="@{'/subprojects/' + ${task.id} + '/status'}" method="post" class="form-inline d-flex align-items-center">
+                            <select name="newStatus" class="form-control mr-2 custom-margin" onchange="this.form.submit()">
+                                <option value="" selected disabled th:text="${task.status.displayName}"></option>
                                 <option value="NOT_STARTED" th:selected="${task.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
-                                <option value="TODO" th:selected="${task.status == 'TODO'}">To do</option>
                                 <option value="IN_PROGRESS" th:selected="${task.status == 'IN_PROGRESS'}">I gang</option>
+                                <option value="TODO" th:selected="${task.status == 'TODO'}">To do</option>
                                 <option value="DONE" th:selected="${task.status == 'DONE'}">Færdig</option>
                                 <option value="ARCHIVED" th:selected="${task.status == 'ARCHIVED'}">Arkiveret</option>
                             </select>
-                            <button type="submit" class="btn btn-primary">Gem</button>
                         </form>
                     </div>
                 </div>
