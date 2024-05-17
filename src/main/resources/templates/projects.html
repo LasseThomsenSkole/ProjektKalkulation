@@ -19,6 +19,7 @@
     <div class="container-fluid">
         <!-- Ensures that the form and table align vertically -->
         <div class="row mb-4">
+
             <!-- Form column -->
             <div class="col-md-12">
                 <form th:action="@{/projects}" method="get" class="form-inline">
@@ -31,7 +32,9 @@
                     </select>
                 </form>
             </div>
-
+            <div>
+                <li><a th:href="@{/archivedprojects}" class="btn btn-primary" >ARKIVEREDE PROJEKTER</a></li>
+            </div>
             <!-- håndtere bredden flydende afhængig af telefon el computer -->
             <div class="table-responsive">
                 <table class="table small-text">

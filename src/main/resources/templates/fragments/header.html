@@ -19,7 +19,6 @@
             Kunne simpelhent ikke finde det, så har overridet med styling her i html i stedet. mici-->
             <li><a th:if="${user.isAdmin}" th:href="@{/create-account}" class="nav-button" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">OPRET KONTO</a></li>
             <li><a th:href="@{/projects}" class="nav-button" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">ALLE PROJEKTER</a></li>
-            <li><a th:href="@{/archivedprojects}" class="nav-button" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">ARKIVEREDE PROJEKTER</a></li>
             <li><a th:href="@{/calendar}" class="nav-button" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">KALENDER</a></li>
             <li><a th:href="@{/logout}" class="nav-button" onmouseover="this.style.color='white'" onmouseout="this.style.color='black'">LOG UD</a></li>
         </ul>

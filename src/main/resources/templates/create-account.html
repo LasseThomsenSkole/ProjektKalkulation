@@ -9,11 +9,11 @@
     <h2>Opret konto</h2>
     <form th:action="@{/create-account}" method="post">
         <div class="form-group">
-            <label for="username">Username:</label>
+            <label for="username">Brugernavn:</label>
             <input type="text" id="username" name="username" class="form-control" required autofocus/>
         </div>
         <div class="form-group">
-            <label for="password">Password:</label>
+            <label for="password">Kodeord:</label>
             <input type="password" id="password" name="password" class="form-control" required/>
         </div>
         <div class="text-center" style="color: #b80000" th:if="${userAlreadyExists}">
