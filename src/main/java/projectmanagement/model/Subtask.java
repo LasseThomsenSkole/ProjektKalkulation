@@ -13,6 +13,16 @@ public class Subtask {
 
     public Subtask() {} //thymeleaf
 
+    public Subtask(int id, String name, String description, double hours, Date startDate, Date deadline, Status status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.hours = hours;
+        this.startDate = startDate;
+        this.deadline = deadline;
+        this.status = status;
+    }
+
     public Subtask(int id, String name, String description, Date startDate, java.sql.Date deadline, double hours) {
     }
 
@@ -72,5 +82,13 @@ public class Subtask {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

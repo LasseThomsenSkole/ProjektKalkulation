@@ -195,7 +195,12 @@ public class ProjectRepository {
                     Date startDate = taskResult.getDate("task_startdate");
                     Date deadline = taskResult.getDate("task_deadline");
                     Status status = Status.valueOf(taskResult.getString("task_status"));
-                    tasks.add(new Task(id, name, description, startDate, deadline, hours, status));
+                    // Fetches subtasks for each task
+                    List<Subtask> subtasks = getSubtasks(id);
+
+                    Task task = new Task(id, name, description, startDate, deadline, hours, status);
+                    task.setSubtasks(subtasks); // Ensure subtasks are fetched
+                    tasks.add(task);
                 }
             }
         }
@@ -252,7 +257,7 @@ public class ProjectRepository {
                     String name = taskResult.getString("subtask_name");
                     String description = taskResult.getString("subtask_description");
                     double hours = taskResult.getDouble("subtask_hours");
-                    Date startDate = taskResult.getDate("task_startdate");
+                    Date startDate = taskResult.getDate("subtask_startdate");
                     Date deadline = taskResult.getDate("subtask_deadline");
                     Status status = Status.valueOf(taskResult.getString("subtask_status"));
                     subtasks.add(new Subtask(id, name, description, startDate, deadline, hours, status));
