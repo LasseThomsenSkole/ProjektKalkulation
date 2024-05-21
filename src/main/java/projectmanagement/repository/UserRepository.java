@@ -51,22 +51,6 @@ public class UserRepository {
         return null;
     }
 
-    /** Ved brug af user_name og password henter vi information om user_id**/
-    public int getIdFromUser(String name, String password) { //TODO HVIS DER ER EN BEDRE MÅDE SÅ SKAL DET HER VÆK
-        try {
-            String SQL = "SELECT user_id FROM users WHERE user_name = ? AND password = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, password);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return 0;
-    }
 
     /** Opretter en user ved at indsætte username og password,
      hvorefter databasen selv tildeler useren et unikt user_id**/

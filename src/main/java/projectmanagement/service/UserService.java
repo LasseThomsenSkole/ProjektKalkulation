@@ -28,9 +28,6 @@ public class UserService {
         return userRepository.getUserFromName(name);
     }
 
-    public int getIdFromUser(String name, String password){
-        return userRepository.getIdFromUser(name, password);
-    }
 
     public void insertUser(String username, String password){
         userRepository.insertUser(username, password);
