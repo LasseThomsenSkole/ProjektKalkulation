@@ -25,17 +25,6 @@ public class UserController {
         return session.getAttribute("user") != null;
     }
 
-//    @GetMapping("")
-//    public String index(HttpSession session, Model model){
-//        if (isLoggedIn(session)) {
-//            User user = (User) session.getAttribute("user");
-//            List<Project> userProjects = projectService.getProjectsForUser(user.getId());
-//            model.addAttribute("user", user);
-//            model.addAttribute("projects", userProjects);
-//            return "index";
-//        }
-//        return "login";
-//    }
 
     @GetMapping("/login")
     public String login(){

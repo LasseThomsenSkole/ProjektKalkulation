@@ -101,12 +101,12 @@ public class ProjectController {
     }
 
     @PostMapping("/subprojects/create")
-    public String createSubproject(@RequestParam String name, @RequestParam String description, @RequestParam double hours,
+    public String createSubproject(@RequestParam String name, @RequestParam String description,
                                    @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                    @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline,
                                    @RequestParam int parentProjectId, HttpSession session) {
         if (isLoggedIn(session)) {
-            projectService.createSubproject(name, description, hours, Date.valueOf(startDate), Date.valueOf(deadline), parentProjectId);
+            projectService.createSubproject(name, description, Date.valueOf(startDate), Date.valueOf(deadline), parentProjectId);
         }
         return "redirect:/project/" + parentProjectId;
     }

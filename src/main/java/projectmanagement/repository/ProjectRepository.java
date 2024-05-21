@@ -411,7 +411,7 @@ public class ProjectRepository {
     /**OPRET SUBPROJECT**/
     /** Indsætter informationer ind i subproject_name, subproject_description, subproject_startdate
      og subproject_deadline for at skabe et nyt subprojekt **/
-    public int createSubproject(String name, String description, double hours, Date startDate, Date deadline, int parentProjectId) {
+    public int createSubproject(String name, String description, Date startDate, Date deadline, int parentProjectId) {
         int subprojectId = 0;
         try {
             String SQL = "INSERT INTO subprojects (subproject_name, subproject_description, subproject_hours, subproject_startdate, subproject_deadline, parent_project_id)" +
@@ -419,7 +419,7 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, description);
-            preparedStatement.setDouble(3, hours);
+            preparedStatement.setDouble(3, 0);
             preparedStatement.setDate(4, startDate);
             preparedStatement.setDate(5, deadline);
             preparedStatement.setInt(6, parentProjectId);

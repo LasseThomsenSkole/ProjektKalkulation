@@ -86,8 +86,8 @@ public class ProjectService {
         projectRepository.changeTaskStatus(taskId, newStatus);
     }
 
-    public int createSubproject(String name, String description, double hours, Date startDate, Date deadline, int parentProjectId) {
-        return projectRepository.createSubproject(name, description, hours, startDate, deadline, parentProjectId);
+    public int createSubproject(String name, String description, Date startDate, Date deadline, int parentProjectId) {
+        return projectRepository.createSubproject(name, description, startDate, deadline, parentProjectId);
     }
 
     public int createTask(String name, String description, double hours, Date startDate, Date deadline, int subprojectId) {
