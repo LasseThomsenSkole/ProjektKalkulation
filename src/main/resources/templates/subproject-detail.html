@@ -90,7 +90,7 @@
                     </div>
 
                     <div th:if="${task.subtasks != null}">
-                        <h6>Underopgaver</h6>
+                        <h6 class="card-title">Underopgaver</h6>
                         <ul class="list-group">
                             <li class="list-group-item" th:each="subtask : ${task.subtasks}">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -100,6 +100,7 @@
                                 <p class="mb-0" th:text="${subtask.description}">Underopgavebeskrivelse</p>
                             </li>
                         </ul>
+                        <a th:href="@{'/subtask/create?parentTaskId=' + ${subtask.id}}" class="btn btn-primary mt-3">Tilføj Underopgave</a>
                     </div>
                 </div>
             </div>

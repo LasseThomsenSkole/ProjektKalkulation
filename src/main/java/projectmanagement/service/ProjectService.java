@@ -110,5 +110,8 @@ public class ProjectService {
         projectRepository.deleteProject(projectId);
     }
 
+    public void createSubtask(String name, String description, double hours, Date startDate, Date deadline, int parentTaskId) {
+      projectRepository.createSubtask(name, description, hours, startDate, deadline, parentTaskId);
+    }
 
 }

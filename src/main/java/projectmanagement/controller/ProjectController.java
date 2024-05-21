@@ -305,6 +305,27 @@ public class ProjectController {
 //        return "login";
 //    }
 
+    @GetMapping("/subtask/create")
+    public String createSubtaskForm(HttpSession session, Model model) {
+        if (isLoggedIn(session)) {
+            User user = (User) session.getAttribute("user");
+            model.addAttribute("user", user);
+            return "create-subtask";
+        }
+        return "login";
+    }
+
+    @PostMapping("/subtask/create")
+    public String createSubtask(@RequestParam String name, @RequestParam String description,@RequestParam Double hours,
+                                @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline,
+                                @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                @RequestParam int parentTaskId, HttpSession session) {
+        if (isLoggedIn(session)) {
+            projectService.createSubtask(name, description, hours,Date.valueOf(startDate), Date.valueOf(deadline), parentTaskId);
+        }
+        return "redirect:/subprojects";
+    }
+
     @GetMapping("/subtask/{id}")
     public String showSubtaskDetails(@PathVariable int id, Model model, HttpSession session) {
         if (isLoggedIn(session)) {

@@ -523,8 +523,6 @@ public class ProjectRepository {
         }
     }
 
-
-
     /**SLET TASK**/
     /** Sletter alle subtasks der har med det ene task at gøre via parent_project_id **/
     public void deleteTask(int taskId){
@@ -539,8 +537,6 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
     }
-
-
 
     /**OPRET SUBTASKS**/
     /** Indsætter informationer ind i subtask_name, subtask_description, subtask_startdate
@@ -562,6 +558,7 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
     }
+
     /** EDIT SUBTASKS **/
     /** Opdaterer informationer i et subtask ved at give muligheden for at sætte
     en ny value i subtask_name, subtask_description, subtask_startdate og subtask_deadline via subtask_id**/
@@ -581,7 +578,6 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
     }
-
 
     /**SLET SUBTASK**/
     /** Sletter alle informationer i subtask via subtask_id**/
