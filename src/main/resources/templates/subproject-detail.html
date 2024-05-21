@@ -100,7 +100,7 @@
                                 <p class="mb-0" th:text="${subtask.description}">Underopgavebeskrivelse</p>
                             </li>
                         </ul>
-                        <a th:href="@{'/subtask/create?parentTaskId=' + ${subtask.id}}" class="btn btn-primary mt-3">Tilføj Underopgave</a>
+                        <a th:href="@{'/subtask/create?parentTaskId=' + ${task.id}}" class="btn btn-primary mt-3">Tilføj Underopgave</a>
                     </div>
                 </div>
             </div>
