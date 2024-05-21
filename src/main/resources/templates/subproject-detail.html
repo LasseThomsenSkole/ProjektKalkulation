@@ -36,7 +36,7 @@
         </div>
 
         <div class="mb-3 d-flex align-items-center">
-            <a th:href="@{'/edit/project/' + ${subproject.id}}" class="btn btn-success mr-2">Rediger Subprojekt</a>
+            <a th:href="@{'/edit/subproject/' + ${subproject.id}}" class="btn btn-success mr-2">Rediger Subprojekt</a>
             <span class="mr-2">Status:</span>
             <form th:action="@{'/subprojects/' + ${subproject.id} + '/status'}" method="post" class="form-inline d-flex align-items-center">
                 <select name="newStatus" class="form-control mr-2 custom-margin" onchange="this.form.submit()">
