@@ -19,8 +19,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private ProjectService projectService;
 
 
     private boolean isLoggedIn(HttpSession session){
@@ -50,7 +48,7 @@ public class UserController {
             @RequestParam("password") String password,
             HttpSession session, Model model){
         if (userService.login(name,password)){
-            session.setAttribute("user", userService.getUserFromName(name)); //todo spørg om der er en bedre måde at gøre det her på
+            session.setAttribute("user", userService.getUserFromName(name));
             session.setMaxInactiveInterval(300); // 5 minutter
             return "redirect:/";
         }
