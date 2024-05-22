@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-//import static com.sun.beans.introspect.PropertyInfo.Name.description;
-
 @Repository
 public class ProjectRepository {
 
@@ -37,7 +35,8 @@ public class ProjectRepository {
     /** Den finder informationer fra alle projekter og viser dem.**/
     public List<Project> findAllProjects() {
         List<Project> projects = new ArrayList<>();
-        String query = "SELECT project_id, project_name, project_description, total_hours, project_startdate, project_deadline, project_status FROM projects;";
+        String query = "SELECT project_id, project_name, project_description, total_hours, project_startdate, project_deadline, project_status " +
+                "FROM projects;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery()) {
             while (rs.next()) {
@@ -48,6 +47,7 @@ public class ProjectRepository {
         }
         return projects;
     }
+
     /** Kalder på findAllProjects og sorterer dem efter deadline, status eller name**/
     public List<Project> findAllProjectsSorted(String sort) {
         List<Project> projects = findAllProjects();
@@ -65,6 +65,7 @@ public class ProjectRepository {
         }
         return projects;
     }
+
     /**  **/
     public Project mapProject(ResultSet rs) throws SQLException {
         int id = rs.getInt("project_id");
@@ -73,17 +74,16 @@ public class ProjectRepository {
         double totalHours = rs.getDouble("total_hours");
         Date startDate = rs.getDate("project_startdate");
         Date deadline = rs.getDate("project_deadline");
-        Status status = Status.valueOf(rs.getString("project_status")); // Assuming you have added a 'status' column to your projects table
+        Status status = Status.valueOf(rs.getString("project_status"));
 
         List<Task> tasks = getTasks(id);
         List<Subproject> subprojects = getSubprojects(id);
         return new Project(id, name, description, tasks, subprojects, totalHours, startDate, deadline, status);
     }
 
-
     /**HENT PROJECT**/
     /** Finder alle info om et projekt ved brug af project_id**/
-    public Project getProject(int projectId) { //gets project + subproject and tasks
+    public Project getProject(int projectId) {
         Project project = null;
 
         try {
@@ -101,11 +101,9 @@ public class ProjectRepository {
                     Date deadline = projectResult.getDate("project_deadline");
                     Status status = Status.valueOf(projectResult.getString("project_status"));
 
-                    // Fetches tasks and subprojects for a particular project
                     List<Task> tasks = getTasks(id);
                     List<Subproject> subprojects = getSubprojects(id);
 
-                    // Creates project with all details
                     project = new Project(id, name, description, tasks, subprojects, totalHours, startDate, deadline, status);
                 }
             }
@@ -114,8 +112,6 @@ public class ProjectRepository {
         }
         return project;
     }
-
-
 
     /**HENT SUBPROJECTS**/
     /** Finder alle info om et subprojekt ved brug af subproject_id**/
@@ -145,7 +141,6 @@ public class ProjectRepository {
         return subprojects;
     }
 
-    //til når vi skal edit ét subproject
     /** Henter alle informationer om et subprojekt via subproject_id **/
     public Subproject getSubprojectById(int subprojectId) {
         Subproject subproject = null;
@@ -164,7 +159,7 @@ public class ProjectRepository {
                     Date startDate = subprojectResult.getDate("subproject_startdate");
                     Date deadline = subprojectResult.getDate("subproject_deadline");
                     Status status = Status.valueOf(subprojectResult.getString("subproject_status"));
-                    List<Task> tasks = getTasks(id);  // get tasks for particular subproject
+                    List<Task> tasks = getTasks(id);
                     subproject = new Subproject(id, name, description, hours, startDate, deadline, status, tasks);
                 }
             }
@@ -195,11 +190,11 @@ public class ProjectRepository {
                     Date startDate = taskResult.getDate("task_startdate");
                     Date deadline = taskResult.getDate("task_deadline");
                     Status status = Status.valueOf(taskResult.getString("task_status"));
-                    // Fetches subtasks for each task
+
                     List<Subtask> subtasks = getSubtasks(id);
 
                     Task task = new Task(id, name, description, startDate, deadline, hours, status);
-                    task.setSubtasks(subtasks); // Ensure subtasks are fetched
+                    task.setSubtasks(subtasks);
                     tasks.add(task);
                 }
             }
@@ -210,7 +205,6 @@ public class ProjectRepository {
         return tasks;
     }
 
-    //hent kun én task
     /** Finder alle info om en task ved brug af task_id**/
     public Task getTaskById(int taskId){
         Task task = null;
@@ -270,7 +264,6 @@ public class ProjectRepository {
         return subtasks;
     }
 
-    //hent kun én subtask
     /** Finder alle info om en subtask ved brug af subtask_id**/
     public Subtask getSubtaskById(int subtaskId){
         Subtask subtask = null;
@@ -315,9 +308,6 @@ public class ProjectRepository {
         }
         return archivedProjects;
     }
-
-
-
 
     /**OPRET PROJECT**/
     /** Indsætter informationer ind i project_name, project_description, project_startdate
@@ -368,33 +358,9 @@ public class ProjectRepository {
 
     /**SLET PROJECT**/
     /** Sletter alle informationer der har med projektet at gøre inklusivt subprojects,
-        tasks og subtasks via parent_project_id **/
-    public void deleteProject(int projectId){ //todo måske lav til sql trigger
+        tasks og subtasks via parent_project_id. Der er lavet en cascade i db **/
+    public void deleteProject(int projectId){
         try {
-            //sletter subprojects fra projects
-            String deleteSubprojects = "DELETE FROM subprojects " +
-                    "WHERE parent_project_id = ?";
-            PreparedStatement deleteSubprojectsStatement = connection.prepareStatement(deleteSubprojects);
-            deleteSubprojectsStatement.setInt(1, projectId);
-            deleteSubprojectsStatement.executeUpdate();
-
-            //sletter tasks fra subprojects
-            String deleteTasks = "DELETE FROM tasks " +
-                    "WHERE subproject_id " +
-                    "IN (SELECT subproject_id FROM subprojects WHERE parent_project_id = ?)";
-            PreparedStatement deleteTasksStatement = connection.prepareStatement(deleteTasks);
-            deleteTasksStatement.setInt(1, projectId);
-            deleteTasksStatement.executeUpdate();
-
-            //sletter subtasks fra tasks
-            String deleteSubtasks = "DELETE FROM subtasks " +
-                    "WHERE parent_task_id " +
-                    "IN (SELECT task_id FROM tasks WHERE subproject_id IN (SELECT subproject_id FROM subprojects WHERE parent_project_id = ?))";
-            PreparedStatement deleteSubtasksStatement = connection.prepareStatement(deleteSubtasks);
-            deleteSubtasksStatement.setInt(1, projectId);
-            deleteSubtasksStatement.executeUpdate();
-
-            //sletter selve projectet
             String SQL = "DELETE FROM projects " +
                     "WHERE project_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
@@ -502,6 +468,7 @@ public class ProjectRepository {
         }
         return taskId;
     }
+
     /** EDIT TASK **/
     /** Opdaterer informationer i et task ved at give muligheden for at sætte
     en ny value i task_name, task_description, task_startdate og task_deadline via task_id **/
@@ -595,7 +562,7 @@ public class ProjectRepository {
     }
 
     /** Finder alle projekter med en selvvalgt status via project_status**/
-    public List<Project> findAllProjectsByStatus(Status status) { //TODO inden vi aflevere skal vi se om vi bruger dem her
+    public List<Project> findAllProjectsByStatus(Status status) {
         List<Project> projects = new ArrayList<>();
         String query = "SELECT project_id, project_name, project_description, total_hours, project_startdate, project_deadline, project_status " +
                 "FROM projects " +
@@ -608,7 +575,7 @@ public class ProjectRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error finding projects by status", e);
+            throw new RuntimeException(e);
         }
         return projects;
     }
@@ -624,10 +591,10 @@ public class ProjectRepository {
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected == 0) {
-                throw new IllegalStateException("No project found with ID: " + projectID);
+                throw new IllegalStateException();
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error updating project status", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -638,11 +605,11 @@ public class ProjectRepository {
                     "SET subproject_status = ? " +
                     "WHERE subproject_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik a enums så vi skal bruge .name()
+            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ikke af enums, så vi skal bruge .name(). lasse
             preparedStatement.setInt(2, subprojectID);
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected == 0) {
-                throw new IllegalStateException("No subproject found with ID: " + subprojectID);
+                throw new IllegalStateException();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -656,11 +623,11 @@ public class ProjectRepository {
                     "SET task_status = ? " +
                     "WHERE task_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik af enums så vi skal bruge .name()
+            preparedStatement.setString(1, newStatus.name());
             preparedStatement.setInt(2, taskID);
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected == 0) {
-                throw new IllegalStateException("No task found with ID: " + taskID);
+                throw new IllegalStateException();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -674,11 +641,11 @@ public class ProjectRepository {
                     "SET subtask_status = ? " +
                     "WHERE subtask_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ik af enums så vi skal bruge .name()
+            preparedStatement.setString(1, newStatus.name());
             preparedStatement.setInt(2, subtaskID);
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected == 0) {
-                throw new IllegalStateException("No subtask found with ID: " + subtaskID);
+                throw new IllegalStateException();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -686,20 +653,7 @@ public class ProjectRepository {
     }
 
     /** **/
-    private Subproject mapSubproject(ResultSet rs) throws SQLException {
-        int id = rs.getInt("subproject_id");
-        String name = rs.getString("subproject_name");
-        String description = rs.getString("subproject_description");
-        double hours = rs.getDouble("subproject_hours");
-        Date startDate = rs.getDate("subproject_startdate");
-        Date deadline = rs.getDate("subproject_deadline");
-        Status status = Status.valueOf(rs.getString("subproject_status"));
-
-        return new Subproject(id, name, description, hours, startDate, deadline, status);
-    }
-
-    /** **/
-    public List<Project> getProjectsFromAssignedUser(int userId) {
+    public List<Project> getProjectsFromAssignedUser(int userId) {//TODO den her sql virker ikke + fjerne forkortelser, der er ingen grund til p. mici
         List<Project> projects = new ArrayList<>();
         try {
             String SQL = "SELECT p.project_id, p.project_name, p.project_description, p.total_hours, p.project_startdate, p.project_deadline, p.project_status " +
@@ -722,7 +676,9 @@ public class ProjectRepository {
     public int findSubprojectIdByTaskId(int taskId) {
         int subprojectId = 0;
         try {
-            String SQL = "SELECT subproject_id FROM tasks WHERE task_id = ?";
+            String SQL = "SELECT subproject_id " +
+                    "FROM tasks " +
+                    "WHERE task_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
                 preparedStatement.setInt(1, taskId);
                 ResultSet rs = preparedStatement.executeQuery();
@@ -731,13 +687,10 @@ public class ProjectRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error finding subproject ID by task ID", e);
+            throw new RuntimeException(e);
         }
         return subprojectId;
     }
-
-
-
 
 
 }

@@ -66,7 +66,7 @@ public class UserController {
                     return "create-account";
                 }
                 userService.insertUser(username, password);
-                return "redirect:/login"; //todo måske redirect tilbage til createaccount ????? - lasse
+                return "redirect:/login"; //todo måske redirect tilbage til createaccount ????? - lasse  - eller index? mici
             }
         }
         return "redirect:/login";

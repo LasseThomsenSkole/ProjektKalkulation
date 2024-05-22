@@ -23,14 +23,27 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Iterer gennem arkiverede projekter og vis detaljer for hver -->
+
         <tr th:each="archivedProject : ${archivedProjects}">
             <td th:text="${archivedProject.id}"></td>
             <td th:text="${archivedProject.name}"></td>
             <td th:text="${archivedProject.description}"></td>
             <td th:text="${archivedProject.totalHours}"></td>
             <td th:text="${#dates.format(archivedProject.deadline, 'yyyy-MM-dd')}"></td>
-            <td>Arkiveret</td>
+            <td>
+                <div class="d-flex align-items-center mb-2">
+                    <form th:action="@{'/projects/' + ${archivedProject.id} + '/status'}" method="post" class="form-inline d-flex align-items-center">
+                        <select name="newStatus" class="form-control mr-2 custom-margin" onchange="this.form.submit()">
+                            <option value="" selected disabled th:text="${archivedProject.status.displayName}"></option>
+                            <option value="NOT_STARTED" th:selected="${archivedProject.status == NOT_STARTED}">Ikke påbegyndt</option>
+                            <option value="IN_PROGRESS" th:selected="${archivedProject.status == IN_PROGRESS}">I gang</option>
+                            <option value="TODO" th:selected="${archivedProject.status == TODO}">To do</option>
+                            <option value="DONE" th:selected="${archivedProject.status == DONE}">Færdig</option>
+                            <option value="ARCHIVED" th:selected="${archivedProject.status == ARCHIVED}">Arkiveret</option>
+                        </select>
+                    </form>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>

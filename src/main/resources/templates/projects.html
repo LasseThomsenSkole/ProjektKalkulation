@@ -48,7 +48,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="project : ${projects}">
+                    <tr th:each="project : ${projects}" th:if="${project.status.displayName != 'Arkiveret'}">
                         <td th:text="${project.id}"></td>
                         <td><a th:href="@{/project/{id}(id=${project.id})}" th:text="${project.name}" style="color: #c7156f"></a></td>
                         <td th:text="${project.description}"></td>

@@ -8,12 +8,10 @@ import projectmanagement.model.*;
 import org.springframework.stereotype.Controller;
 import projectmanagement.service.ProjectService;
 import org.springframework.ui.Model;
-import projectmanagement.service.UserService;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 @RequestMapping("")
@@ -39,7 +37,6 @@ public class ProjectController {
         }
         return "login";
     }
-
 
    @PostMapping("/project/{projectId}")
     public String assignUserToProject(@PathVariable int projectId, HttpSession session) {
@@ -75,7 +72,6 @@ public class ProjectController {
         }
         return "login";
     }
-
     @PostMapping("/projects/create")
     public String createProject(@RequestParam String name, @RequestParam String description,
                                 @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline,
@@ -98,7 +94,6 @@ public class ProjectController {
         }
         return "login";
     }
-
     @PostMapping("/subprojects/create")
     public String createSubproject(@RequestParam String name, @RequestParam String description,
                                    @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
@@ -120,7 +115,6 @@ public class ProjectController {
         }
         return "login";
     }
-
     @PostMapping("/tasks/create")
     public String createTask(@RequestParam String name, @RequestParam String description,
                              @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
@@ -142,7 +136,6 @@ public class ProjectController {
         }
         return "login";
     }
-
     @PostMapping("/subtask/create")
     public String createSubtask(@RequestParam String name, @RequestParam String description,@RequestParam Double hours,
                                 @RequestParam("deadline") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deadline,
@@ -150,8 +143,10 @@ public class ProjectController {
                                 @RequestParam int parentTaskId, HttpSession session) {
         if (isLoggedIn(session)) {
             projectService.createSubtask(name, description, hours,Date.valueOf(startDate), Date.valueOf(deadline), parentTaskId);
+            int subprojectId = projectService.findSubprojectIdByTaskId(parentTaskId);
+            return "redirect:/subproject/" + subprojectId;
         }
-        return "redirect:/projects";
+        return "login";
     }
 
     /**DETAIL**/
@@ -179,17 +174,17 @@ public class ProjectController {
         return "login";
     }
 
-//    @GetMapping("/task/{id}")
-//    public String showTaskDetails(@PathVariable int id, Model model, HttpSession session) {
-//        if (isLoggedIn(session)) {
-//            User user = (User) session.getAttribute("user");
-//            model.addAttribute("user", user);
-//            Task task = projectService.getTaskById(id);
-//            model.addAttribute("task", task);
-//            return "task-detail";
-//        }
-//        return "login";
-//    }
+    @GetMapping("/task/{id}")
+    public String showTaskDetails(@PathVariable int id, Model model, HttpSession session) {
+        if (isLoggedIn(session)) {
+            User user = (User) session.getAttribute("user");
+            model.addAttribute("user", user);
+            Task task = projectService.getTaskById(id);
+            model.addAttribute("task", task);
+            return "task-detail";
+        }
+        return "login";
+    }
 
 
     @GetMapping("/subtask/{id}")
@@ -340,70 +335,6 @@ public class ProjectController {
         return "login";
     }
 
-    //vi skal lave en overordnet dto som skal extende dto for hvert objekt hvis det her skal virke
-    /*@GetMapping("/edit/{entity}/{id}")
-    public String editForm(@PathVariable String entity, @PathVariable int id, Model model, HttpSession session) {
-        if (isLoggedIn(session)) {
-            User user = (User) session.getAttribute("user");
-            model.addAttribute("user", user);
-            model.addAttribute("entity", entity);
-            switch (entity) {
-                case "project":
-                    Project project = projectService.getProject(id);
-                    model.addAttribute("project", project);
-                    return "edit-project";
-                case "subproject":
-                    Subproject subproject = projectService.getSubprojectById(id);
-                    model.addAttribute("subproject", subproject);
-                    return "edit-subproject";
-                case "task":
-                    Task task = projectService.getTaskById(id);
-                    model.addAttribute("task", task);
-                    return "edit-task";
-                case "subtask":
-                    Subtask subtask = projectService.getSubtaskById(id);
-                    model.addAttribute("subtask", subtask);
-                    return "edit-subtask";
-                default:
-                    return "redirect:/projects";
-            }
-        }
-        return "login";
-    }
-
-    @PostMapping("/edit/{entity}/{id}")
-    public String editEntity(@PathVariable String entity, @PathVariable int id, @ModelAttribute Object updatedEntity, HttpSession session, Model model) {
-        if (isLoggedIn(session)) {
-            User user = (User) session.getAttribute("user");
-            model.addAttribute("user", user);
-            switch (entity) {
-                case "project":
-                    if (updatedEntity instanceof Project) {
-                        projectService.editProject(id, (Project) updatedEntity);
-                    }
-                    break;
-                case "subproject":
-                    if (updatedEntity instanceof Subproject) {
-                        projectService.editSubproject(id, (Subproject) updatedEntity);
-                    }
-                    break;
-                case "task":
-                    if (updatedEntity instanceof Task) {
-                        projectService.editTask(id, (Task) updatedEntity);
-                    }
-                    break;
-                case "subtask":
-                    if (updatedEntity instanceof Subtask) {
-                        projectService.editSubtask(id, (Subtask) updatedEntity);
-                    }
-                    break;
-            }
-            return "redirect:/" + entity + "/" + id;
-        }
-        return "login";
-    }*/
-
-
     /**DELETE**/
     @PostMapping("/projects/{projectId}/delete")
     public String deleteProject(@PathVariable int projectId, HttpSession session) {
@@ -418,4 +349,6 @@ public class ProjectController {
         User user = (User) session.getAttribute("user");
         return user != null && user.isAdmin();
     }
+
+    //TODO lav deleteSubproject - metoden er i projectrepository
 }
