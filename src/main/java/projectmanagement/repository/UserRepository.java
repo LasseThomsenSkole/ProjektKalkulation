@@ -32,9 +32,11 @@ public class UserRepository {
     }
 
     /** Finder user ved brug af user_id **/
-    public User getUserById(int userId) {
+    public User getUserById(int userId) { //TODO bruger vi den her?? mici
         try {
-            String SQL = "SELECT * FROM users WHERE user_id = ?";
+            String SQL = "SELECT * " +
+                    "FROM users " +
+                    "WHERE user_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -56,7 +58,8 @@ public class UserRepository {
      hvorefter databasen selv tildeler useren et unikt user_id**/
     public void insertUser(String username, String password) {
         try {
-            String SQL = "INSERT INTO users (user_name, password) VALUES (?,?)";
+            String SQL = "INSERT INTO users (user_name, password) " +
+                    "VALUES (?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
@@ -68,7 +71,9 @@ public class UserRepository {
     /**Finder user_name ud fra informationer om userid, is_admin og password**/
     public User getUserFromName(String name) {
         try {
-            String SQL = "SELECT * FROM users WHERE user_name = ?";
+            String SQL = "SELECT * " +
+                    "FROM users " +
+                    "WHERE user_name = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -87,7 +92,8 @@ public class UserRepository {
     /** Tildeler et projekt til en user, ved at indsætte user_id og project_id i user_project_relation **/
     public void assignUserToProject(int userId, int projectId) {
         try {
-            String SQL = "INSERT INTO user_project_relation (user_id, project_id) VALUES (?, ?)";
+            String SQL = "INSERT INTO user_project_relation (user_id, project_id) " +
+                    "VALUES (?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, projectId);
@@ -98,9 +104,11 @@ public class UserRepository {
     }
 
     /** Tjekker om en bruger allerede eksisterer - til når man skal oprette en bruger**/
-    public boolean userAlreadyExists(String username){
+    public boolean userAlreadyExists(String username){ //TODO hvad er forskellen på den her og getUserFromName? det er samme sql string. mici
         try {
-            String SQL = "SELECT * FROM users WHERE user_name = ?";
+            String SQL = "SELECT * " +
+                    "FROM users " +
+                    "WHERE user_name = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -111,7 +119,7 @@ public class UserRepository {
     }
 
     /** Finder tasks som en user er tildelt ved brug af user_task_relation **/
-    public List<Task> getTasksFromUser(int userId) {
+    public List<Task> getTasksFromUser(int userId) { //TODO bruger vi den her? skriv den om til alm sprog ikke sql. mici
         List<Task> tasks = new ArrayList<>();
         try {
             String SQL = "SELECT t.* FROM tasks t " +
