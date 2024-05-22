@@ -8,7 +8,7 @@
 <body>
 <div class="main-content mt-5">
     <h2>Opret Ny Underopgave</h2>
-    <form th:action="@{/subtasks/create}" method="post">
+    <form th:action="@{/subtask/create}" method="post">
         <div class="form-group">
             <label for="name">Navn:</label>
             <input type="text" class="form-control" id="name" name="name" required>
@@ -29,7 +29,7 @@
             <label for="deadline">Deadline:</label>
             <input type="date" class="form-control" id="deadline" name="deadline" required>
         </div>
-        <input type="hidden" th:name="parentProjectId" th:value="${parentProjectId}">
+        <input type="hidden" th:name="parentTaskId" th:value="${parentTaskId}">
         <button type="submit" class="btn btn-primary">Opret Underopgave</button>
     </form>
     <button onclick="history.back()" class="btn btn-primary mt-3">Gå tilbage</button>

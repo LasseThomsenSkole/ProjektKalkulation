@@ -134,10 +134,11 @@ public class ProjectController {
     }
 
     @GetMapping("/subtask/create")
-    public String createSubtaskForm(HttpSession session, Model model) {
+    public String createSubtaskForm(@RequestParam int parentTaskId, HttpSession session, Model model) {
         if (isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");
             model.addAttribute("user", user);
+            model.addAttribute("parentTaskId", parentTaskId);
             return "create-subtask";
         }
         return "login";
@@ -151,7 +152,7 @@ public class ProjectController {
         if (isLoggedIn(session)) {
             projectService.createSubtask(name, description, hours,Date.valueOf(startDate), Date.valueOf(deadline), parentTaskId);
         }
-        return "redirect:/subprojects";
+        return "redirect:/projects";
     }
 
     /**DETAIL**/

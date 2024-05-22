@@ -552,7 +552,7 @@ public class ProjectRepository {
             preparedStatement.setDate(4, startDate);
             preparedStatement.setDate(5, deadline);
             preparedStatement.setInt(6, parentTaskId);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
         }
         catch (SQLException e){
             throw new RuntimeException(e);
