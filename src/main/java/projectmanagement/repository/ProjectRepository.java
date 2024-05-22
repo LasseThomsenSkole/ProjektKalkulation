@@ -511,11 +511,12 @@ public class ProjectRepository {
                     "SET task_name = ?, task_description = ?, task_startdate = ?, task_deadline = ? " +
                     "WHERE task_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(4, taskId);
             preparedStatement.setString(1, edittedTask.getName());
             preparedStatement.setString(2,edittedTask.getDescription());
             preparedStatement.setDate(3, edittedTask.getStartDate());
             preparedStatement.setDate(4, edittedTask.getDeadline());
+            preparedStatement.setInt(5, taskId);
+            preparedStatement.executeUpdate();
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
