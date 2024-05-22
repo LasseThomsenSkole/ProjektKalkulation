@@ -11,11 +11,11 @@
     <form th:action="@{'/edit/project/' + ${project.id}}" method="post">
         <div class="form-group">
             <label for="name">Navn:</label>
-            <input type="text" class="form-control" id="name" name="name" th:value="${project.name}">
+            <input type="text" class="form-control" id="name" name="name" th:value="${project.name}" maxlength="50">
         </div>
         <div class="form-group">
             <label for="description">Beskrivelse:</label>
-            <textarea class="form-control" id="description" name="description" th:text="${project.description}"></textarea>
+            <textarea class="form-control" id="description" name="description" th:text="${project.description}" maxlength="255"></textarea>
         </div>
         <div class="form-group">
             <label for="startDate">Startdato:</label>
