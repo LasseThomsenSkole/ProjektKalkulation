@@ -119,7 +119,7 @@ public class UserRepository {
     }
 
     /** Finder tasks som en user er tildelt ved brug af user_task_relation **/
-    public List<Task> getTasksFromUser(int userId) { //TODO bruger vi den her? skriv den om til alm sprog ikke sql. mici
+    public List<Task> getTasksFromUser(int userId) { //TODO bruger vi den her? skriv den om til alm sprog ikke chatgpt. mici
         List<Task> tasks = new ArrayList<>();
         try {
             String SQL = "SELECT t.* FROM tasks t " +

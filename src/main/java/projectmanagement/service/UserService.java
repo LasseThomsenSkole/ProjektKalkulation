@@ -12,7 +12,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean login(String name, String password){ //TODO MÅSKE LAV OM
+    public boolean login(String name, String password){
         User user = userRepository.getUserFromName(name);
         if (user != null){
             return user.getPassword().equals(password);
