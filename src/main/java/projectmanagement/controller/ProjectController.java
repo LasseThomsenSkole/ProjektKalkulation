@@ -19,7 +19,6 @@ import java.util.Locale;
 @RequestMapping("")
 public class ProjectController {
     private ProjectService projectService;
-    @Autowired
 
     public ProjectController(ProjectService projectService){
         this.projectService = projectService;
