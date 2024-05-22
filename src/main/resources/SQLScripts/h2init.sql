@@ -1,6 +1,3 @@
-USE
-AlphaManagement;
-
 -- Inserting test data into the 'users' table
 INSERT INTO users ( is_admin, user_name, password)
 VALUES (true, 'admin', 'admin'),
