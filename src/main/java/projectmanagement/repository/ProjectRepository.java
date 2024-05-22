@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-//import static com.sun.beans.introspect.PropertyInfo.Name.description;
-
 @Repository
 public class ProjectRepository {
 
@@ -37,7 +35,8 @@ public class ProjectRepository {
     /** Den finder informationer fra alle projekter og viser dem.**/
     public List<Project> findAllProjects() {
         List<Project> projects = new ArrayList<>();
-        String query = "SELECT project_id, project_name, project_description, total_hours, project_startdate, project_deadline, project_status FROM projects;";
+        String query = "SELECT project_id, project_name, project_description, total_hours, project_startdate, project_deadline, project_status " +
+                "FROM projects;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery()) {
             while (rs.next()) {
@@ -48,6 +47,7 @@ public class ProjectRepository {
         }
         return projects;
     }
+
     /** Kalder på findAllProjects og sorterer dem efter deadline, status eller name**/
     public List<Project> findAllProjectsSorted(String sort) {
         List<Project> projects = findAllProjects();
@@ -65,6 +65,7 @@ public class ProjectRepository {
         }
         return projects;
     }
+
     /**  **/
     public Project mapProject(ResultSet rs) throws SQLException {
         int id = rs.getInt("project_id");
@@ -79,7 +80,6 @@ public class ProjectRepository {
         List<Subproject> subprojects = getSubprojects(id);
         return new Project(id, name, description, tasks, subprojects, totalHours, startDate, deadline, status);
     }
-
 
     /**HENT PROJECT**/
     /** Finder alle info om et projekt ved brug af project_id**/
@@ -112,8 +112,6 @@ public class ProjectRepository {
         }
         return project;
     }
-
-
 
     /**HENT SUBPROJECTS**/
     /** Finder alle info om et subprojekt ved brug af subproject_id**/
@@ -310,9 +308,6 @@ public class ProjectRepository {
         }
         return archivedProjects;
     }
-
-
-
 
     /**OPRET PROJECT**/
     /** Indsætter informationer ind i project_name, project_description, project_startdate

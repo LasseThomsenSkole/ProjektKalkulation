@@ -32,7 +32,7 @@ public class UserRepository {
     }
 
     /** Finder user ved brug af user_id **/
-    public User getUserById(int userId) { //TODO bruger vi den her?? mici
+    public User getUserById(int userId) { //TODO bruger vi den her?? der er 3 af den mici
         try {
             String SQL = "SELECT * " +
                     "FROM users " +
@@ -104,7 +104,7 @@ public class UserRepository {
     }
 
     /** Tjekker om en bruger allerede eksisterer - til når man skal oprette en bruger**/
-    public boolean userAlreadyExists(String username){ //TODO hvad er forskellen på den her og getUserFromName? det er samme sql string. mici
+    public boolean userAlreadyExists(String username){ //TODO hvad er forskellen på den her, getUserById og getUserFromName? det er samme sql string. mici
         try {
             String SQL = "SELECT * " +
                     "FROM users " +
