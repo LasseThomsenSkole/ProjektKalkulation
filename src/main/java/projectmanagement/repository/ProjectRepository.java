@@ -484,7 +484,7 @@ public class ProjectRepository {
         int taskId = 0;
         try {
             String SQL = "INSERT INTO tasks (task_name, task_description, task_startdate, task_deadline, subproject_id)" +
-                    "VALUES (?, ?, ?, ?, ?, ?);";
+                    "VALUES (?, ?, ?, ?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, description);
