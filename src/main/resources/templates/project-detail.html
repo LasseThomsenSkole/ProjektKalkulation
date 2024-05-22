@@ -59,7 +59,16 @@
     </section>
     <!-- Subprojects -->
     <section class="subprojects-section">
-        <h3>Subprojekter</h3>
+        <h3>Subprojekter
+            <a th:href="@{'/subprojects/create?parentProjectId=' + ${project.id}}" style="float:right;" class="btn btn-primary mt-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                </svg>
+            </a>
+
+
+
+        </h3>
         <div class="subprojects-grid">
             <div class="card mb-3" th:each="subproject : ${project.subprojects}">
                 <div class="card-body">
@@ -86,7 +95,6 @@
                 </div>
             </div>
         </div>
-        <a th:href="@{'/subprojects/create?parentProjectId=' + ${project.id}}" class="btn btn-primary mt-3">Tilføj Subprojekt</a>
     </section>
     <button onclick="history.back()" class="btn btn-primary mt-3">Gå tilbage</button>
 </main>

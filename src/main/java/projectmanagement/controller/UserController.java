@@ -54,11 +54,11 @@ public class UserController {
         return "login";
     }
 
-    @PostMapping("/create-account")
+    @PostMapping("/create-account") //TODO kan ikke indsætte header
     public String createAccountPost(@RequestParam("username") String username,
                                     @RequestParam("password") String password,
                                     HttpSession session, Model model){
-        if (isLoggedIn(session)){ //det her er fuld spaghetti kode men jeg kan ikke finde en bedre måde at gøre det på - Lasse
+        if (isLoggedIn(session)){
             User user = (User) session.getAttribute("user");
             if (user.isAdmin()){
                 if (userService.userAlreadyExists(username)){
@@ -66,7 +66,7 @@ public class UserController {
                     return "create-account";
                 }
                 userService.insertUser(username, password);
-                return "redirect:/login"; //todo måske redirect tilbage til createaccount ????? - lasse  - eller index? mici
+                return "/create-account";
             }
         }
         return "redirect:/login";
