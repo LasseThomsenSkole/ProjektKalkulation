@@ -17,7 +17,6 @@ import java.util.List;
 @RequestMapping("")
 public class ProjectController {
     private ProjectService projectService;
-    @Autowired
 
     public ProjectController(ProjectService projectService){
         this.projectService = projectService;

@@ -37,6 +37,11 @@
 
         <div class="mb-3 d-flex align-items-center">
             <a th:href="@{'/edit/subproject/' + ${subproject.id}}" class="btn btn-success mr-2">Rediger Subprojekt</a>
+            <div th:if="${session.user.isAdmin}">
+                <form th:action="@{'/subprojects/' + ${subproject.id} + '/delete'}" method="post" class="d-inline" >
+                    <button type="submit" class="btn btn-success mr-2" onclick="return confirm('Er du sikker på, at du vil slette dette subprojekt?');">Slet Subprojekt</button>
+                </form>
+            </div>
             <span class="mr-2">Status:</span>
             <form th:action="@{'/subprojects/' + ${subproject.id} + '/status'}" method="post" class="form-inline d-flex align-items-center">
                 <select name="newStatus" class="form-control mr-2 custom-margin" onchange="this.form.submit()">
@@ -76,6 +81,14 @@
                     </div>
                     <div class="mt-2 mb-2 d-flex align-items-center">
                         <a th:href="@{'/edit/task/' + ${task.id}}" class="btn btn-secondary mr-2">Rediger</a>
+
+                        <div th:if="${session.user.isAdmin}">
+                            <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-success mr-2" onclick="return confirm('Er du sikker på, at du vil slette denne opgave?');">Slet Opgave</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div>
                         <span class="mr-2">Status:</span>
                         <form th:action="@{'/tasks/' + ${task.id} + '/status'}" method="post" class="form-inline d-flex align-items-center">
                             <select name="newStatus" class="form-control mr-2 custom-margin" onchange="this.form.submit()">
@@ -95,9 +108,23 @@
                             <li class="list-group-item" th:each="subtask : ${task.subtasks}">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span th:text="${subtask.name}">Underopgavenavn</span>
-                                    <span th:text="${subtask.status.displayName}">Status</span>
+                                    <form th:action="@{'/subtasks/' + ${subtask.id} + '/status'}" method="post" class="form-inline d-flex align-items-center">
+                                        <select name="newStatus" class="form-control mr-2 custom-margin" onchange="this.form.submit()">
+                                            <option value="" selected disabled th:text="${subtask.status.displayName}"></option>
+                                            <option value="NOT_STARTED" th:selected="${subtask.status == 'NOT_STARTED'}">Ikke påbegyndt</option>
+                                            <option value="IN_PROGRESS" th:selected="${subtask.status == 'IN_PROGRESS'}">I gang</option>
+                                            <option value="TODO" th:selected="${subtask.status == 'TODO'}">To do</option>
+                                            <option value="DONE" th:selected="${subtask.status == 'DONE'}">Færdig</option>
+                                            <option value="ARCHIVED" th:selected="${subtask.status == 'ARCHIVED'}">Arkiveret</option>
+                                        </select>
+                                    </form>
                                 </div>
                                 <p class="mb-0" th:text="${subtask.description}">Underopgavebeskrivelse</p>
+                                <div th:if="${session.user.isAdmin}">
+                                    <form th:action="@{'/subtask/' + ${subtask.id} + '/delete'}" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-success mr-2 mb-2" onclick="return confirm('Er du sikker på, at du vil slette denne underopgave?');">Slet Underopgave</button>
+                                    </form>
+                                </div>
                             </li>
                         </ul>
                         <a th:href="@{'/subtask/create?parentTaskId=' + ${task.id}}" class="btn btn-primary mt-3">Tilføj Underopgave</a>
