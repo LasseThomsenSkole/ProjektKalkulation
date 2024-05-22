@@ -414,15 +414,14 @@ public class ProjectRepository {
     public int createSubproject(String name, String description, Date startDate, Date deadline, int parentProjectId) {
         int subprojectId = 0;
         try {
-            String SQL = "INSERT INTO subprojects (subproject_name, subproject_description, subproject_hours, subproject_startdate, subproject_deadline, parent_project_id)" +
-                    "VALUES (?, ?, ?, ?, ?, ?);";
+            String SQL = "INSERT INTO subprojects (subproject_name, subproject_description, subproject_startdate, subproject_deadline, parent_project_id)" +
+                    "VALUES (?, ?, ?, ?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, description);
-            preparedStatement.setDouble(3, 0);
-            preparedStatement.setDate(4, startDate);
-            preparedStatement.setDate(5, deadline);
-            preparedStatement.setInt(6, parentProjectId);
+            preparedStatement.setDate(3, startDate);
+            preparedStatement.setDate(4, deadline);
+            preparedStatement.setInt(5, parentProjectId);
             preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
