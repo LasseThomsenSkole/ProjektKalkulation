@@ -481,18 +481,17 @@ public class ProjectRepository {
     /**OPRET TASK**/
     /** Indsætter informationer ind i task_name, task_description, task_startdate
     og task_deadline for at skabe en ny task**/
-    public int createTask(String name, String description, double hours, Date startDate, Date deadline, int subprojectId) {
+    public int createTask(String name, String description, Date startDate, Date deadline, int subprojectId) {
         int taskId = 0;
         try {
-            String SQL = "INSERT INTO tasks (task_name, task_description, task_hours, task_startdate, task_deadline, subproject_id)" +
+            String SQL = "INSERT INTO tasks (task_name, task_description, task_startdate, task_deadline, subproject_id)" +
                     "VALUES (?, ?, ?, ?, ?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, description);
-            preparedStatement.setDouble(3, hours);
-            preparedStatement.setDate(4, startDate);
-            preparedStatement.setDate(5, deadline);
-            preparedStatement.setInt(6, subprojectId);
+            preparedStatement.setDate(3, startDate);
+            preparedStatement.setDate(4, deadline);
+            preparedStatement.setInt(5, subprojectId);
             preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {

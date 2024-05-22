@@ -90,8 +90,8 @@ public class ProjectService {
         return projectRepository.createSubproject(name, description, startDate, deadline, parentProjectId);
     }
 
-    public int createTask(String name, String description, double hours, Date startDate, Date deadline, int subprojectId) {
-        return projectRepository.createTask(name, description, hours, startDate, deadline, subprojectId);
+    public int createTask(String name, String description, Date startDate, Date deadline, int subprojectId) {
+        return projectRepository.createTask(name, description, startDate, deadline, subprojectId);
     }
     
     public List<Project> getProjectsForUser(int userId) {
