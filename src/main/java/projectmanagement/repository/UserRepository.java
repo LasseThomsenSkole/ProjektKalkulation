@@ -31,29 +31,6 @@ public class UserRepository {
         connection = ConnectionManager.getConnection(db_url, username, pwd);
     }
 
-    /** Finder user ved brug af user_id **/
-    public User getUserById(int userId) { //TODO bruger vi den her?? der er 3 af den mici
-        try {
-            String SQL = "SELECT * " +
-                    "FROM users " +
-                    "WHERE user_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                int id = resultSet.getInt("user_id");
-                String name = resultSet.getString("user_name");
-                boolean isAdmin = resultSet.getBoolean("is_admin");
-                String password = resultSet.getString("password");
-                return new User(id, name, isAdmin, password);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
-
-
     /** Opretter en user ved at indsætte username og password,
      hvorefter databasen selv tildeler useren et unikt user_id**/
     public void insertUser(String username, String password) {
@@ -104,7 +81,7 @@ public class UserRepository {
     }
 
     /** Tjekker om en bruger allerede eksisterer - til når man skal oprette en bruger**/
-    public boolean userAlreadyExists(String username){ //TODO hvad er forskellen på den her, getUserById og getUserFromName? det er samme sql string. mici
+    public boolean userAlreadyExists(String username){
         try {
             String SQL = "SELECT * " +
                     "FROM users " +
@@ -116,32 +93,6 @@ public class UserRepository {
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-    }
-
-    /** Finder tasks som en user er tildelt ved brug af user_task_relation **/
-    public List<Task> getTasksFromUser(int userId) { //TODO bruger vi den her? skriv den om til alm sprog ikke chatgpt. mici
-        List<Task> tasks = new ArrayList<>();
-        try {
-            String SQL = "SELECT t.* FROM tasks t " +
-                    "JOIN user_task_relation utr ON t.task_id = utr.task_id " +
-                    "WHERE utr.user_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("task_id");
-                String name = resultSet.getString("task_name");
-                String description = resultSet.getString("task_description");
-                double hours = resultSet.getDouble("task_hours");
-                Date startDate = resultSet.getDate("task_startdate");
-                Date deadline = resultSet.getDate("task_deadline");
-                Status status = Status.valueOf(resultSet.getString("task_status"));
-                tasks.add(new Task(id, name, description, startDate, deadline, hours, status));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return tasks;
     }
 }
 
