@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS tasks (
     task_deadline DATE,
     task_status ENUM('DONE', 'IN_PROGRESS', 'TODO', 'ARCHIVED', 'NOT_STARTED') NOT NULL DEFAULT 'NOT_STARTED',
     parent_subproject_id INT NOT NULL,
-    FOREIGN KEY (subproject_id) REFERENCES subprojects(subproject_id) ON DELETE CASCADE
+    FOREIGN KEY (parent_subproject_id) REFERENCES subprojects(subproject_id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS subtasks (
