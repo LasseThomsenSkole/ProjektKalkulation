@@ -109,12 +109,12 @@ BEGIN
     -- Calculate the total hours of all tasks related to the subproject
     SELECT SUM(task_hours) INTO total_task_hours
     FROM tasks
-    WHERE subproject_id = NEW.subproject_id;
+    WHERE parent_subproject_id = NEW.parent_subproject_id;
 
     -- Update the subproject_hours in the subprojects table
     UPDATE subprojects
     SET subproject_hours = total_task_hours
-    WHERE subproject_id = NEW.subproject_id;
+    WHERE subproject_id = NEW.parent_subproject_id;
 END;
 //
 
@@ -127,12 +127,12 @@ BEGIN
     -- Calculate the total hours of all tasks related to the subproject
     SELECT SUM(task_hours) INTO total_task_hours
     FROM tasks
-    WHERE subproject_id = NEW.subproject_id;
+    WHERE parent_subproject_id = NEW.parent_subproject_id;
 
     -- Update the subproject_hours in the subprojects table
     UPDATE subprojects
     SET subproject_hours = total_task_hours
-    WHERE subproject_id = NEW.subproject_id;
+    WHERE subproject_id = NEW.parent_subproject_id;
 END;
 //
 
