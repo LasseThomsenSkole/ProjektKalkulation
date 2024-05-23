@@ -177,7 +177,7 @@ public class ProjectRepository {
         try {
             String SQL = "SELECT task_id, task_name, task_description, task_hours, task_startdate, task_deadline, task_status " +
                     "FROM tasks " +
-                    "WHERE subproject_id = ?;";
+                    "WHERE parent_subproject_id = ?;";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
                 preparedStatement.setInt(1, subprojectId);
@@ -449,7 +449,7 @@ public class ProjectRepository {
     public int createTask(String name, String description, Date startDate, Date deadline, int subprojectId) {
         int taskId = 0;
         try {
-            String SQL = "INSERT INTO tasks (task_name, task_description, task_startdate, task_deadline, subproject_id)" +
+            String SQL = "INSERT INTO tasks (task_name, task_description, task_startdate, task_deadline, parent_subproject_id)" +
                     "VALUES (?, ?, ?, ?, ?);";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, name);
@@ -676,14 +676,14 @@ public class ProjectRepository {
     public int findSubprojectIdByTaskId(int taskId) {
         int subprojectId = 0;
         try {
-            String SQL = "SELECT subproject_id " +
+            String SQL = "SELECT parent_subproject_id " +
                     "FROM tasks " +
                     "WHERE task_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
                 preparedStatement.setInt(1, taskId);
                 ResultSet rs = preparedStatement.executeQuery();
                 if (rs.next()) {
-                    subprojectId = rs.getInt("subproject_id");
+                    subprojectId = rs.getInt("parent_subproject_id");
                 }
             }
         } catch (SQLException e) {
