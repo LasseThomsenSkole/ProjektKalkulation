@@ -1,8 +1,8 @@
 package projectmanagement.model;
 
 public enum Status {
-    DONE("Afsluttet"),
-    IN_PROGRESS("påbegyndt"),
+    DONE("Færdig"),
+    IN_PROGRESS("I gang"),
     TODO("To do"),
     ARCHIVED("Arkiveret"),
     NOT_STARTED("Ikke påbegyndt");
