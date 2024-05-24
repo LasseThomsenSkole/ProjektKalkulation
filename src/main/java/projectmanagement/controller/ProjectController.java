@@ -365,4 +365,15 @@ public class ProjectController {
     }
 
     //TODO lav deleteSubproject - metoden er i projectrepository
+
+
+    public String singletonInstance(){
+        return this.toString();
+    }
+
+    @GetMapping("singleton")
+    public String singleton(Model model){
+        System.out.println("singleton bevis" + singletonInstance());
+        return "login";
+    }
 }
