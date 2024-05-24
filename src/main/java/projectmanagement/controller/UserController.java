@@ -53,7 +53,7 @@ public class UserController {
         }
         return "login";
     }
-
+    //TODO TILFØJ INDIKATOR FOR HVIS DER ALLEREDE ER EN USER MED DET NAVN
     @PostMapping("/create-account") //TODO kan ikke indsætte header
     public String createAccountPost(@RequestParam("username") String username,
                                     @RequestParam("password") String password,
