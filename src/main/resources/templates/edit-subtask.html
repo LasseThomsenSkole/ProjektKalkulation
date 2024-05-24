@@ -27,7 +27,7 @@
         </div>
         <div class="form-group">
             <label for="hours">Antal timer:</label>
-            <input type="text" class="form-control" id="hours" name="hours" th:value="${subtask.hours}" min="0" max="2147483645"> <!-- max value for int in MySQL -2 -->
+            <input type="text" class="form-control" id="hours" name="hours" th:value="${subtask.hours}" min="0" max="2147483645"> <!-- max værdi for int i MySQL -2 -->
         </div>
         <button type="submit" class="btn btn-primary">Gem Ændringer</button>
     </form>
