@@ -36,10 +36,10 @@
         </div>
 
         <div class="mb-3 d-flex align-items-center flex-wrap">
-            <a th:href="@{'/edit/project/' + ${project.id}}" class="btn btn-success mr-2 mb-2">Rediger Projekt</a>
+            <a th:href="@{'/edit/project/' + ${project.id}}" class="btn btn-success mr-2 mb-2">Rediger projekt</a>
             <div th:if="${session.user.isAdmin}">
                 <form th:action="@{'/projects/' + ${project.id} + '/delete'}" method="post" class="d-inline">
-                    <button type="submit" class="btn btn-success mr-2 mb-2" onclick="return confirm('Er du sikker på, at du vil slette dette projekt?');">Slet Projekt</button>
+                    <button type="submit" class="btn btn-success mr-2 mb-2" onclick="return confirm('Er du sikker på, at du vil slette dette projekt?');">Slet projekt</button>
                 </form>
             </div>
             <div class="d-flex align-items-center mb-2">
@@ -59,7 +59,7 @@
     </section>
     <!-- Subprojects -->
     <section class="subprojects-section">
-        <h3>Subprojekter
+        <h3>Delprojekter
             <a th:href="@{'/subprojects/create?parentProjectId=' + ${project.id}}" style="float:right;" class="btn btn-primary mt-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
@@ -73,9 +73,9 @@
             <div class="card mb-3" th:each="subproject : ${project.subprojects}">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <a th:href="@{'/subproject/' + ${subproject.id}}" class="text-decoration-none" th:text="${subproject.name}">Subprojektnavn</a>
+                        <a th:href="@{'/subproject/' + ${subproject.id}}" class="text-decoration-none" th:text="${subproject.name}">Delprojektnavn</a>
                     </h5>
-                    <p class="card-text" th:text="${subproject.description}">Subprojektbeskrivelse</p>
+                    <p class="card-text" th:text="${subproject.description}">Delprojektbeskrivelse</p>
                     <div class="mb-2 d-flex align-items-center flex-wrap">
                         <a th:href="@{'/edit/subproject/' + ${subproject.id}}" class="btn btn-secondary mr-2 mb-2">Rediger</a>
                         <div class="d-flex align-items-center mb-2">
