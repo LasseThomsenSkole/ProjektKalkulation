@@ -691,4 +691,23 @@ public class ProjectRepository {
         }
         return subprojectId;
     }
+
+    public int findTaskIdBySubtaskId(int subtaskId) {
+        int taskId = 0;
+        try {
+            String SQL = "SELECT parent_task_id " +
+                    "FROM subtasks " +
+                    "WHERE subtask_id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+                preparedStatement.setInt(1, subtaskId);
+                ResultSet rs = preparedStatement.executeQuery();
+                if (rs.next()) {
+                    taskId = rs.getInt("parent_task_id");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return taskId;
+    }
 }

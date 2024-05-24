@@ -113,5 +113,11 @@ public class ProjectService {
     public void createSubtask(String name, String description, double hours, Date startDate, Date deadline, int parentTaskId) {
       projectRepository.createSubtask(name, description, hours, startDate, deadline, parentTaskId);
     }
+    public void changeSubtaskStatus(int subtaskId, Status status) {
+        projectRepository.changeSubtaskStatus(subtaskId, status);
+    }
+    public int findTaskIdBySubtaskId(int subtaskId) {
+        return projectRepository.findTaskIdBySubtaskId(subtaskId);
+    }
 
 }
