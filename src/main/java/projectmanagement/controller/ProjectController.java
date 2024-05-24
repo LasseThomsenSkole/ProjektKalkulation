@@ -252,6 +252,20 @@ public class ProjectController {
         }
         return "login";
     }
+    @PostMapping("/subtasks/{subtaskId}/status")
+    public String updateSubtaskStatus(@PathVariable("subtaskId") int subtaskId,
+                                     @RequestParam("newStatus") String statusString, HttpSession session, Model model) {
+        if (isLoggedIn(session)) {
+            User user = (User) session.getAttribute("user");
+            model.addAttribute("user", user);
+            Status newStatus = Status.valueOf(statusString);
+            projectService.changeSubtaskStatus(subtaskId, newStatus);
+            int taskId = projectService.findTaskIdBySubtaskId(subtaskId);
+            int subprojectId = projectService.findSubprojectIdByTaskId(taskId);
+            return "redirect:/subproject/" + subprojectId;
+        }
+        return "login";
+    }
 
     /**EDIT**/
     @GetMapping("/edit/project/{id}")
