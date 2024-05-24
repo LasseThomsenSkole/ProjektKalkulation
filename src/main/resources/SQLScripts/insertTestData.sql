@@ -23,7 +23,7 @@ VALUES ('Alpha Subproject 1', 'Design phase of Project Alpha', '2024-05-01', '20
        ('Gamma Subproject 1', 'Data collection for Project Gamma', '2024-05-10', '2024-06-10', 3);
 
 -- Inserting test data into the 'tasks' table
-INSERT INTO tasks (task_name, task_description, task_startdate, task_deadline, subproject_id)
+INSERT INTO tasks (task_name, task_description, task_startdate, task_deadline, parent_subproject_id)
 VALUES ('Design UI', 'Create user interface mockups', '2024-05-02', '2024-05-10', 1),
        ('Backend API Development', 'Implement backend APIs', '2024-05-23', '2024-06-20', 2),
        ('Homepage Design', 'Design homepage layout', '2024-05-02', '2024-05-20', 3),
