@@ -359,12 +359,41 @@ public class ProjectController {
         return "login";
     }
 
+    @PostMapping("/subprojects/{subprojectId}/delete")
+    public String deleteSubproject(@PathVariable int subprojectId, HttpSession session) {
+        if (isLoggedIn(session) && isAdmin(session)) {
+            int projectId = projectService.findParentProjectIdBySubprojectId(subprojectId);
+            projectService.deleteSubproject(subprojectId);
+            return "redirect:/project/" + projectId;
+        }
+        return "login";
+    }
+
+    @PostMapping("/tasks/{taskId}/delete")
+    public String deleteTask(@PathVariable int taskId, HttpSession session) {
+        if (isLoggedIn(session) && isAdmin(session)) {
+            int subprojectId = projectService.findSubprojectIdByTaskId(taskId);
+            projectService.deleteTask(taskId);
+            return "redirect:/subproject/" + subprojectId;
+        }
+        return "login";
+    }
+
+    @PostMapping("/subtask/{subtaskId}/delete")
+    public String deleteSubtask(@PathVariable int subtaskId, HttpSession session) {
+        if (isLoggedIn(session) && isAdmin(session)) {
+            int taskId = projectService.findTaskIdBySubtaskId(subtaskId);
+            int subprojectId = projectService.findSubprojectIdByTaskId(taskId);
+            projectService.deleteSubtask(subtaskId);
+            return "redirect:/subproject/" + subprojectId;
+        }
+        return "login";
+    }
+
     private boolean isAdmin(HttpSession session) {
         User user = (User) session.getAttribute("user");
         return user != null && user.isAdmin();
     }
-
-    //TODO lav deleteSubproject - metoden er i projectrepository
 
 
     public String singletonInstance(){
