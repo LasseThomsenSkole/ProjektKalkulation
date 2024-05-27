@@ -65,10 +65,6 @@ public class Subproject {
         return hours;
     }
 
-    public void setHours(double hours) {
-        this.hours = hours;
-    }
-
     public Date getDeadline() {
         return deadline;
     }
