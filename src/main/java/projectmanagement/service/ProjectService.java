@@ -106,8 +106,24 @@ public class ProjectService {
         return projectRepository.findSubprojectIdByTaskId(taskId);
     }
 
+    public int findParentProjectIdBySubprojectId(int subprojectId) {
+        return projectRepository.findParentProjectIdBySubprojectId(subprojectId);
+    }
+
     public void deleteProject(int projectId) {
         projectRepository.deleteProject(projectId);
+    }
+
+    public void deleteTask(int taskId) {
+        projectRepository.deleteTask(taskId);
+    }
+
+    public void deleteSubtask(int subtaskId) {
+        projectRepository.deleteSubtask(subtaskId);
+    }
+
+    public void deleteSubproject(int subprojectId) {
+        projectRepository.deleteSubproject(subprojectId);
     }
 
     public void createSubtask(String name, String description, double hours, Date startDate, Date deadline, int parentTaskId) {
