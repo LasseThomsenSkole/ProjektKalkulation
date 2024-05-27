@@ -653,7 +653,7 @@ public class ProjectRepository {
     }
 
     /** **/
-    public List<Project> getProjectsFromAssignedUser(int userId) {//TODO den her sql virker ikke + fjerne forkortelser, der er ingen grund til p. mici
+    public List<Project> getProjectsFromAssignedUser(int userId) {
         List<Project> projects = new ArrayList<>();
         try {
             String SQL = "SELECT p.project_id, p.project_name, p.project_description, p.total_hours, p.project_startdate, p.project_deadline, p.project_status " +
