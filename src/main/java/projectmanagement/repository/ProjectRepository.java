@@ -432,7 +432,7 @@ public class ProjectRepository {
     public void deleteSubproject(int subprojectId){
         try {
             String SQL = "DELETE FROM subprojects " +
-                    "WHERE subprojects_id = ?;";
+                    "WHERE subproject_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, subprojectId);
             preparedStatement.executeUpdate();
@@ -709,5 +709,22 @@ public class ProjectRepository {
             throw new RuntimeException(e);
         }
         return taskId;
+    }
+
+    public int findParentProjectIdBySubprojectId(int subprojectId) {
+        int projectId = 0;
+        try {
+            String SQL = "SELECT parent_project_id FROM subprojects WHERE subproject_id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+                preparedStatement.setInt(1, subprojectId);
+                ResultSet rs = preparedStatement.executeQuery();
+                if (rs.next()) {
+                    projectId = rs.getInt("parent_project_id");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return projectId;
     }
 }
