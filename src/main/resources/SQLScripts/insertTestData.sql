@@ -1,3 +1,4 @@
+-- Dette er lavet af chatGPT
 USE
 AlphaManagement;
 
