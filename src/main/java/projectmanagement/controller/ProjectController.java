@@ -388,7 +388,7 @@ public class ProjectController {
     }
 
     @GetMapping("singleton")
-    public String singleton(Model model){
+    public String singleton(){
         System.out.println("singleton bevis" + singletonInstance());
         return "login";
     }

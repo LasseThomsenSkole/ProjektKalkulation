@@ -550,25 +550,6 @@ public class ProjectRepository {
 
     }
 
-    /** Finder alle projekter med en selvvalgt status via project_status**/
-    public List<Project> findAllProjectsByStatus(Status status) {
-        List<Project> projects = new ArrayList<>();
-        String query = "SELECT project_id, project_name, project_description, total_hours, project_startdate, project_deadline, project_status " +
-                "FROM projects " +
-                "WHERE project_status = ?;";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, status.toString());
-            try (ResultSet rs = preparedStatement.executeQuery()) {
-                while (rs.next()) {
-                    projects.add(mapProject(rs));
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return projects;
-    }
-
     /** Ændrer status for et project **/
     public void changeProjectStatus(int projectID, Status newStatus) {
         String SQL = "UPDATE projects " +
