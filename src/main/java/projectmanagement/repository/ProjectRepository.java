@@ -93,18 +93,7 @@ public class ProjectRepository {
                 preparedStatement.setInt(1, projectId);
                 ResultSet projectResult = preparedStatement.executeQuery();
                 if (projectResult.next()) {
-                    int id = projectResult.getInt("project_id");
-                    String name = projectResult.getString("project_name");
-                    String description = projectResult.getString("project_description");
-                    double totalHours = projectResult.getDouble("total_hours");
-                    Date startDate = projectResult.getDate("project_startdate");
-                    Date deadline = projectResult.getDate("project_deadline");
-                    Status status = Status.valueOf(projectResult.getString("project_status"));
-
-                    List<Task> tasks = getTasks(id);
-                    List<Subproject> subprojects = getSubprojects(id);
-
-                    project = new Project(id, name, description, tasks, subprojects, totalHours, startDate, deadline, status);
+                    project = mapProject(projectResult);
                 }
             }
         } catch (SQLException e) {
