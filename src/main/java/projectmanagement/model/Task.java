@@ -15,15 +15,15 @@ public class Task {
 
     public Task() {} //thymeleaf
 
-    public Task(int id, String name, String description, List<Subtask> subtasks, Date startDate, Date deadline, double hours, Status status) {
+    public Task(int id, String name, String description, Date startDate, Date deadline, double hours, Status status, List<Subtask> subtasks) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.subtasks = subtasks;
         this.startDate = startDate;
         this.deadline = deadline;
         this.hours = hours;
         this.status = status;
+        this.subtasks = subtasks;
     }
 
     public Task(int id, String name, String description, Date startDate, Date deadline, double hours, Status status) {
