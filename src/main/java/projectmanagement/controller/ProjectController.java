@@ -371,13 +371,5 @@ public class ProjectController {
         return "login";
     }
 
-    public String singletonInstance(){
-        return this.toString();
-    }
 
-    @GetMapping("singleton")
-    public String singleton(){
-        System.out.println("singleton bevis" + singletonInstance());
-        return "login";
-    }
 }
