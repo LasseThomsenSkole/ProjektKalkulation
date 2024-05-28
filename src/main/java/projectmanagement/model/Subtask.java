@@ -23,8 +23,6 @@ public class Subtask {
         this.status = status;
     }
 
-
-
     public Date getDeadline() {
         return deadline;
     }
