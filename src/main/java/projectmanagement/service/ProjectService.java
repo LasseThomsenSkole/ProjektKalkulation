@@ -19,11 +19,11 @@ public class ProjectService {
     private UserRepository userRepository;
 
     public List<Project> findAllProjects() {
-        return projectRepository.findAllProjects();
+        return projectRepository.getAllProjects();
     }
 
     public List<Project> findAllProjectsSorted(String sort) {
-        return projectRepository.findAllProjectsSorted(sort);
+        return projectRepository.getAllProjectsSorted(sort);
     }
 
     public int createProject(String name, String description, Date startDate, Date deadline) {
