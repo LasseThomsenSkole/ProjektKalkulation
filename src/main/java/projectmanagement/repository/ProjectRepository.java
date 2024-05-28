@@ -595,10 +595,8 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, newStatus.name());
             preparedStatement.setInt(2, subtaskID);
-            int rowsAffected = preparedStatement.executeUpdate();
-            if (rowsAffected == 0) {
-                throw new IllegalStateException();
-            }
+            preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
