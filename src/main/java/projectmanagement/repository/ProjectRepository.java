@@ -76,7 +76,6 @@ public class ProjectRepository {
         Date deadline = rs.getDate("project_deadline");
         Status status = Status.valueOf(rs.getString("project_status"));
 
-        //List<Task> tasks = getTasks(id);
         List<Subproject> subprojects = getSubprojects(id);
         return new Project(id, name, description, subprojects, totalHours, startDate, deadline, status);
     }

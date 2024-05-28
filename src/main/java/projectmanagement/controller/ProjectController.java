@@ -377,7 +377,7 @@ public class ProjectController {
         return "login";
     }
 
-    private boolean isAdmin(HttpSession session) { //TODO DET HER SKAL OGSÅ VÆRE I USERCONTROLLER
+    private boolean isAdmin(HttpSession session) {
         User user = (User) session.getAttribute("user");
         return user != null && user.isAdmin();
     }

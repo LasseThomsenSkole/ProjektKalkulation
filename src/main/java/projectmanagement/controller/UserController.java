@@ -24,7 +24,10 @@ public class UserController {
     private boolean isLoggedIn(HttpSession session){
         return session.getAttribute("user") != null;
     }
-
+    private boolean isAdmin(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        return user != null && user.isAdmin();
+    }
 
     @GetMapping("/login")
     public String login(){
@@ -53,21 +56,17 @@ public class UserController {
         }
         return "login";
     }
-    //TODO TILFØJ INDIKATOR FOR HVIS DER ALLEREDE ER EN USER MED DET NAVN
-    @PostMapping("/create-account") //TODO kan ikke indsætte header
+    @PostMapping("/create-account")
     public String createAccountPost(@RequestParam("username") String username,
                                     @RequestParam("password") String password,
                                     HttpSession session, Model model){
-        if (isLoggedIn(session)){
-            User user = (User) session.getAttribute("user");
-            if (user.isAdmin()){
+        if (isLoggedIn(session) && isAdmin(session)){
                 if (userService.userAlreadyExists(username)){
                     model.addAttribute("userAlreadyExists", true);
                     return "create-account";
                 }
                 userService.insertUser(username, password);
-                return "/create-account";
-            }
+                return "redirect:/create-account";
         }
         return "redirect:/login";
     }
