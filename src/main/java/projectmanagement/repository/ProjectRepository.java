@@ -250,7 +250,6 @@ public class ProjectRepository {
 
     /** Finder alle info om en subtask ved brug af subtask_id**/
     public Subtask getSubtaskById(int subtaskId){
-        Subtask subtask = null;
         try {
             String taskSQL = "SELECT subtask_id, subtask_name, subtask_description, subtask_hours, subtask_startdate, subtask_deadline " +
                     "FROM subtasks " +
@@ -258,22 +257,16 @@ public class ProjectRepository {
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(taskSQL)) {
                 preparedStatement.setInt(1, subtaskId);
-                ResultSet subtaskResult = preparedStatement.executeQuery();
-                while (subtaskResult.next()) {
-                    int id = subtaskResult.getInt("subtask_id");
-                    String name = subtaskResult.getString("subtask_name");
-                    String description = subtaskResult.getString("subtask_description");
-                    double hours = subtaskResult.getDouble("subtask_hours");
-                    Date startDate = subtaskResult.getDate("subtask_startdate");
-                    Date deadline = subtaskResult.getDate("subtask_deadline");
-                    subtask = new Subtask(id, name, description, startDate, deadline, hours);
+                ResultSet rs = preparedStatement.executeQuery();
+                if (rs.next()) {
+                    return mapSubtask(rs);
                 }
             }
         }
         catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return subtask;
+        return null;
     }
 
     /** Find alle arkiverede projekter ved at finde ud af hvilke projekter har en project_status der er sat til 'ARCHIVED' **/
