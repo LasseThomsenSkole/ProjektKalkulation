@@ -179,17 +179,6 @@ public class ProjectController {
         return "login";
     }
 
-    @GetMapping("/subtask/{id}")
-    public String showSubtaskDetails(@PathVariable int id, Model model, HttpSession session) {
-        if (isLoggedIn(session)) {
-            User user = (User) session.getAttribute("user");
-            model.addAttribute("user", user);
-            Subtask subtask = projectService.getSubtaskById(id);
-            model.addAttribute("subtask", subtask);
-            return "subtask-detail";
-        }
-        return "login";
-    }
 
     /**ARCHIVED**/
     @GetMapping("/archivedprojects")
