@@ -135,10 +135,6 @@
                                 </div>
                                 <p class="mb-0" th:text="${subtask.description}">Delopgavebeskrivelse</p>
 
-
-
-
-
                                 <div th:if="${session.user.isAdmin}">
                                     <form th:action="@{'/subtask/' + ${subtask.id} + '/delete'}" method="post" class="d-inline">
                                         <button type="submit" class="btn btn-success mr-2 mb-2" style="float: right;"  onclick="return confirm('Er du sikker på, at du vil slette denne underopgave?');">
@@ -149,10 +145,6 @@
                                         </button>
                                     </form>
                                 </div>
-
-
-
-
 
                             </li>
                         </ul>
