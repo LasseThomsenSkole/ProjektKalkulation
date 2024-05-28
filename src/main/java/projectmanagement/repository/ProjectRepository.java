@@ -559,7 +559,7 @@ public class ProjectRepository {
                     "SET subproject_status = ? " +
                     "WHERE subproject_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ikke af enums, så vi skal bruge .name(). lasse
+            preparedStatement.setString(1, newStatus.name()); //jdbc benytter sig ikke af enums, så vi skal bruge .name()
             preparedStatement.setInt(2, subprojectID);
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected == 0) {
@@ -579,10 +579,8 @@ public class ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, newStatus.name());
             preparedStatement.setInt(2, taskID);
-            int rowsAffected = preparedStatement.executeUpdate();
-            if (rowsAffected == 0) {
-                throw new IllegalStateException();
-            }
+            preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
