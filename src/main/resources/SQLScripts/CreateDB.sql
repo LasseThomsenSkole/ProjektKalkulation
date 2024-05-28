@@ -1,4 +1,4 @@
--- dele af dette script er lavet i samarbejde med chatGPT
+-- dele af dette script er lavet med assistance fra chatGPT
 CREATE SCHEMA IF NOT EXISTS AlphaManagement;
 USE AlphaManagement;
 
