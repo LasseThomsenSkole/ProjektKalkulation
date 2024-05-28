@@ -65,108 +65,92 @@ CREATE TABLE IF NOT EXISTS user_project_relation (
 
 DELIMITER //
 
--- Trigger for updates on subprojects
 CREATE TRIGGER update_total_hours_after_update AFTER UPDATE ON subprojects
     FOR EACH ROW
 BEGIN
     DECLARE total_subproject_hours DOUBLE;
 
-    -- Calculate the total hours of all subprojects related to the project
+    -- Calculate the total hours
     SELECT SUM(subproject_hours) INTO total_subproject_hours
     FROM subprojects
     WHERE parent_project_id = NEW.parent_project_id;
 
-    -- Update the total_hours in the projects table
+    -- Update the total_hours
     UPDATE projects
     SET total_hours = total_subproject_hours
     WHERE project_id = NEW.parent_project_id;
 END;
 //
 
--- Trigger for inserts on subprojects
 CREATE TRIGGER update_total_hours_after_insert AFTER INSERT ON subprojects
     FOR EACH ROW
 BEGIN
     DECLARE total_subproject_hours DOUBLE;
 
-    -- Calculate the total hours of all subprojects related to the project
     SELECT SUM(subproject_hours) INTO total_subproject_hours
     FROM subprojects
     WHERE parent_project_id = NEW.parent_project_id;
 
-    -- Update the total_hours in the projects table
     UPDATE projects
     SET total_hours = total_subproject_hours
     WHERE project_id = NEW.parent_project_id;
 END;
 //
 
--- Trigger for updates on tasks
 CREATE TRIGGER update_subproject_hours_after_update AFTER UPDATE ON tasks
     FOR EACH ROW
 BEGIN
     DECLARE total_task_hours DOUBLE;
 
-    -- Calculate the total hours of all tasks related to the subproject
     SELECT SUM(task_hours) INTO total_task_hours
     FROM tasks
     WHERE parent_subproject_id = NEW.parent_subproject_id;
 
-    -- Update the subproject_hours in the subprojects table
     UPDATE subprojects
     SET subproject_hours = total_task_hours
     WHERE subproject_id = NEW.parent_subproject_id;
 END;
 //
 
--- Trigger for inserts on tasks
 CREATE TRIGGER update_subproject_hours_after_insert AFTER INSERT ON tasks
     FOR EACH ROW
 BEGIN
     DECLARE total_task_hours DOUBLE;
 
-    -- Calculate the total hours of all tasks related to the subproject
     SELECT SUM(task_hours) INTO total_task_hours
     FROM tasks
     WHERE parent_subproject_id = NEW.parent_subproject_id;
 
-    -- Update the subproject_hours in the subprojects table
     UPDATE subprojects
     SET subproject_hours = total_task_hours
     WHERE subproject_id = NEW.parent_subproject_id;
 END;
 //
 
--- Trigger for updates on subtasks
 CREATE TRIGGER update_task_hours_after_update AFTER UPDATE ON subtasks
     FOR EACH ROW
 BEGIN
     DECLARE total_subtask_hours DOUBLE;
 
-    -- Calculate the total hours of all subtasks related to the task
     SELECT SUM(subtask_hours) INTO total_subtask_hours
     FROM subtasks
     WHERE parent_task_id = NEW.parent_task_id;
 
-    -- Update the task_hours in the tasks table
     UPDATE tasks
     SET task_hours = total_subtask_hours
     WHERE task_id = NEW.parent_task_id;
 END;
 //
 
--- Trigger for inserts on subtasks
 CREATE TRIGGER update_task_hours_after_insert AFTER INSERT ON subtasks
     FOR EACH ROW
 BEGIN
     DECLARE total_subtask_hours DOUBLE;
 
-    -- Calculate the total hours of all subtasks related to the task
     SELECT SUM(subtask_hours) INTO total_subtask_hours
     FROM subtasks
     WHERE parent_task_id = NEW.parent_task_id;
 
-    -- Update the task_hours in the tasks table
     UPDATE tasks
     SET task_hours = total_subtask_hours
     WHERE task_id = NEW.parent_task_id;
