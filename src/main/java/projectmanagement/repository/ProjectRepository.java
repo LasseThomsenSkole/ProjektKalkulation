@@ -57,6 +57,7 @@ public class ProjectRepository {
         List<Task> tasks = getTasks(id);
         return new Subproject(id, name, description, hours, startDate, deadline, status, tasks);
     }
+    /** Returner et Task objekt udfra et ResultSet **/
     private Task mapTask(ResultSet rs) throws SQLException {
         int id = rs.getInt("task_id");
         String name = rs.getString("task_name");
