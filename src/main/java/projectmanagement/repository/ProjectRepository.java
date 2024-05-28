@@ -290,7 +290,6 @@ public class ProjectRepository {
     /** Indsætter informationer ind i project_name, project_description, project_startdate
         og project_deadline for at skabe et nyt projekt **/
     public int createProject(String name, String description, Date startDate, Date deadline) {
-        int projectId = 0;
         try {
             String SQL = "INSERT INTO projects (project_name, project_description, project_startdate, project_deadline) " +
                     "VALUES (?, ?, ?, ?);";
@@ -302,13 +301,13 @@ public class ProjectRepository {
             preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                projectId = generatedKeys.getInt(1);
+                return generatedKeys.getInt(1);
             }
         }
         catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return projectId;
+        return 0;
     }
 
     /**EDIT PROJECT**/
