@@ -15,7 +15,6 @@ Med Alpha Management skal det være lettere at holde overblik og se data ift. pr
 - **Oprettelse af projekter, delprojekter, opgaver og delopgaver:** Brugere kan oprette projekter osv. De kan tilføje navn, beskrivelse, status og start samt slut dato. Derudover kan der tilføjes timer til delopgaverne.
 - **Redigering:** Man kan redigere informationer i både projekter, delprojekter, opgaver og delopgaver.
 - **Sletning:** Admin kan slette projekter, delprojekter, opgaver og delopgaver.
-- 
 
 ### Teknologier
 
