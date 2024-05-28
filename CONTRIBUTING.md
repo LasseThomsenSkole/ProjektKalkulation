@@ -23,6 +23,12 @@ Vær sikker på at du har en forståelse for projektets funktionalitet før du b
 1. Klon repository til din locale maskine:
    ```bash
    git clone https://github.com/LasseThomsenSkole/ProjektKalkulation.git
+   
+2. Opret en forbindelse til database i MySQL.
+3. Køre SQL-scripts:
+   1. /src/main/resources/SQLScripts/CreateDB.sql 
+   2. /src/main/resources/SQLScripts/insertTestData.sql
+3. Setup dine environment variables inde i configuration.
 
 ### Adfærdskodeks
 Fortrolighed
