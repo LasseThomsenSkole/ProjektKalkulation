@@ -624,7 +624,6 @@ public class ProjectRepository {
 
     /**Benyttes for at redirecte fra task status ændring til parent subproject side**/
     public int findSubprojectIdByTaskId(int taskId) {
-        int subprojectId = 0;
         try {
             String SQL = "SELECT parent_subproject_id " +
                     "FROM tasks " +
@@ -633,13 +632,13 @@ public class ProjectRepository {
                 preparedStatement.setInt(1, taskId);
                 ResultSet rs = preparedStatement.executeQuery();
                 if (rs.next()) {
-                    subprojectId = rs.getInt("parent_subproject_id");
+                    return rs.getInt("parent_subproject_id");
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return subprojectId;
+        return 0;
     }
 
     public int findTaskIdBySubtaskId(int subtaskId) {
