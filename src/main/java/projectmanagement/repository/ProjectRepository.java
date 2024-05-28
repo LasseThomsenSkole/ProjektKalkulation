@@ -545,11 +545,8 @@ public class ProjectRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
             preparedStatement.setString(1, newStatus.name());
             preparedStatement.setInt(2, projectID);
+            preparedStatement.executeUpdate();
 
-            int rowsAffected = preparedStatement.executeUpdate();
-            if (rowsAffected == 0) {
-                throw new IllegalStateException();
-            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
