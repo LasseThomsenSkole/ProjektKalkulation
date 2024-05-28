@@ -466,7 +466,7 @@ public class ProjectRepository {
     }
 
     /**SLET TASK**/
-    /** Sletter alle subtasks der har med det ene task at gøre via parent_project_id **/
+    /** Sletter task **/
     public void deleteTask(int taskId){
         try {
             String SQL = "DELETE FROM tasks " +
