@@ -71,6 +71,17 @@ public class ProjectRepository {
 
         return new Task(id, name, description, startDate, deadline, hours, status, subtasks);
     }
+    private Subtask mapSubtask(ResultSet rs) throws SQLException {
+        int id = rs.getInt("subtask_id");
+        String name = rs.getString("subtask_name");
+        String description = rs.getString("subtask_description");
+        double hours = rs.getDouble("subtask_hours");
+        Date startDate = rs.getDate("subtask_startdate");
+        Date deadline = rs.getDate("subtask_deadline");
+        Status status = Status.valueOf(rs.getString("subtask_status"));
+
+        return new Subtask(id, name, description, startDate, deadline, hours, status);
+    }
 
     /**GET ALL PROJECTS**/
     /** Den finder informationer fra alle projekter og viser dem.**/
@@ -226,16 +237,9 @@ public class ProjectRepository {
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(taskSQL)) {
                 preparedStatement.setInt(1, parentTaskId);
-                ResultSet taskResult = preparedStatement.executeQuery();
-                while (taskResult.next()) {
-                    int id = taskResult.getInt("subtask_id");
-                    String name = taskResult.getString("subtask_name");
-                    String description = taskResult.getString("subtask_description");
-                    double hours = taskResult.getDouble("subtask_hours");
-                    Date startDate = taskResult.getDate("subtask_startdate");
-                    Date deadline = taskResult.getDate("subtask_deadline");
-                    Status status = Status.valueOf(taskResult.getString("subtask_status"));
-                    subtasks.add(new Subtask(id, name, description, startDate, deadline, hours, status));
+                ResultSet rs = preparedStatement.executeQuery();
+                while (rs.next()) {
+                    subtasks.add(mapSubtask(rs));
                 }
             }
         }
