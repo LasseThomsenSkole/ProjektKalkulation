@@ -57,6 +57,19 @@ public class ProjectRepository {
         List<Task> tasks = getTasks(id);
         return new Subproject(id, name, description, hours, startDate, deadline, status, tasks);
     }
+    private Task mapTask(ResultSet rs) throws SQLException {
+        int id = rs.getInt("task_id");
+        String name = rs.getString("task_name");
+        String description = rs.getString("task_description");
+        double hours = rs.getDouble("task_hours");
+        Date startDate = rs.getDate("task_startdate");
+        Date deadline = rs.getDate("task_deadline");
+        Status status = Status.valueOf(rs.getString("task_status"));
+
+        List<Subtask> subtasks = getSubtasks(id);
+
+        return new Task(id, name, description, startDate, deadline, hours, status, subtasks);
+    }
 
     /**GET ALL PROJECTS**/
     /** Den finder informationer fra alle projekter og viser dem.**/
@@ -167,21 +180,9 @@ public class ProjectRepository {
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
                 preparedStatement.setInt(1, subprojectId);
-                ResultSet taskResult = preparedStatement.executeQuery();
-                while (taskResult.next()) {
-                    int id = taskResult.getInt("task_id");
-                    String name = taskResult.getString("task_name");
-                    String description = taskResult.getString("task_description");
-                    double hours = taskResult.getDouble("task_hours");
-                    Date startDate = taskResult.getDate("task_startdate");
-                    Date deadline = taskResult.getDate("task_deadline");
-                    Status status = Status.valueOf(taskResult.getString("task_status"));
-
-                    List<Subtask> subtasks = getSubtasks(id);
-
-                    Task task = new Task(id, name, description, startDate, deadline, hours, status);
-                    task.setSubtasks(subtasks);
-                    tasks.add(task);
+                ResultSet rs = preparedStatement.executeQuery();
+                while (rs.next()) {
+                    tasks.add(mapTask(rs));
                 }
             }
         }
@@ -201,16 +202,9 @@ public class ProjectRepository {
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
                 preparedStatement.setInt(1, taskId);
-                ResultSet taskResult = preparedStatement.executeQuery();
-                while (taskResult.next()) {
-                    int id = taskResult.getInt("task_id");
-                    String name = taskResult.getString("task_name");
-                    String description = taskResult.getString("task_description");
-                    double hours = taskResult.getDouble("task_hours");
-                    Date startDate = taskResult.getDate("task_startdate");
-                    Date deadline = taskResult.getDate("task_deadline");
-                    Status status = Status.valueOf(taskResult.getString("task_status"));
-                    task = new Task(id, name, description, startDate, deadline, hours, status);
+                ResultSet rs = preparedStatement.executeQuery();
+                while (rs.next()) {
+                    task = mapTask(rs);
                 }
             }
         }
