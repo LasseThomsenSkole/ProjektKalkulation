@@ -7,7 +7,6 @@ public class Project {
     private int id;
     private String name;
     private String description;
-    //private List<Task> tasks;
     private List<Subproject> subprojects;
     private double totalHours;
     private Date startDate;
