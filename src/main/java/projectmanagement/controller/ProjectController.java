@@ -42,11 +42,11 @@ public class ProjectController {
         return "login";
     }
 
-   @PostMapping("/project/{projectId}")
+    @PostMapping("/project/{projectId}")
     public String assignUserToProject(@PathVariable int projectId, HttpSession session) {
         User user = (User) session.getAttribute("user");
         projectService.assignUserToProject(user.getId(), projectId);
-        return "redirect:/mypage";
+        return "redirect:/index";
     }
 
     @GetMapping("/projects")
