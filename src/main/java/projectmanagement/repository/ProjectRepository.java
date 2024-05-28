@@ -606,9 +606,9 @@ public class ProjectRepository {
     public List<Project> getProjectsFromAssignedUser(int userId) {
         List<Project> projects = new ArrayList<>();
         try {
-            String SQL = "SELECT p.project_id, p.project_name, p.project_description, p.total_hours, p.project_startdate, p.project_deadline, p.project_status " +
-                    "FROM projects p " +
-                    "JOIN user_project_relation upr ON p.project_id = upr.project_id " +
+            String SQL = "SELECT project_id, project_name, project_description, total_hours, project_startdate, project_deadline, project_status " +
+                    "FROM projects " +
+                    "JOIN user_project_relation upr ON projects.project_id = upr.project_id " +
                     "WHERE upr.user_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, userId);
