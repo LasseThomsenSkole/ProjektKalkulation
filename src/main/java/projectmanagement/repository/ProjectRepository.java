@@ -76,7 +76,7 @@ public class ProjectRepository {
         Date deadline = rs.getDate("project_deadline");
         Status status = Status.valueOf(rs.getString("project_status"));
 
-        List<Subproject> subprojects = getSubprojects(id);
+        List<Subproject> subprojects = getSubprojectsFromProjectId(id);
         return new Project(id, name, description, subprojects, totalHours, startDate, deadline, status);
     }
 
@@ -103,7 +103,7 @@ public class ProjectRepository {
 
     /**HENT SUBPROJECTS**/
     /** Finder alle info om et subprojekt ved brug af subproject_id**/
-    public List<Subproject> getSubprojects(int projectId) {
+    public List<Subproject> getSubprojectsFromProjectId(int projectId) {
         List<Subproject> subprojects = new ArrayList<>();
         try {
             String SQL = "SELECT subproject_id, subproject_name, subproject_description, subproject_hours, subproject_startdate, subproject_deadline, subproject_status " +

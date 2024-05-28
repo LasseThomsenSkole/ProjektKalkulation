@@ -42,7 +42,7 @@ public class ProjectTest {
 
     @Test
     void findSubProject() throws SQLException {
-        List<Subproject> found = repository.getSubprojects(4);
+        List<Subproject> found = repository.getSubprojectsFromProjectId(4);
         assertNotNull(found);
     }
 /*
