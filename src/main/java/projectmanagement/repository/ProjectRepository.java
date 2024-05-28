@@ -660,19 +660,19 @@ public class ProjectRepository {
     }
 
     public int findParentProjectIdBySubprojectId(int subprojectId) {
-        int projectId = 0;
+
         try {
             String SQL = "SELECT parent_project_id FROM subprojects WHERE subproject_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
                 preparedStatement.setInt(1, subprojectId);
                 ResultSet rs = preparedStatement.executeQuery();
                 if (rs.next()) {
-                    projectId = rs.getInt("parent_project_id");
+                    return rs.getInt("parent_project_id");
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return projectId;
+        return 0;
     }
 }
