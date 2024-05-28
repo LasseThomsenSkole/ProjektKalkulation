@@ -1,33 +1,38 @@
-# Contributing to Project Management Tool
+# Bidragelse til Project Management Tool
 
-Thank you for your interest in contributing to our Project Management Tool! This document provides guidelines for making contributions to this project, which is designed for internal use at our company. We welcome your insights and contributions.
+Tak for din interesse i at bidrage til vores Project Management Tool! Dette dokument giver nogle guidelines for bidragelse til dette projekt, som er designet for brug inden for vores firma. Vi takker for din indsigt og bidragelse.
 
-## Getting Started
 
-Before you begin contributing, please ensure you have a clear understanding of the project's functionality. This tool helps us manage projects, subprojects, tasks, subtasks, and their associated time estimations and calendar displays:
+## Kom i gang
 
-- Please go through the README.md file to understand our project setup, architecture, and development practices.
-- Ensure you are aware of our core functions and modules.
+Vær sikker på at du har en forståelse for projektets funktionalitet før du begynder at bidrage. Dette program er lavet til at hjælpe og med at styre projekter, delprojekter, opgaver og delopgaver, og holde styr på deres timer og deadlines.
 
-### Prerequisites
+- Venligst gå igennem vores README.md fil for at forstå vores projekt setup, arkitektur og udviklingsprocess.
+- Vær sikker på at du er opmærksom på vores kerne funktioner og moduler.
 
-- Familiarize yourself with the project by reading the existing documentation.
-- Make sure you have access to the project's repository and the necessary permissions to create branches and push commits.
-- Basic understanding of project management concepts.
-- Proficiency in the technologies we use (Java, Spring Boot).
-- An installed local development environment that mirrors our production environment.
+### Forudsætninger
 
-### Setup Your Environment
+- Gør dig selv bekendt med projektet ved at læse de eksisterende dokumenter.
+- Vær sikker på at du har adgang til projektets repository, og har de nødvendige tilladelser til at lave branches, lave commits og pushe.
+- En grundlæggende forståelde af projekt kalkulationsværktøjs konceptet.
+- Forståelse for teknologierne som der gøres brug af (Java, Spring Boot).
+- Et lokalt installeret udviklingsmiljø som spejler vores produktionsmiljø.
 
-1. Clone the repository to your local machine:
+### Setup dit miljø
+
+1. Klon repository til din locale maskine:
    ```bash
    git clone https://github.com/LasseThomsenSkole/ProjektKalkulation.git
+   
+2. Opret en forbindelse til database i MySQL.
+3. Køre SQL-scripts:
+   1. /src/main/resources/SQLScripts/CreateDB.sql 
+   2. /src/main/resources/SQLScripts/insertTestData.sql
+3. Setup dine environment variables inde i configuration.
 
-### Code of Conduct
-Respect confidentiality.
-Be respectful of your colleagues and other contributors.
+### Adfærdskodeks
+Fortrolighed
+Vær respektfulde over for dine kollegaer og andre bidragsydere.
+Støt op om dine kollegaer og andre bidragsydere.
+Vær konstruktive i feedback til andre bidragsydere.
 
-#### Community Guidelines
-Encourage and support your fellow contributors.
-Provide constructive feedback in reviews.
-Be kind.

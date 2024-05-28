@@ -60,12 +60,7 @@ public class ProjectService {
     }
 
     public void editSubtask(int id, Subtask updatedSubtask){
-
         projectRepository.editSubtask(id,updatedSubtask);
-    }
-
-    public List<Project> findAllProjectsByStatus(Status status) {
-        return projectRepository.findAllProjectsByStatus(status);
     }
 
     public List<Project> findArchivedProjects() {
@@ -75,13 +70,11 @@ public class ProjectService {
     public void changeProjectStatus(int projectId, Status newStatus) {
         projectRepository.changeProjectStatus(projectId, newStatus);
     }
-
-    // Ændre status for et subprojekt
+    
     public void changeSubprojectStatus(int subprojectId, Status newStatus) {
         projectRepository.changeSubprojectStatus(subprojectId, newStatus);
     }
 
-    // Ændre status for en opgave (task)
     public void changeTaskStatus(int taskId, Status newStatus) {
         projectRepository.changeTaskStatus(taskId, newStatus);
     }
