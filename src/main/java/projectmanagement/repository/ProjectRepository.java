@@ -603,7 +603,7 @@ public class ProjectRepository {
         }
     }
 
-    /** Ændrer status for en substask **/
+    /** Ændrer status for en subtask **/
     public void changeSubtaskStatus(int subtaskID, Status newStatus){
         try{
             String SQL = "UPDATE subtasks " +
@@ -621,7 +621,7 @@ public class ProjectRepository {
         }
     }
 
-    /** **/
+    /** Tilføjer projekter ejer af user, til users 'min side' **/
     public List<Project> getProjectsFromAssignedUser(int userId) {
         List<Project> projects = new ArrayList<>();
         try {
