@@ -206,7 +206,6 @@ public class ProjectRepository {
 
     /** Finder alle info om en task ved brug af task_id**/
     public Task getTaskById(int taskId){
-        Task task = null;
         try {
             String SQL = "SELECT task_id, task_name, task_description, task_hours, task_startdate, task_deadline, task_status " +
                     "FROM tasks " +
@@ -215,15 +214,15 @@ public class ProjectRepository {
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
                 preparedStatement.setInt(1, taskId);
                 ResultSet rs = preparedStatement.executeQuery();
-                while (rs.next()) {
-                    task = mapTask(rs);
+                if (rs.next()) {
+                    return mapTask(rs);
                 }
             }
         }
         catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return task;
+        return null;
     }
 
     /**HENT SUBTASK**/
