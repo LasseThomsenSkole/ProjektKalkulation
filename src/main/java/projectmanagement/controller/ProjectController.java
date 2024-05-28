@@ -83,7 +83,8 @@ public class ProjectController {
                                 HttpSession session) {
         if (isLoggedIn(session)) {
             int projectID = projectService.createProject(name, description, Date.valueOf(startDate), Date.valueOf(deadline));
-            projectService.assignUserToProject(((User) session.getAttribute("user")).getId(), projectID);
+            int userID = ((User) session.getAttribute("user")).getId();
+            projectService.assignUserToProject(userID, projectID);
         }
         return "redirect:/projects";
     }
