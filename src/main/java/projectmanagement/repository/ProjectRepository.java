@@ -31,9 +31,36 @@ public class ProjectRepository {
         connection = ConnectionManager.getConnection(db_url, username, pwd);
     }
 
+    /** Returner et Project objekt udfra et ResultSet **/
+    private Project mapProject(ResultSet rs) throws SQLException {
+        int id = rs.getInt("project_id");
+        String name = rs.getString("project_name");
+        String description = rs.getString("project_description");
+        double totalHours = rs.getDouble("total_hours");
+        Date startDate = rs.getDate("project_startdate");
+        Date deadline = rs.getDate("project_deadline");
+        Status status = Status.valueOf(rs.getString("project_status"));
+
+        List<Subproject> subprojects = getSubprojectsFromProjectId(id);
+        return new Project(id, name, description, subprojects, totalHours, startDate, deadline, status);
+    }
+    /** Returner et Subproject objekt udfra et ResultSet **/
+    private Subproject mapSubproject(ResultSet rs) throws SQLException {
+        int id = rs.getInt("subproject_id");
+        String name = rs.getString("subproject_name");
+        String description = rs.getString("subproject_description");
+        double hours = rs.getDouble("subproject_hours");
+        Date startDate = rs.getDate("subproject_startdate");
+        Date deadline = rs.getDate("subproject_deadline");
+        Status status = Status.valueOf(rs.getString("subproject_status"));
+
+        List<Task> tasks = getTasks(id);
+        return new Subproject(id, name, description, hours, startDate, deadline, status, tasks);
+    }
+
     /**GET ALL PROJECTS**/
     /** Den finder informationer fra alle projekter og viser dem.**/
-    public List<Project> findAllProjects() {
+    public List<Project> getAllProjects() {
         List<Project> projects = new ArrayList<>();
         String query = "SELECT project_id, project_name, project_description, total_hours, project_startdate, project_deadline, project_status " +
                 "FROM projects;";
@@ -48,9 +75,9 @@ public class ProjectRepository {
         return projects;
     }
 
-    /** Kalder på findAllProjects og sorterer dem efter deadline, status eller name**/
-    public List<Project> findAllProjectsSorted(String sort) {
-        List<Project> projects = findAllProjects();
+    /** Kalder på getAllProjects og sorterer dem efter deadline, status eller name**/
+    public List<Project> getAllProjectsSorted(String sort) {
+        List<Project> projects = getAllProjects();
         switch (sort) {
             case "deadline":
                 projects.sort(Comparator.comparing(Project::getDeadline));
@@ -66,22 +93,8 @@ public class ProjectRepository {
         return projects;
     }
 
-    /**  **/
-    public Project mapProject(ResultSet rs) throws SQLException {
-        int id = rs.getInt("project_id");
-        String name = rs.getString("project_name");
-        String description = rs.getString("project_description");
-        double totalHours = rs.getDouble("total_hours");
-        Date startDate = rs.getDate("project_startdate");
-        Date deadline = rs.getDate("project_deadline");
-        Status status = Status.valueOf(rs.getString("project_status"));
-
-        List<Subproject> subprojects = getSubprojectsFromProjectId(id);
-        return new Project(id, name, description, subprojects, totalHours, startDate, deadline, status);
-    }
-
     /**HENT PROJECT**/
-    /** Finder alle info om et projekt ved brug af project_id**/
+    /** Returner et Projekt objekt ved brug af project_id**/
     public Project getProject(int projectId) {
         Project project = null;
 
@@ -111,16 +124,9 @@ public class ProjectRepository {
                     "WHERE parent_project_id = ?;";
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
                 preparedStatement.setInt(1, projectId);
-                ResultSet subprojectResult = preparedStatement.executeQuery();
-                while (subprojectResult.next()) {
-                    int id = subprojectResult.getInt("subproject_id");
-                    String name = subprojectResult.getString("subproject_name");
-                    String description = subprojectResult.getString("subproject_description");
-                    double hours = subprojectResult.getDouble("subproject_hours");
-                    Date startDate = subprojectResult.getDate("subproject_startdate");
-                    Date deadline = subprojectResult.getDate("subproject_deadline");
-                    Status status = Status.valueOf(subprojectResult.getString("subproject_status"));
-                    subprojects.add(new Subproject(id, name, description, hours, startDate, deadline, status));
+                ResultSet rs = preparedStatement.executeQuery();
+                while (rs.next()) {
+                    subprojects.add(mapSubproject(rs));
                 }
             }
         } catch (SQLException e) {
@@ -138,17 +144,9 @@ public class ProjectRepository {
                     "WHERE subproject_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
                 preparedStatement.setInt(1, subprojectId);
-                ResultSet subprojectResult = preparedStatement.executeQuery();
-                if (subprojectResult.next()) {
-                    int id = subprojectResult.getInt("subproject_id");
-                    String name = subprojectResult.getString("subproject_name");
-                    String description = subprojectResult.getString("subproject_description");
-                    double hours = subprojectResult.getDouble("subproject_hours");
-                    Date startDate = subprojectResult.getDate("subproject_startdate");
-                    Date deadline = subprojectResult.getDate("subproject_deadline");
-                    Status status = Status.valueOf(subprojectResult.getString("subproject_status"));
-                    List<Task> tasks = getTasks(id);
-                    subproject = new Subproject(id, name, description, hours, startDate, deadline, status, tasks);
+                ResultSet rs = preparedStatement.executeQuery();
+                if (rs.next()) {
+                    subproject = mapSubproject(rs);
                 }
             }
         } catch (SQLException e) {
