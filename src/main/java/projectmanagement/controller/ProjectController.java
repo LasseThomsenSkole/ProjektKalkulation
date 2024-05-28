@@ -82,9 +82,9 @@ public class ProjectController {
                                 @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                 HttpSession session) {
         if (isLoggedIn(session)) {
-            int projectID = projectService.createProject(name, description, Date.valueOf(startDate), Date.valueOf(deadline));
-            int userID = ((User) session.getAttribute("user")).getId();
-            projectService.assignUserToProject(userID, projectID);
+            int projectId = projectService.createProject(name, description, Date.valueOf(startDate), Date.valueOf(deadline));
+            int userId = ((User) session.getAttribute("user")).getId();
+            projectService.assignUserToProject(userId, projectId);
         }
         return "redirect:/projects";
     }
