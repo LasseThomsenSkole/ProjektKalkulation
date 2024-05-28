@@ -70,14 +70,6 @@ public class Project {
         this.description = description;
     }
 
-   /* public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
-*/
     public List<Subproject> getSubprojects() {
         return subprojects;
     }
