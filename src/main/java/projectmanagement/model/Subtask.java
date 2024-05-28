@@ -23,8 +23,7 @@ public class Subtask {
         this.status = status;
     }
 
-    public Subtask(int id, String name, String description, Date startDate, java.sql.Date deadline, double hours) {
-    }
+
 
     public Date getDeadline() {
         return deadline;
