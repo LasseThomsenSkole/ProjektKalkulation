@@ -17,9 +17,11 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    @Autowired
     private UserService userService;
 
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
 
     private boolean isLoggedIn(HttpSession session){
         return session.getAttribute("user") != null;

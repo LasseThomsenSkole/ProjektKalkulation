@@ -25,6 +25,10 @@ public class ProjectController {
     private boolean isLoggedIn(HttpSession session){
         return session.getAttribute("user") != null;
     }
+    private boolean isAdmin(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        return user != null && user.isAdmin();
+    }
 
     @GetMapping("")
     public String index(HttpSession session, Model model){
@@ -376,12 +380,6 @@ public class ProjectController {
         }
         return "login";
     }
-
-    private boolean isAdmin(HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        return user != null && user.isAdmin();
-    }
-
 
     public String singletonInstance(){
         return this.toString();

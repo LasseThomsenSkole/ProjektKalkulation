@@ -9,8 +9,12 @@ import projectmanagement.repository.UserRepository;
 import java.util.List;
 @Service
 public class UserService {
-    @Autowired
+
     private UserRepository userRepository;
+
+    public UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     public boolean login(String name, String password){
         User user = userRepository.getUserFromName(name);
